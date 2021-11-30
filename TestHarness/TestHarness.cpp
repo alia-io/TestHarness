@@ -67,8 +67,5 @@ void TestHarness::executeChild() {
 		TestItem test = handler.dequeueTestRequest();
 		TestRunner runner{ test.getName(), test.getPointer() };
 		runner.runTest(&handler, testHarnessThreadId, logger.getLogLevel());
-		//TestItem item = testQueue.deQ();
-		//TestRunner runner(item.name, item.ptr);	// run each test on test list
-		//bool outcome = runner.runTest(logger.getLogLevel());
 	}
 }
