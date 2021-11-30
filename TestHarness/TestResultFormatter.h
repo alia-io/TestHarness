@@ -2,6 +2,7 @@
 #include "TestTimer.h"
 #include "TestLogger.h"
 #include <string>
+#include <iostream>
 
 using namespace TestSuite;
 

@@ -30,14 +30,12 @@ class TestHarness
 private:
 	std::string suiteName;
 	std::thread::id testHarnessThreadId;
-	std::list<TestItem> testList{};			// TODO: change to be received as a TestMessages from client
 	TestSuite::TestLogger logger{};
 	TestResultCounter counter{};
 	TestMessageHandler handler{};
+	void executeChild();
 public:
 	TestHarness();
 	TestHarness(std::string name, TestSuite::LOG_LEVEL log);
-	void sendTestList(std::list<TestItem> tests);
-	void execute();
-	void executeChild();
+	void execute(std::list<TestItem> tests);
 };

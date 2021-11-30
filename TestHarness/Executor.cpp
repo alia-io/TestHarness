@@ -86,6 +86,5 @@ int main() {
 	};
 
 	TestHarness testHarness("def", LOG_LEVEL::debug);
-	testHarness.sendTestList(tests);
-	testHarness.execute();
+	testHarness.execute(tests);
 }
