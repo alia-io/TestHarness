@@ -85,7 +85,7 @@ int main() {
 		TestItem{"OverflowErrorTestDriverExceptionScenario", *testOverflowErrorTestDriverExceptionScenario}
 	};
 
-	TestHarness testHarness("def", LOGLEVEL::debug);
+	TestHarness testHarness("def", LOG_LEVEL::debug);
 	testHarness.sendTestList(tests);
 	testHarness.execute();
 }

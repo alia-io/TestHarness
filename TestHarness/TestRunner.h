@@ -1,6 +1,12 @@
 #pragma once
+#include <iostream>
+#include <Windows.h>
+#include <exception>
+#include "TestMessageHandler.h"
+#include "TestTimer.h"
+#include "TestResultFormatter.h"
 #include <string>
-#include "TestLogger.h"
+#include <thread>
 using namespace TestSuite;
 
 //////////////////////////////////////////////////////
@@ -25,5 +31,5 @@ private:
 	bool (*testFunction)();
 public:
 	TestRunner(std::string name, bool (*funcPtr)());
-	bool runTest(TestLogger logger);
+	void runTest(TestMessageHandler* messageHandler, std::thread::id parentId, LOG_LEVEL logLevel);
 };

@@ -1,7 +1,7 @@
 #pragma once
 #include "TestBlockingQueue.h"
 #include "TestMessage.h"
-#include "TestHarness.h"
+#include "TestItem.h"
 #include <thread>
 
 using namespace TestSuite;

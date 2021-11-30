@@ -117,6 +117,12 @@
     <ClInclude Include="ITest.h">
       <Filter>Header Files\TestDriver</Filter>
     </ClInclude>
+    <ClInclude Include="TestResultFormatter.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
+    <ClInclude Include="TestItem.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdvCalculator.cpp">
@@ -159,6 +165,12 @@
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
     <ClCompile Include="TestTimer.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="TestResultFormatter.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="TestItem.cpp">
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
   </ItemGroup>

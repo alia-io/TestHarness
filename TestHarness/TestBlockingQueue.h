@@ -33,6 +33,7 @@ private:
     std::mutex mtx_;
     std::condition_variable cv_;
 };
+
 //----< move constructor >---------------------------------------------
 
 template<typename T>

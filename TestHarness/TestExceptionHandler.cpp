@@ -17,7 +17,7 @@
 
 using namespace TestSuite;
 
-string TestExceptionHandler::getCustomizedString(exception& e, LOGLEVEL logLevel) {
+string TestExceptionHandler::getCustomizedString(exception& e, LOG_LEVEL logLevel) {
 	string logDetail = ""; // initialize the return string for the exception handler
 	string except_str = ""; // string that indicates the type of exception
 
@@ -87,13 +87,13 @@ string TestExceptionHandler::getCustomizedString(exception& e, LOGLEVEL logLevel
 	}
 
 	switch (logLevel) {
-	case LOGLEVEL::info:
+	case LOG_LEVEL::info:
 		logDetail = " Test failed with exception."; // level 1 exception
 		break;
-	case LOGLEVEL::detail:
+	case LOG_LEVEL::detail:
 		logDetail = " Test failed with the exception: " + except_str; // level 2 exception
 		break;
-	case LOGLEVEL::debug:
+	case LOG_LEVEL::debug:
 		logDetail = " Test failed with the exception: " + except_str;
 		logDetail += "\n Exception occurred on " + TestTimer::currentTime() + "."; // level 3 exception
 		break;

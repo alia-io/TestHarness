@@ -1,6 +1,6 @@
 #pragma once
 #include "TestLogger.h"
-#include "TestBlockingQueue.h"
+#include "TestMessageHandler.h"
 #include "TestRunner.h"
 #include "TestLogger.h"
 #include "TestTimer.h"
@@ -9,10 +9,9 @@
 #include <string>
 #include <list>
 #include <thread>
+#include "TestItem.h"
 
 using namespace TestSuite;
-using std::string;
-using std::list;
 
 //////////////////////////////////////////////////////
 // TestHarness.h									//
@@ -25,23 +24,20 @@ using std::list;
 * Purpose of class is to repeatedly call the testrunner class which inturn invokes the testable function
 *
 */
-struct TestItem {
-	string name;
-	bool (*ptr)();
-};
 
 class TestHarness
 {
 private:
-	string suiteName;
-	list<TestItem> testList{};			// TODO: change to be received as a TestMessages
+	std::string suiteName;
+	std::thread::id testHarnessThreadId;
+	std::list<TestItem> testList{};			// TODO: change to be received as a TestMessages from client
 	TestSuite::TestLogger logger{};
 	TestResultCounter counter{};
+	TestMessageHandler handler{};
 public:
 	TestHarness();
-	TestHarness(string name, TestSuite::LOGLEVEL log);
+	TestHarness(std::string name, TestSuite::LOG_LEVEL log);
 	void sendTestList(std::list<TestItem> tests);
 	void execute();
 	void executeChild();
 };
-

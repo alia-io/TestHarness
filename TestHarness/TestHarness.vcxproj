@@ -157,10 +157,12 @@
     <ClInclude Include="TestBlockingQueue.h" />
     <ClInclude Include="TestExceptionHandler.h" />
     <ClInclude Include="TestHarness.h" />
+    <ClInclude Include="TestItem.h" />
     <ClInclude Include="TestLogger.h" />
     <ClInclude Include="TestMessage.h" />
     <ClInclude Include="TestMessageHandler.h" />
     <ClInclude Include="TestResultCounter.h" />
+    <ClInclude Include="TestResultFormatter.h" />
     <ClInclude Include="TestRunner.h" />
     <ClInclude Include="TestTimer.h" />
   </ItemGroup>
@@ -173,10 +175,12 @@
     <ClCompile Include="TestBlockingQueue.cpp" />
     <ClCompile Include="TestExceptionHandler.cpp" />
     <ClCompile Include="TestHarness.cpp" />
+    <ClCompile Include="TestItem.cpp" />
     <ClCompile Include="TestLogger.cpp" />
     <ClCompile Include="TestMessage.cpp" />
     <ClCompile Include="TestMessageHandler.cpp" />
     <ClCompile Include="TestResultCounter.cpp" />
+    <ClCompile Include="TestResultFormatter.cpp" />
     <ClCompile Include="TestRunner.cpp" />
     <ClCompile Include="TestTimer.cpp" />
   </ItemGroup>

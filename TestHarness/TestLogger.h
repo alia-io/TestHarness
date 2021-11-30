@@ -17,20 +17,20 @@
 */
 
 namespace TestSuite {
-	enum class LOGLEVEL {
+	enum class LOG_LEVEL {
 		info, debug, detail
 	};
 	class TestLogger
 	{
 	private:
-		LOGLEVEL logLevel;
+		LOG_LEVEL logLevel;
 	public:
-		TestLogger(LOGLEVEL);
+		TestLogger(LOG_LEVEL);
 		TestLogger();
 		void writeLogInfoToOutput(std::string message, TestTimer timer);
 		void writeLogInfoToOutput(std::string message, TestTimer timer, bool outcome);
-		LOGLEVEL getLogLevel();
-		void setLogLevel(LOGLEVEL log);
+		LOG_LEVEL getLogLevel();
+		void setLogLevel(LOG_LEVEL log);
 		void writeTestRunSummary(TestResultCounter counter, TestTimer timer);
 	};
 

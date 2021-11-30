@@ -29,45 +29,43 @@ using std::right;
 
 
 
-TestLogger::TestLogger(LOGLEVEL log) :logLevel(log) {
+TestLogger::TestLogger(LOG_LEVEL log) :logLevel(log) {
 
 }
 
-TestLogger::TestLogger() : logLevel(LOGLEVEL::info) {
+TestLogger::TestLogger() : logLevel(LOG_LEVEL::info) {
 
 }
 
 void TestLogger::writeLogInfoToOutput(std::string message, TestTimer timer) {
-	HANDLE  hConsole;
-	hConsole = GetStdHandle(STD_OUTPUT_HANDLE); //retrieve handle for std ouput device
-	SetConsoleTextAttribute(hConsole, 14);	//Set format parameters
-	cout << "[Exception] ";					// print the test name
-	SetConsoleTextAttribute(hConsole, 15);
-	cout << message;
-	cout << " Time elapsed: " << timer.timeTaken() << " ns.\n" << endl; // print the time taken
+	//HANDLE  hConsole;
+	//hConsole = GetStdHandle(STD_OUTPUT_HANDLE); //retrieve handle for std ouput device
+	//SetConsoleTextAttribute(hConsole, 14);	//Set format parameters
+	//cout << "[Exception] ";					// print the test name
+	//SetConsoleTextAttribute(hConsole, 15);
+	cout << message << "\n\n";
+	//cout << " Time elapsed: " << timer.timeTaken() << " ns.\n" << endl; // print the time taken
 }
 
 void TestLogger::writeLogInfoToOutput(std::string message, TestTimer timer, bool outcome) {
-	HANDLE  hConsole;											// Additional logging in this function
-	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	if (outcome) {
-		SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);	//Uses outcome boolean to display pass/fail
-		cout << "[Pass] ";
-	}
-	else {
-		SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
-		cout << "[Fail] ";
-	}
-	SetConsoleTextAttribute(hConsole, 15);
+	//HANDLE  hConsole;											// Additional logging in this function
+	//hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	//if (outcome) {
+	//	SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);	//Uses outcome boolean to display pass/fail
+	//	cout << "[Pass] ";
+	//}
+	//else {
+	//	SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
+	//	cout << "[Fail] ";
+	//}
+	//SetConsoleTextAttribute(hConsole, 15);
 	cout << message;
-	cout << " Time elapsed: " << timer.timeTaken() << " ns.\n" << endl;
+	//cout << " Time elapsed: " << timer.timeTaken() << " ns.\n" << endl;
 }
 
-LOGLEVEL TestLogger::getLogLevel() { return logLevel; }
+LOG_LEVEL TestLogger::getLogLevel() { return logLevel; }
 
-void TestLogger::setLogLevel(LOGLEVEL log) {
-	logLevel = log;
-}
+void TestLogger::setLogLevel(LOG_LEVEL log) { logLevel = log; }
 
 
 void TestLogger::writeTestRunSummary(TestResultCounter counter, TestTimer timer) {

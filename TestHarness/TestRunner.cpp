@@ -1,9 +1,4 @@
 #include "TestRunner.h"
-#include <iostream>
-#include <Windows.h>
-#include <exception>
-#include "TestTimer.h"
-#include "TestExceptionHandler.h"
 
 //////////////////////////////////////////////////////
 // TestRunner.cpp									//
@@ -21,11 +16,12 @@
 * -----------------
 * TestRunner	initialize TestRunner object with the name of the test function and a pointer to the test function
 * runTest		pass TestLogger object to run the test function
+* 
 */
 
 TestRunner::TestRunner(std::string name, bool (*funcPtr)()) : testFunctionName{ name }, testFunction{ funcPtr } { }
 
-bool TestRunner::runTest(TestLogger logger) {
+void TestRunner::runTest(TestMessageHandler* messageHandler, std::thread::id parentId, LOG_LEVEL logLevel) {
 	TestTimer timer{};
 	bool result = false;
 	timer.startTimer();
@@ -34,20 +30,25 @@ bool TestRunner::runTest(TestLogger logger) {
 	}
 	catch (std::exception& e) {
 		timer.endTimer();
-		std::string message = testFunctionName + "\n";
-		TestExceptionHandler handler{};
-		message += handler.getCustomizedString(e, logger.getLogLevel()) + "\n";
-		logger.writeLogInfoToOutput(message, timer);
-		return false;
+		messageHandler->enqueueTestResult(parentId, TestResultFormatter::testExceptionMessage(testFunctionName, e, logLevel));
+		return;
+		//std::string message = testFunctionName + "\n";
+		//TestExceptionHandler handler{};
+		//message += handler.getCustomizedString(e, logger.getLogLevel()) + "\n";
+		//logger.writeLogInfoToOutput(message, timer);
+		//return false;
 	}
 
 	timer.endTimer();
 
 	if (result) {
-		logger.writeLogInfoToOutput(std::string(testFunctionName + "\n"), timer, result);
-		return true;
+		messageHandler->enqueueTestResult(parentId, TestResultFormatter::testPassedMessage(testFunctionName, timer));
+		return;
+		//logger.writeLogInfoToOutput(std::string(testFunctionName + "\n"), timer, result);
+		//return true;
 	}
 
-	logger.writeLogInfoToOutput(std::string(testFunctionName + "\n"), timer, result);
-	return false;
+	messageHandler->enqueueTestResult(parentId, TestResultFormatter::testFailedMessage(testFunctionName, timer));
+	//logger.writeLogInfoToOutput(std::string(testFunctionName + "\n"), timer, result);
+	//return false;
 }
