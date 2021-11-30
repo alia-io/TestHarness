@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\TestController">
+      <UniqueIdentifier>{1b2b3844-09e5-4879-844b-dd7633e01e7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TestDriver">
+      <UniqueIdentifier>{03e3bebb-e1f0-4f4a-9a6f-ffcc9ca6edaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TestLibrary">
+      <UniqueIdentifier>{0852a458-16eb-4f08-a3c3-dd71afcd741f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TestMessenger">
+      <UniqueIdentifier>{c774f999-25db-4711-984e-124d64fb01a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TestUtilities">
+      <UniqueIdentifier>{399afc6a-5b82-4380-a305-ea7f0a0b0d9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestController">
+      <UniqueIdentifier>{558a7c98-61c3-4b57-aba2-efe4c4e0493d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestDriver">
+      <UniqueIdentifier>{501ac82f-6f97-43d1-bb69-d4809a5a8ec7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestLibrary">
+      <UniqueIdentifier>{c514eae2-4717-4dce-b2c8-ddc01d57ef01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestMessenger">
+      <UniqueIdentifier>{ef32c489-e038-4dfa-b573-c646e67b5e47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestUtilities">
+      <UniqueIdentifier>{2a19671e-27d6-48ac-9b3d-58f7ac23534a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AdvCalculator.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="AdvCalculatorTestDriverPass.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicCalculator.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicCalculatorTestDriverException.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicCalculatorTestDriverFail.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicCalculatorTestDriverPass.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerConversions.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerConversionsTestDriverException.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerConversionsTestDriverFail.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="LengthErrorTestDriverException.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryAllocator.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryAllocatorTestDriverException1.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryAllocatorTestDriverException2.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="OverflowErrorTestDriverException.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="TestExceptionHandler.h">
+      <Filter>Header Files\TestLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="TestRunner.h">
+      <Filter>Header Files\TestLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="TestBlockingQueue.h">
+      <Filter>Header Files\TestMessenger</Filter>
+    </ClInclude>
+    <ClInclude Include="TestMessage.h">
+      <Filter>Header Files\TestMessenger</Filter>
+    </ClInclude>
+    <ClInclude Include="TestMessageHandler.h">
+      <Filter>Header Files\TestMessenger</Filter>
+    </ClInclude>
+    <ClInclude Include="TestHarness.h">
+      <Filter>Header Files\TestController</Filter>
+    </ClInclude>
+    <ClInclude Include="TestResultCounter.h">
+      <Filter>Header Files\TestController</Filter>
+    </ClInclude>
+    <ClInclude Include="TestLogger.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
+    <ClInclude Include="TestTimer.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
+    <ClInclude Include="ITest.h">
+      <Filter>Header Files\TestDriver</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AdvCalculator.cpp">
+      <Filter>Source Files\TestDriver</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicCalculator.cpp">
+      <Filter>Source Files\TestDriver</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerConversions.cpp">
+      <Filter>Source Files\TestDriver</Filter>
+    </ClCompile>
+    <ClCompile Include="Executor.cpp">
+      <Filter>Source Files\TestDriver</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryAllocator.cpp">
+      <Filter>Source Files\TestDriver</Filter>
+    </ClCompile>
+    <ClCompile Include="TestHarness.cpp">
+      <Filter>Source Files\TestController</Filter>
+    </ClCompile>
+    <ClCompile Include="TestResultCounter.cpp">
+      <Filter>Source Files\TestController</Filter>
+    </ClCompile>
+    <ClCompile Include="TestExceptionHandler.cpp">
+      <Filter>Source Files\TestLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="TestRunner.cpp">
+      <Filter>Source Files\TestLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="TestBlockingQueue.cpp">
+      <Filter>Source Files\TestMessenger</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMessage.cpp">
+      <Filter>Source Files\TestMessenger</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMessageHandler.cpp">
+      <Filter>Source Files\TestMessenger</Filter>
+    </ClCompile>
+    <ClCompile Include="TestLogger.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="TestTimer.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
