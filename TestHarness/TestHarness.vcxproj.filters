@@ -170,8 +170,5 @@
     <ClCompile Include="TestResultFormatter.cpp">
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
-    <ClCompile Include="TestItem.cpp">
-      <Filter>Source Files\TestUtilities</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

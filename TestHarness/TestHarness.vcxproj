@@ -175,7 +175,6 @@
     <ClCompile Include="TestBlockingQueue.cpp" />
     <ClCompile Include="TestExceptionHandler.cpp" />
     <ClCompile Include="TestHarness.cpp" />
-    <ClCompile Include="TestItem.cpp" />
     <ClCompile Include="TestLogger.cpp" />
     <ClCompile Include="TestMessage.cpp" />
     <ClCompile Include="TestMessageHandler.cpp" />
