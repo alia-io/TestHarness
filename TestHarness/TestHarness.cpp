@@ -24,7 +24,6 @@ TestHarness::TestHarness(string name, LOGLEVEL log) : suiteName(name) {
 // TODO: this should be sent through the messenger from the client
 void TestHarness::sendTestList(list<TestItem> tests) { testList = tests; }
 
-
 void TestHarness::execute() {
 
 	TestTimer timer{};

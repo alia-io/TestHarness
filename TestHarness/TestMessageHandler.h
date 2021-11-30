@@ -2,6 +2,7 @@
 #include "TestBlockingQueue.h"
 #include "TestMessage.h"
 #include "TestHarness.h"
+#include <thread>
 
 using namespace TestSuite;
 
@@ -15,9 +16,9 @@ public:
 	//void enqueueClientRequest(std::string body);
 	//void enqueueClientResult(std::string body);
 	void enqueueTestRequest(TestItem item);
-	void enqueueTestResult(std::string body);
+	void enqueueTestResult(std::thread::id parentThreadId, std::string body);
 	//TestMessage dequeueClientRequest();
 	//TestMessage dequeueClientResult();
 	TestItem dequeueTestRequest();
-	//TestMessage dequeueTestResult();
+	TestMessage dequeueTestResult();
 };

@@ -15,7 +15,7 @@ using std::chrono::system_clock;
 *		source: parent process ID (TestHarness)
 *		destination: child process ID (TestRunner)
 *
-*	response - message containing the result of a single DLL/TEST function pointer
+*	result - message containing the result of a single DLL/TEST function pointer
 *		source: child process ID (TestRunner)
 *		destination: parent process ID (TestHarness)
 *
@@ -23,7 +23,7 @@ using std::chrono::system_clock;
 *		source: client IP address & port
 *		destination: server IP address & port
 *
-*	response_list - message containing a list of the TEST results
+*	result_list - message containing a list of the TEST results
 *		source: server IP address & port
 *		destination: client IP address & port
 */
@@ -32,7 +32,7 @@ namespace TestSuite {
 
 	enum class THREAD_TYPE { parent, child };
 	enum class IP_VERSION { IPV4 = 4, IPV6 = 6 };
-	enum class MESSAGE_TYPE { request, response, request_list, response_list };
+	enum class MESSAGE_TYPE { request, result, request_list, result_list };
 
 	struct Address { };
 
