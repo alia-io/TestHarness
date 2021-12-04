@@ -30,25 +30,19 @@ void TestRunner::runTest(TestMessageHandler* messageHandler, std::thread::id par
 	}
 	catch (std::exception& e) {
 		timer.endTimer();
-		messageHandler->enqueueTestResult(parentId, TestResultFormatter::testExceptionMessage(testFunctionName, e, logLevel));
+		messageHandler->enqueueTestResult(parentId, TEST_RESULT::exception,
+			TestResultFormatter::testExceptionMessage(testFunctionName, e, logLevel));
 		return;
-		//std::string message = testFunctionName + "\n";
-		//TestExceptionHandler handler{};
-		//message += handler.getCustomizedString(e, logger.getLogLevel()) + "\n";
-		//logger.writeLogInfoToOutput(message, timer);
-		//return false;
 	}
 
 	timer.endTimer();
 
 	if (result) {
-		messageHandler->enqueueTestResult(parentId, TestResultFormatter::testPassedMessage(testFunctionName, timer));
+		messageHandler->enqueueTestResult(parentId, TEST_RESULT::pass,
+			TestResultFormatter::testPassedMessage(testFunctionName, timer));
 		return;
-		//logger.writeLogInfoToOutput(std::string(testFunctionName + "\n"), timer, result);
-		//return true;
 	}
 
-	messageHandler->enqueueTestResult(parentId, TestResultFormatter::testFailedMessage(testFunctionName, timer));
-	//logger.writeLogInfoToOutput(std::string(testFunctionName + "\n"), timer, result);
-	//return false;
+	messageHandler->enqueueTestResult(parentId, TEST_RESULT::fail,
+		TestResultFormatter::testFailedMessage(testFunctionName, timer));
 }

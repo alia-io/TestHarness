@@ -153,6 +153,7 @@
     <ClInclude Include="MemoryAllocator.h" />
     <ClInclude Include="MemoryAllocatorTestDriverException1.h" />
     <ClInclude Include="MemoryAllocatorTestDriverException2.h" />
+    <ClInclude Include="TestMessageParser.h" />
     <ClInclude Include="OverflowErrorTestDriverException.h" />
     <ClInclude Include="TestBlockingQueue.h" />
     <ClInclude Include="TestExceptionHandler.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="TestLogger.cpp" />
     <ClCompile Include="TestMessage.cpp" />
     <ClCompile Include="TestMessageHandler.cpp" />
+    <ClCompile Include="TestMessageParser.cpp" />
     <ClCompile Include="TestResultCounter.cpp" />
     <ClCompile Include="TestResultFormatter.cpp" />
     <ClCompile Include="TestRunner.cpp" />

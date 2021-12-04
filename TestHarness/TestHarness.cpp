@@ -30,9 +30,10 @@ void TestHarness::execute(std::list<TestItem> tests) {
 
 	timer.startTimer();						// Initiate start time
 
-	std::thread thr1([=] { executeChild(); });
-	std::thread thr2([=] { executeChild(); });
-	std::thread thr3([=] { executeChild(); });
+	std::vector<std::thread> threads{};
+	for (int i = 0; i < NUM_THREADS; ++i) {
+		threads.push_back(std::thread([=] { executeChild(); }));
+	}
 
 	// enqueue test requests
 	for (auto const& test : tests) {
@@ -46,9 +47,11 @@ void TestHarness::execute(std::list<TestItem> tests) {
 	while (true) {
 		TestMessage message = handler.dequeueTestResult();
 		std::string messageStr = message.getMessage();
-		if (messageStr.at(2) == 'P') counter.incrementTestPassed();
+		TEST_RESULT result = TestMessageParser::testResult(message);
+		std::string resultMsg = TestMessageParser::testResultMessage(message);
+		if (result == TEST_RESULT::pass) counter.incrementTestPassed();
 		else counter.incrementTestFailed();
-		logger.writeLogInfoToOutput(messageStr, timer);		// write each result to console
+		logger.writeLogInfoToOutput(result, resultMsg, timer);	// write result to console
 		numTestsComplete++;
 		if (numTestsComplete == NUM_TESTS) break;
 	}
@@ -56,13 +59,12 @@ void TestHarness::execute(std::list<TestItem> tests) {
 	// write test result summary
 	logger.writeTestRunSummary(counter, timer);
 
-	thr1.join();
-	thr2.join();
-	thr3.join();
+	for (auto& thr : threads) {
+		if (thr.joinable()) thr.join();
+	}
 }
 
 void TestHarness::executeChild() {
-
 	while (true) {
 		TestItem test = handler.dequeueTestRequest();
 		TestRunner runner{ test.getName(), test.getPointer() };

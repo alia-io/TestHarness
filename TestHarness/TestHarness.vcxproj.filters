@@ -123,6 +123,9 @@
     <ClInclude Include="TestItem.h">
       <Filter>Header Files\TestUtilities</Filter>
     </ClInclude>
+    <ClInclude Include="TestMessageParser.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdvCalculator.cpp">
@@ -168,6 +171,9 @@
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
     <ClCompile Include="TestResultFormatter.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMessageParser.cpp">
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
   </ItemGroup>

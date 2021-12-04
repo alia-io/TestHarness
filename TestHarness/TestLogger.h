@@ -1,7 +1,12 @@
 #pragma once
 #include "TestTimer.h"
 #include "TestResultCounter.h"
+#include "TestMessageParser.h"
 #include <string>
+#include <string>
+#include <iostream>
+#include <Windows.h>
+#include <iomanip>
 
 //////////////////////////////////////////////////////
 // TestLogger.h										//
@@ -27,8 +32,7 @@ namespace TestSuite {
 	public:
 		TestLogger(LOG_LEVEL);
 		TestLogger();
-		void writeLogInfoToOutput(std::string message, TestTimer timer);
-		void writeLogInfoToOutput(std::string message, TestTimer timer, bool outcome);
+		void writeLogInfoToOutput(TEST_RESULT result, std::string message, TestTimer timer);
 		LOG_LEVEL getLogLevel();
 		void setLogLevel(LOG_LEVEL log);
 		void writeTestRunSummary(TestResultCounter counter, TestTimer timer);

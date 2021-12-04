@@ -1,6 +1,7 @@
 #pragma once
 #include "TestLogger.h"
 #include "TestMessageHandler.h"
+#include "TestMessageParser.h"
 #include "TestRunner.h"
 #include "TestLogger.h"
 #include "TestTimer.h"

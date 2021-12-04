@@ -1,21 +1,21 @@
 #include "TestResultFormatter.h"
 
 std::string TestResultFormatter::testPassedMessage(std::string testName, TestTimer timer) {
-	return " [PASS] " + testName + "\n        Time elapsed: " + std::to_string(timer.timeTaken()) + " ns.";
+	return testName + "\n        Time elapsed: " + std::to_string(timer.timeTaken()) + " ns.";
 }
 
 std::string TestResultFormatter::testFailedMessage(std::string testName, TestTimer timer) {
-	return " [FAIL] " + testName + "\n        Time elapsed: " + std::to_string(timer.timeTaken()) + " ns.";
+	return testName + "\n        Time elapsed: " + std::to_string(timer.timeTaken()) + " ns.";
 }
 
 std::string TestResultFormatter::testExceptionMessage(std::string testName, std::exception& e, LOG_LEVEL logLevel) {
 	switch (logLevel) {
 	case LOG_LEVEL::info:	// level 1 logging
-		return " [EXCEPTION] " + testName + "\n        Test failed with exception.";
+		return testName + "\n        Test failed with exception.";
 	case LOG_LEVEL::detail:	// level 2 logging
-		return " [EXCEPTION] " + testName + "\n        Test failed with exception: " + exceptionDetails(e);
+		return testName + "\n        Test failed with exception: " + exceptionDetails(e);
 	case LOG_LEVEL::debug:	// level 3 logging
-		return " [EXCEPTION] " + testName + "\n        Test failed with exception: " + exceptionDetails(e)
+		return testName + "\n        Test failed with exception: " + exceptionDetails(e)
 			+ "\n        Exception occurred on " + TestTimer::currentTime() + ".";
 	}
 
