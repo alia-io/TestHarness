@@ -19,12 +19,12 @@ using namespace TestSuite;
 using std::cout;
 using std::endl;
 
-bool testBasicCalculatorPassScenario() {	// expect PASS
+bool testBasicCalculatorTestDriverPassScenario() {	// expect PASS
 	BasicCalculatorTestDriverPass calc{};
 	return calc.TEST();
 }
 
-bool testBasicCalculatorFailScenario() {	// expect FAIL
+bool testBasicCalculatorTestDriverFailScenario() {	// expect FAIL
 	BasicCalculatorTestDriverFail calc{};
 	return calc.TEST();
 }
@@ -73,8 +73,8 @@ bool testOverflowErrorTestDriverExceptionScenario() {	// expect EXCEPTION
 /*int main() {
 	
 	std::list<TestItem> tests{
-		TestItem{"BasicCalculatorPassScenario", *testBasicCalculatorPassScenario},
-		TestItem{"BasicCalculatorFailScenario", *testBasicCalculatorFailScenario},
+		TestItem{"BasicCalculatorTestDriverPassScenario", *testBasicCalculatorTestDriverPassScenario},
+		TestItem{"BasicCalculatorTestDriverFailScenario", *testBasicCalculatorTestDriverFailScenario},
 		TestItem{"BasicCalculatorTestDriverExceptionScenario", *testBasicCalculatorTestDriverExceptionScenario},
 		TestItem{"AdvCalculatorTestDriverPassScenario", *testAdvCalculatorTestDriverPassScenario},
 		TestItem{"MemoryAllocatorTestDriverExceptionScenario1", *testMemoryAllocatorTestDriverExceptionScenario1},

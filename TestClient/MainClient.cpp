@@ -102,19 +102,73 @@ void StringClient::execute(const size_t TimeBetweenMessages, const size_t NumMes
     }
 }
 
-int main()
-{
-    Show::title("Demonstrating two String Clients each running on a child thread");
+int main() {
 
-    StringClient c1;
-    std::thread t1(
-        [&]() { c1.execute(100, 50); } // 50 messages 100 millisec apart
-    );
+    int numTests = 10;
+    std::string testListStr = "{ \"count\": 10, ";
+    testListStr += "\"tests\": [ \"BasicCalculatorTestDriverPassScenario\", ";
+    testListStr += "\"BasicCalculatorTestDriverFailScenario\", ";
+    testListStr += "\"BasicCalculatorTestDriverExceptionScenario\", ";
+    testListStr += "\"AdvCalculatorTestDriverPassScenario\", ";
+    testListStr += "\"MemoryAllocatorTestDriverExceptionScenario1\", ";
+    testListStr += "\"MemoryAllocatorTestDriverExceptionScenario2\", ";
+    testListStr += "\"ContainerConversionsTestDriverFailScenario\", ";
+    testListStr += "\"ContainerConversionsTestDriverExceptionScenario\", ";
+    testListStr += "\"LengthErrorTestDriverExceptionScenario\", ";
+    testListStr += "\"OverflowErrorTestDriverExceptionScenario\" ] }";
 
-    StringClient c2;
-    std::thread t2(
-        [&]() { c2.execute(120, 50); } // 50 messages 120 millisec apart
-    );
-    t1.join();
-    t2.join();
+    Show::attach(&std::cout);
+    Show::start();
+
+    std::thread sendThread([=] {
+        Show::title("Starting Client on thread " + Utilities::Converter<std::thread::id>::toString(std::this_thread::get_id()));
+        try {
+            SocketSystem ss;
+            SocketConnecter si;
+            while (!si.connect("localhost", 8080)) {
+                Show::write("\n client waiting to connect");
+                ::Sleep(100);
+            }
+
+            /*std::string msg;
+
+            for (size_t i = 0; i < NumMessages; ++i)
+            {
+                msg = "message #" + Converter<size_t>::toString(i + 1) + " from client" + myCountString;
+                si.sendString(msg);
+                Show::write("\n  client" + myCountString + " sent \"" + msg + "\"");
+                ::Sleep(TimeBetweenMessages);
+            }
+            msg = "quit";*/
+
+            si.sendString(testListStr);
+            Show::write("\n  client sent \"" + testListStr + "\"");
+
+            Show::write("\n");
+            //Show::write("\n  All done folks");
+        }
+        catch (std::exception& exc)
+        {
+            Show::write("\n  Exeception caught: ");
+            std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
+            Show::write(exMsg);
+        }
+    });
+    
+    std::cin.get();
+    sendThread.join();
+
+    //Show::title("Demonstrating two String Clients each running on a child thread");
+
+    //StringClient c1;
+    //std::thread t1(
+    //    [&]() { c1.execute(100, 50); } // 50 messages 100 millisec apart
+    //);
+
+    //StringClient c2;
+    //std::thread t2(
+    //    [&]() { c2.execute(120, 50); } // 50 messages 120 millisec apart
+    //);
+    //t1.join();
+    //t2.join();
 }
