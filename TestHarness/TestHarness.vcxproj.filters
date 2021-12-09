@@ -43,6 +43,9 @@
     <Filter Include="Source Files\TestUtilities">
       <UniqueIdentifier>{2a19671e-27d6-48ac-9b3d-58f7ac23534a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\TestClientInterface">
+      <UniqueIdentifier>{4f332c87-22c7-42bc-baad-a573cd6e9ec2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdvCalculator.h">
