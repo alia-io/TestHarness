@@ -50,7 +50,7 @@ void ConnectionHandler::operator()(Socket& socket_)
 /////////////////////////////////////////////////////////////////////
 // ClientCounter creates a sequential number for each client
 //
-class ClientCounter
+/*class ClientCounter
 {
 public:
     ClientCounter() { ++clientCount; }
@@ -117,7 +117,7 @@ void StringClient::execute(const size_t TimeBetweenMessages, const size_t NumMes
         std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
         Show::write(exMsg);
     }
-}
+}*/
 
 int main()
 {
