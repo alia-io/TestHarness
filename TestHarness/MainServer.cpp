@@ -28,18 +28,18 @@
 using namespace Sockets;
 using Show = StaticLogger<1>;
 
-class ClientHandler
+class ConnectionHandler
 {
 public:
     void operator()(Socket& socket_);
 };
 
-void ClientHandler::operator()(Socket& socket_)
+void ConnectionHandler::operator()(Socket& socket_)
 {
     while (true)
     {
         std::string msg = Socket::removeTerminator(socket_.recvString());
-        Show::write("\n  server recvd message \"" + msg + "\"");
+        Show::write("\nrecvd message: " + msg);
         if (msg == "quit")
             break;
     }
@@ -51,12 +51,12 @@ int main()
 {
     Show::attach(&std::cout);
     Show::start();
-    Show::title("\n  String Server started");
+    Show::title("\n  Server started");
     try
     {
         SocketSystem ss;
         SocketListener sl(8080, Socket::IP6);
-        ClientHandler cp;
+        ConnectionHandler cp;
         sl.start(cp);
         Show::write("\n --------------------\n  press key to exit: \n --------------------");
         std::cout.flush();

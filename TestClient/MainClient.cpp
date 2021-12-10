@@ -30,6 +30,23 @@ using Show = StaticLogger<1>;
 using namespace Utilities;
 using namespace Sockets;
 
+class ConnectionHandler
+{
+public:
+    void operator()(Socket& socket_);
+};
+
+void ConnectionHandler::operator()(Socket& socket_)
+{
+    while (true)
+    {
+        std::string msg = Socket::removeTerminator(socket_.recvString());
+        Show::write("\nrecvd message: " + msg);
+        if (msg == "quit")
+            break;
+    }
+}
+
 /////////////////////////////////////////////////////////////////////
 // ClientCounter creates a sequential number for each client
 //
@@ -104,7 +121,29 @@ void StringClient::execute(const size_t TimeBetweenMessages, const size_t NumMes
 
 int main()
 {
-    Show::title("Demonstrating two String Clients each running on a child thread");
+    Show::attach(&std::cout);
+    Show::start();
+    Show::title("\n  Client started");
+    try
+    {
+        SocketSystem ss;
+        SocketListener sl(9090, Socket::IP6);
+        ConnectionHandler cp;
+        sl.start(cp);
+        Show::write("\n --------------------\n  press key to exit: \n --------------------");
+        std::cout.flush();
+        std::cin.get();
+    }
+    catch (std::exception& exc)
+    {
+        Show::write("\n  Exeception caught: ");
+        std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
+        Show::write(exMsg);
+    }
+    
+    
+    
+    /*Show::title("Demonstrating two String Clients each running on a child thread");
 
     StringClient c1;
     std::thread t1(
@@ -116,5 +155,5 @@ int main()
         [&]() { c2.execute(120, 50); } // 50 messages 120 millisec apart
     );
     t1.join();
-    t2.join();
+    t2.join();*/
 }
