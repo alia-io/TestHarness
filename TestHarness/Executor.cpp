@@ -70,7 +70,7 @@ bool testOverflowErrorTestDriverExceptionScenario() {	// expect EXCEPTION
 }
 
 
-int main() {
+/*int main() {
 	
 	std::list<TestItem> tests{
 		TestItem{"BasicCalculatorPassScenario", *testBasicCalculatorPassScenario},
@@ -87,4 +87,4 @@ int main() {
 
 	TestHarness testHarness("def", LOG_LEVEL::debug);
 	testHarness.execute(tests);
-}
+}*/

@@ -120,14 +120,20 @@
     <ClInclude Include="TestMessageParser.h">
       <Filter>Header Files\TestUtilities</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities.h">
-      <Filter>Header Files\TestUtilities</Filter>
-    </ClInclude>
     <ClInclude Include="TestRunner.h">
       <Filter>Header Files\TestController</Filter>
     </ClInclude>
+    <ClInclude Include="Message.h">
+      <Filter>Header Files\TestClientInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files\TestClientInterface</Filter>
+    </ClInclude>
     <ClInclude Include="StaticLogger.h">
-      <Filter>Header Files\TestUtilities</Filter>
+      <Filter>Header Files\TestClientInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Sockets.h">
+      <Filter>Header Files\TestClientInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -173,14 +179,23 @@
     <ClCompile Include="TestMessageParser.cpp">
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities.cpp">
-      <Filter>Source Files\TestUtilities</Filter>
-    </ClCompile>
     <ClCompile Include="TestRunner.cpp">
       <Filter>Source Files\TestController</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>Source Files\TestClientInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Message.cpp">
+      <Filter>Source Files\TestClientInterface</Filter>
+    </ClCompile>
     <ClCompile Include="StaticLogger.cpp">
-      <Filter>Source Files\TestUtilities</Filter>
+      <Filter>Source Files\TestClientInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Sockets.cpp">
+      <Filter>Source Files\TestClientInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="MainServer.cpp">
+      <Filter>Source Files\TestClientInterface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

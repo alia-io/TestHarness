@@ -154,6 +154,8 @@
     <ClInclude Include="MemoryAllocator.h" />
     <ClInclude Include="MemoryAllocatorTestDriverException1.h" />
     <ClInclude Include="MemoryAllocatorTestDriverException2.h" />
+    <ClInclude Include="Message.h" />
+    <ClInclude Include="Sockets.h" />
     <ClInclude Include="StaticLogger.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="TestMessageParser.h" />
@@ -174,7 +176,10 @@
     <ClCompile Include="BasicCalculator.cpp" />
     <ClCompile Include="ContainerConversions.cpp" />
     <ClCompile Include="Executor.cpp" />
+    <ClCompile Include="MainServer.cpp" />
     <ClCompile Include="MemoryAllocator.cpp" />
+    <ClCompile Include="Message.cpp" />
+    <ClCompile Include="Sockets.cpp" />
     <ClCompile Include="StaticLogger.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="TestBlockingQueue.cpp" />
