@@ -139,19 +139,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="Sockets.h" />
-    <ClInclude Include="StaticLogger.h" />
-    <ClInclude Include="TestBlockingQueue.h" />
-    <ClInclude Include="Utilities.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="MainClient.cpp" />
-    <ClCompile Include="Sockets.cpp" />
-    <ClCompile Include="StaticLogger.cpp" />
-    <ClCompile Include="TestBlockingQueue.cpp" />
-    <ClCompile Include="Utilities.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
