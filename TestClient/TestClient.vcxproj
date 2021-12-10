@@ -22,9 +22,13 @@
     <ClInclude Include="CSockets.h" />
     <ClInclude Include="CStaticLogger.h" />
     <ClInclude Include="CTestBlockingQueue.h" />
+    <ClInclude Include="CTestMessage.h" />
+    <ClInclude Include="CTestTimer.h" />
     <ClInclude Include="CUtilities.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CTestMessage.cpp" />
+    <ClCompile Include="CTestTimer.cpp" />
     <ClCompile Include="MainClient.cpp" />
     <ClCompile Include="CSockets.cpp" />
     <ClCompile Include="CStaticLogger.cpp" />

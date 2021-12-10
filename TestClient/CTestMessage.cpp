@@ -1,4 +1,4 @@
-#include "TestMessage.h"
+#include "CTestMessage.h"
 
 using namespace TestSuite;
 

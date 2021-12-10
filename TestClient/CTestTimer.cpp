@@ -1,4 +1,4 @@
-#include "TestTimer.h"
+#include "CTestTimer.h"
 #include <chrono>
 #include <sstream>
 #include <regex>

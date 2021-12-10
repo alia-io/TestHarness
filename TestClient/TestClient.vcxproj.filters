@@ -27,6 +27,12 @@
     <ClInclude Include="CSockets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CTestMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CTestTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CTestBlockingQueue.cpp">
@@ -42,6 +48,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MainClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTestMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTestTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
