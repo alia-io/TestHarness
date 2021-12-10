@@ -34,10 +34,8 @@ public:
     void operator()(Socket& socket_);
 };
 
-void ConnectionHandler::operator()(Socket& socket_)
-{
-    while (true)
-    {
+void ConnectionHandler::operator()(Socket& socket_) {
+    while (true) {
         std::string msg = Socket::removeTerminator(socket_.recvString());
         Show::write("\nrecvd message: " + msg);
         if (msg == "quit")

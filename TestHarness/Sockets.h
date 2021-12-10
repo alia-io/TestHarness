@@ -261,9 +261,7 @@ namespace Sockets
 
         // listen on a dedicated thread so server's main thread won't block
 
-        std::thread ListenThread(
-            [&]()
-            {
+        std::thread ListenThread([&]() {
                 StaticLogger<1>::write("\n  -- server waiting for connection");
 
                 while (!acceptFailed_)
