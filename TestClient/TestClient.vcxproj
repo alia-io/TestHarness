@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{76167e98-6fb8-4baf-ba5d-142b29f74eb7}</ProjectGuid>
-    <RootNamespace>TestHarness</RootNamespace>
+    <ProjectGuid>{320f0350-344f-4f88-93fa-b0260963a336}</ProjectGuid>
+    <RootNamespace>TestClient</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,55 +139,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="AdvCalculator.h" />
-    <ClInclude Include="AdvCalculatorTestDriverPass.h" />
-    <ClInclude Include="BasicCalculator.h" />
-    <ClInclude Include="BasicCalculatorTestDriverException.h" />
-    <ClInclude Include="BasicCalculatorTestDriverFail.h" />
-    <ClInclude Include="BasicCalculatorTestDriverPass.h" />
-    <ClInclude Include="ContainerConversions.h" />
-    <ClInclude Include="ContainerConversionsTestDriverException.h" />
-    <ClInclude Include="ContainerConversionsTestDriverFail.h" />
-    <ClInclude Include="ITest.h" />
-    <ClInclude Include="LengthErrorTestDriverException.h" />
-    <ClInclude Include="MemoryAllocator.h" />
-    <ClInclude Include="MemoryAllocatorTestDriverException1.h" />
-    <ClInclude Include="MemoryAllocatorTestDriverException2.h" />
-    <ClInclude Include="StaticLogger.h" />
-    <ClInclude Include="Utilities.h" />
-    <ClInclude Include="TestMessageParser.h" />
-    <ClInclude Include="OverflowErrorTestDriverException.h" />
-    <ClInclude Include="TestBlockingQueue.h" />
-    <ClInclude Include="TestHarness.h" />
-    <ClInclude Include="TestItem.h" />
-    <ClInclude Include="TestLogger.h" />
-    <ClInclude Include="TestMessage.h" />
-    <ClInclude Include="TestMessageHandler.h" />
-    <ClInclude Include="TestResultCounter.h" />
-    <ClInclude Include="TestResultFormatter.h" />
-    <ClInclude Include="TestRunner.h" />
-    <ClInclude Include="TestTimer.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="AdvCalculator.cpp" />
-    <ClCompile Include="BasicCalculator.cpp" />
-    <ClCompile Include="ContainerConversions.cpp" />
-    <ClCompile Include="Executor.cpp" />
-    <ClCompile Include="MemoryAllocator.cpp" />
-    <ClCompile Include="StaticLogger.cpp" />
-    <ClCompile Include="Utilities.cpp" />
-    <ClCompile Include="TestBlockingQueue.cpp" />
-    <ClCompile Include="TestHarness.cpp" />
-    <ClCompile Include="TestLogger.cpp" />
-    <ClCompile Include="TestMessage.cpp" />
-    <ClCompile Include="TestMessageHandler.cpp" />
-    <ClCompile Include="TestMessageParser.cpp" />
-    <ClCompile Include="TestResultCounter.cpp" />
-    <ClCompile Include="TestResultFormatter.cpp" />
-    <ClCompile Include="TestRunner.cpp" />
-    <ClCompile Include="TestTimer.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

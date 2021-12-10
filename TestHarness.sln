@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestHarness", "TestHarness\TestHarness.vcxproj", "{76167E98-6FB8-4BAF-BA5D-142B29F74EB7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestClient", "TestClient\TestClient.vcxproj", "{320F0350-344F-4F88-93FA-B0260963A336}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{76167E98-6FB8-4BAF-BA5D-142B29F74EB7}.Release|x64.Build.0 = Release|x64
 		{76167E98-6FB8-4BAF-BA5D-142B29F74EB7}.Release|x86.ActiveCfg = Release|Win32
 		{76167E98-6FB8-4BAF-BA5D-142B29F74EB7}.Release|x86.Build.0 = Release|Win32
+		{320F0350-344F-4F88-93FA-B0260963A336}.Debug|x64.ActiveCfg = Debug|x64
+		{320F0350-344F-4F88-93FA-B0260963A336}.Debug|x64.Build.0 = Debug|x64
+		{320F0350-344F-4F88-93FA-B0260963A336}.Debug|x86.ActiveCfg = Debug|Win32
+		{320F0350-344F-4F88-93FA-B0260963A336}.Debug|x86.Build.0 = Debug|Win32
+		{320F0350-344F-4F88-93FA-B0260963A336}.Release|x64.ActiveCfg = Release|x64
+		{320F0350-344F-4F88-93FA-B0260963A336}.Release|x64.Build.0 = Release|x64
+		{320F0350-344F-4F88-93FA-B0260963A336}.Release|x86.ActiveCfg = Release|Win32
+		{320F0350-344F-4F88-93FA-B0260963A336}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

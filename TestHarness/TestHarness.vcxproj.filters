@@ -19,9 +19,6 @@
     <Filter Include="Header Files\TestDriver">
       <UniqueIdentifier>{03e3bebb-e1f0-4f4a-9a6f-ffcc9ca6edaa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\TestLibrary">
-      <UniqueIdentifier>{0852a458-16eb-4f08-a3c3-dd71afcd741f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\TestMessenger">
       <UniqueIdentifier>{c774f999-25db-4711-984e-124d64fb01a1}</UniqueIdentifier>
     </Filter>
@@ -34,9 +31,6 @@
     <Filter Include="Source Files\TestDriver">
       <UniqueIdentifier>{501ac82f-6f97-43d1-bb69-d4809a5a8ec7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\TestLibrary">
-      <UniqueIdentifier>{c514eae2-4717-4dce-b2c8-ddc01d57ef01}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\TestMessenger">
       <UniqueIdentifier>{ef32c489-e038-4dfa-b573-c646e67b5e47}</UniqueIdentifier>
     </Filter>
@@ -45,6 +39,9 @@
     </Filter>
     <Filter Include="Header Files\TestClientInterface">
       <UniqueIdentifier>{4f332c87-22c7-42bc-baad-a573cd6e9ec2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestClientInterface">
+      <UniqueIdentifier>{7ea4fa2d-4127-4270-bd86-6b3e5eb55bc6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -90,12 +87,6 @@
     <ClInclude Include="OverflowErrorTestDriverException.h">
       <Filter>Header Files\TestDriver</Filter>
     </ClInclude>
-    <ClInclude Include="TestExceptionHandler.h">
-      <Filter>Header Files\TestLibrary</Filter>
-    </ClInclude>
-    <ClInclude Include="TestRunner.h">
-      <Filter>Header Files\TestLibrary</Filter>
-    </ClInclude>
     <ClInclude Include="TestBlockingQueue.h">
       <Filter>Header Files\TestMessenger</Filter>
     </ClInclude>
@@ -129,6 +120,15 @@
     <ClInclude Include="TestMessageParser.h">
       <Filter>Header Files\TestUtilities</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
+    <ClInclude Include="TestRunner.h">
+      <Filter>Header Files\TestController</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticLogger.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdvCalculator.cpp">
@@ -152,12 +152,6 @@
     <ClCompile Include="TestResultCounter.cpp">
       <Filter>Source Files\TestController</Filter>
     </ClCompile>
-    <ClCompile Include="TestExceptionHandler.cpp">
-      <Filter>Source Files\TestLibrary</Filter>
-    </ClCompile>
-    <ClCompile Include="TestRunner.cpp">
-      <Filter>Source Files\TestLibrary</Filter>
-    </ClCompile>
     <ClCompile Include="TestBlockingQueue.cpp">
       <Filter>Source Files\TestMessenger</Filter>
     </ClCompile>
@@ -177,6 +171,15 @@
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
     <ClCompile Include="TestMessageParser.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="TestRunner.cpp">
+      <Filter>Source Files\TestController</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticLogger.cpp">
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
   </ItemGroup>
