@@ -2,9 +2,8 @@
 #include <chrono>
 #include <string>
 #include <thread>
-
-using std::chrono::time_point;
-using std::chrono::system_clock;
+#include <sstream>
+#include "TestTimer.h"
 
 /*
 *	--------------------
@@ -34,32 +33,41 @@ namespace TestSuite {
 	enum class IP_VERSION { IPV4 = 4, IPV6 = 6 };
 	enum class MESSAGE_TYPE { request, result, request_list, result_list };
 
-	struct Address { };
+	class Address {
+	public:
+		virtual ~Address() = default;
+	};
 
 	class ThreadAddress : public Address {
 	private:
-		const THREAD_TYPE type;
-		const std::thread::id id;
+		THREAD_TYPE type;
+		std::thread::id id;
 	public:
 		ThreadAddress(THREAD_TYPE threadType, std::thread::id threadId);
+		THREAD_TYPE getType();
+		std::thread::id getId();
 	};
 
 	class ServerAddress : public Address {
-		const IP_VERSION version;
-		const std::string ip;
-		const size_t port;
+	private:
+		IP_VERSION version;
+		std::string ip;
+		size_t port;
 	public:
 		ServerAddress(IP_VERSION serverIpVersion, std::string serverIpAddress, size_t serverPort);
+		IP_VERSION getVersion();
+		std::string getIp();
+		size_t getPort();
 	};
 
 	class TestMessage {
 	private:
-		const Address* source;
-		const Address* destination;
-		const MESSAGE_TYPE type;
-		const std::string author;		// this could be a client user name or "TestHarness" server
+		Address* source;
+		Address* destination;
+		MESSAGE_TYPE type;
+		std::string author;		// this could be a client user name or "TestHarness" server
 		time_point<system_clock> timestamp;
-		const std::string body;
+		std::string body;
 	public:
 		TestMessage(THREAD_TYPE sourceThreadType, std::thread::id sourceThreadId,	// constructor for thread-to-thread communication
 			THREAD_TYPE destinationThreadType, std::thread::id destinationThreadId,
@@ -69,7 +77,8 @@ namespace TestSuite {
 			MESSAGE_TYPE messageType, std::string messageAuthor, std::string messageBody);
 		Address getSourceAddress();
 		Address getDestinationAddress();
-		MESSAGE_TYPE getMessageType();
-		std::string getMessage();
+		time_point<system_clock> getTimestamp();
+		std::string getMessageBody();
+		std::string toString();
 	};
 }

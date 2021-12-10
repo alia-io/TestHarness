@@ -130,6 +130,7 @@
 #include <vector>
 #include <string>
 #include <atomic>
+#include <functional>
 
 #include "Utilities.h"
 #include "StaticLogger.h"
@@ -287,7 +288,7 @@ namespace Sockets
                     // start thread to handle client request
 
                     //std::thread clientThread(std::ref(co), std::move(clientSocket));
-                    std::thread clientThread(co, std::move(clientSocket));
+                    std::thread clientThread(std::bind(co, std::move(clientSocket)));
                     clientThread.detach();  // detach - listener won't access thread again
                 }
                 StaticLogger<1>::write("\n  -- Listen thread stopping");
