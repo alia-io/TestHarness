@@ -126,12 +126,6 @@
     <ClInclude Include="TestRunner.h">
       <Filter>Header Files\TestController</Filter>
     </ClInclude>
-    <ClInclude Include="TestClientConnection.h">
-      <Filter>Header Files\TestClientInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="Sockets.h">
-      <Filter>Header Files\TestClientInterface</Filter>
-    </ClInclude>
     <ClInclude Include="StaticLogger.h">
       <Filter>Header Files\TestUtilities</Filter>
     </ClInclude>
@@ -185,14 +179,8 @@
     <ClCompile Include="TestRunner.cpp">
       <Filter>Source Files\TestController</Filter>
     </ClCompile>
-    <ClCompile Include="Sockets.cpp">
-      <Filter>Source Files\TestClientInterface</Filter>
-    </ClCompile>
     <ClCompile Include="StaticLogger.cpp">
       <Filter>Source Files\TestUtilities</Filter>
-    </ClCompile>
-    <ClCompile Include="MainServer.cpp">
-      <Filter>Source Files\TestClientInterface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
