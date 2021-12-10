@@ -131,8 +131,8 @@
 #include <string>
 #include <atomic>
 
-#include "Utilities.h"
-#include "StaticLogger.h"
+#include "CUtilities.h"
+#include "CStaticLogger.h"
 
 #pragma warning(disable:4522)
 #pragma comment(lib, "Ws2_32.lib")

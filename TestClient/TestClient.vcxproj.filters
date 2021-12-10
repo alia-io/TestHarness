@@ -15,30 +15,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TestBlockingQueue.h">
+    <ClInclude Include="CTestBlockingQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities.h">
+    <ClInclude Include="CUtilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StaticLogger.h">
+    <ClInclude Include="CStaticLogger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sockets.h">
+    <ClInclude Include="CSockets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TestBlockingQueue.cpp">
+    <ClCompile Include="CTestBlockingQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities.cpp">
+    <ClCompile Include="CUtilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StaticLogger.cpp">
+    <ClCompile Include="CStaticLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sockets.cpp">
+    <ClCompile Include="CSockets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MainClient.cpp">
