@@ -47,113 +47,55 @@ void ConnectionHandler::operator()(Socket& socket_)
     }
 }
 
-/////////////////////////////////////////////////////////////////////
-// ClientCounter creates a sequential number for each client
-//
-/*class ClientCounter
+int main()
 {
-public:
-    ClientCounter() { ++clientCount; }
-    size_t count() { return clientCount; }
-private:
-    static size_t clientCount;
-};
-
-size_t ClientCounter::clientCount = 0;
-
-/////////////////////////////////////////////////////////////////////
-// StringClient class
-// - was created as a class so more than one instance could be 
-//   run on child thread
-//
-class StringClient
-{
-public:
-    void execute(const size_t TimeBetweenMessages, const size_t NumMessages);
-};
-
-void StringClient::execute(const size_t TimeBetweenMessages, const size_t NumMessages)
-{
-    ClientCounter counter;
-    size_t myCount = counter.count();
-    std::string myCountString = Utilities::Converter<size_t>::toString(myCount);
-
     Show::attach(&std::cout);
-    Show::start();
 
-    Show::title(
-        "Starting String client" + myCountString +
-        " on thread " + Utilities::Converter<std::thread::id>::toString(std::this_thread::get_id())
-    );
-    try
-    {
+    std::thread listenThread([=] {
+        Show::start();
+        Show::title("\n  Client started");
+        try {
+            SocketSystem ss;
+            SocketListener sl(9090, Socket::IP6);
+            ConnectionHandler cp;
+            sl.start(cp);
+            Show::write("\n --------------------\n  press key to exit: \n --------------------");
+            std::cout.flush();
+            std::cin.get();
+        } catch (std::exception& exc) {
+            Show::write("\n  Exeception caught: ");
+            std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
+            Show::write(exMsg);
+        }
+    });
+    
+    ::Sleep(1000);   // wait for server to start
+    
+    try {
         SocketSystem ss;
         SocketConnecter si;
-        while (!si.connect("localhost", 8080))
-        {
+        while (!si.connect("localhost", 8080)) {
             Show::write("\n client waiting to connect");
             ::Sleep(100);
         }
 
-        std::string msg;
+        std::string msg = "request_list";
+        si.sendString(msg);
+        Show::write("\n  client send msg: " + msg);
 
-        for (size_t i = 0; i < NumMessages; ++i)
-        {
-            msg = "message #" + Converter<size_t>::toString(i + 1) + " from client" + myCountString;
-            si.sendString(msg);
-            Show::write("\n  client" + myCountString + " sent \"" + msg + "\"");
-            ::Sleep(TimeBetweenMessages);
-        }
+        ::Sleep(100);
+
         msg = "quit";
         si.sendString(msg);
-        Show::write("\n  client sent \"" + msg + "\"");
+        Show::write("\n  client sent msg: " + msg);
 
         Show::write("\n");
         Show::write("\n  All done folks");
-    }
-    catch (std::exception& exc)
-    {
+    } catch (std::exception& exc) {
         Show::write("\n  Exeception caught: ");
         std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
         Show::write(exMsg);
     }
-}*/
 
-int main()
-{
-    Show::attach(&std::cout);
-    Show::start();
-    Show::title("\n  Client started");
-    try
-    {
-        SocketSystem ss;
-        SocketListener sl(9090, Socket::IP6);
-        ConnectionHandler cp;
-        sl.start(cp);
-        Show::write("\n --------------------\n  press key to exit: \n --------------------");
-        std::cout.flush();
-        std::cin.get();
-    }
-    catch (std::exception& exc)
-    {
-        Show::write("\n  Exeception caught: ");
-        std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
-        Show::write(exMsg);
-    }
-    
-    
-    
-    /*Show::title("Demonstrating two String Clients each running on a child thread");
-
-    StringClient c1;
-    std::thread t1(
-        [&]() { c1.execute(100, 50); } // 50 messages 100 millisec apart
-    );
-
-    StringClient c2;
-    std::thread t2(
-        [&]() { c2.execute(120, 50); } // 50 messages 120 millisec apart
-    );
-    t1.join();
-    t2.join();*/
+    listenThread.join();
 }

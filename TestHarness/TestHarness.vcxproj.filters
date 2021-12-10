@@ -123,9 +123,6 @@
     <ClInclude Include="TestRunner.h">
       <Filter>Header Files\TestController</Filter>
     </ClInclude>
-    <ClInclude Include="Message.h">
-      <Filter>Header Files\TestClientInterface</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities.h">
       <Filter>Header Files\TestClientInterface</Filter>
     </ClInclude>
@@ -183,9 +180,6 @@
       <Filter>Source Files\TestController</Filter>
     </ClCompile>
     <ClCompile Include="Utilities.cpp">
-      <Filter>Source Files\TestClientInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="Message.cpp">
       <Filter>Source Files\TestClientInterface</Filter>
     </ClCompile>
     <ClCompile Include="StaticLogger.cpp">

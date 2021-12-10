@@ -253,17 +253,12 @@ namespace Sockets
     *    used in the test stub below
     */
     template<typename CallObj>
-    bool SocketListener::start(CallObj& co)
-    {
-        if (!bind())
-        {
-            return false;
-        }
+    bool SocketListener::start(CallObj& co) {
+        
+        if (!bind()) { return false; }
 
-        if (!listen())
-        {
-            return false;
-        }
+        if (!listen()) { return false; }
+
         // listen on a dedicated thread so server's main thread won't block
 
         std::thread ListenThread(

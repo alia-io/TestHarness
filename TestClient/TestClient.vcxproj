@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Message.h" />
     <ClInclude Include="Sockets.h" />
     <ClInclude Include="StaticLogger.h" />
     <ClInclude Include="TestBlockingQueue.h" />
@@ -27,7 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainClient.cpp" />
-    <ClCompile Include="Message.cpp" />
     <ClCompile Include="Sockets.cpp" />
     <ClCompile Include="StaticLogger.cpp" />
     <ClCompile Include="TestBlockingQueue.cpp" />
