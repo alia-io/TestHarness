@@ -35,23 +35,36 @@ public:
 };
 
 void ConnectionHandler::operator()(Socket& socket_) {
+    
+    ::Sleep(1000);    // make sure client listener is started
+
+    SocketConnecter si;
+    while (!si.connect("localhost", 9090)) {
+        Show::write("\n server waiting to connect");
+        ::Sleep(100);
+    }
+
     while (true) {
         std::string msg = Socket::removeTerminator(socket_.recvString());
         Show::write("\nrecvd message: " + msg);
-        if (msg == "quit")
-            break;
+        if (msg == "quit") break;
+        std::string response = "I got your message. It said " + msg + ".";
+        si.sendString(response);
+        Show::write("\n  server sent msg: " + response);
     }
+
+    si.sendString("quit");
+    Show::write("\n\n  Connection terminated.");
+    
 }
 
 //----< test stub >--------------------------------------------------
 
-int main()
-{
+int main() {
     Show::attach(&std::cout);
     Show::start();
     Show::title("\n  Server started");
-    try
-    {
+    try {
         SocketSystem ss;
         SocketListener sl(8080, Socket::IP6);
         ConnectionHandler cp;
@@ -59,9 +72,7 @@ int main()
         Show::write("\n --------------------\n  press key to exit: \n --------------------");
         std::cout.flush();
         std::cin.get();
-    }
-    catch (std::exception& exc)
-    {
+    } catch (std::exception& exc) {
         Show::write("\n  Exeception caught: ");
         std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
         Show::write(exMsg);

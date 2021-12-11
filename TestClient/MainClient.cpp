@@ -50,29 +50,23 @@ void ConnectionHandler::operator()(Socket& socket_)
 int main()
 {
     Show::attach(&std::cout);
+    Show::start();
+    Show::title("\n  Client started");
 
-    std::thread listenThread([=] {
-        Show::start();
-        Show::title("\n  Client started");
-        try {
-            SocketSystem ss;
+    try {
+        SocketSystem ss;
+        
+        std::thread listenThread([=] {
             SocketListener sl(9090, Socket::IP6);
             ConnectionHandler cp;
             sl.start(cp);
             Show::write("\n --------------------\n  press key to exit: \n --------------------");
             std::cout.flush();
             std::cin.get();
-        } catch (std::exception& exc) {
-            Show::write("\n  Exeception caught: ");
-            std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
-            Show::write(exMsg);
-        }
-    });
-    
-    ::Sleep(1000);   // wait for server to start
-    
-    try {
-        SocketSystem ss;
+        });
+
+        ::Sleep(1000);   // make sure server listener is started
+
         SocketConnecter si;
         while (!si.connect("localhost", 8080)) {
             Show::write("\n client waiting to connect");
@@ -81,7 +75,7 @@ int main()
 
         std::string msg = "request_list";
         si.sendString(msg);
-        Show::write("\n  client send msg: " + msg);
+        Show::write("\n  client sent msg: " + msg);
 
         ::Sleep(100);
 
@@ -89,13 +83,13 @@ int main()
         si.sendString(msg);
         Show::write("\n  client sent msg: " + msg);
 
-        Show::write("\n");
-        Show::write("\n  All done folks");
-    } catch (std::exception& exc) {
+        Show::write("\n\n  Connection terminated.");
+
+        listenThread.join();
+    }
+    catch (std::exception& exc) {
         Show::write("\n  Exeception caught: ");
         std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
         Show::write(exMsg);
     }
-
-    listenThread.join();
 }
