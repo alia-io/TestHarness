@@ -1,4 +1,3 @@
-#pragma once
 #ifndef LOGGER_H
 #define LOGGER_H
 /////////////////////////////////////////////////////////////////////
@@ -40,7 +39,7 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include "TestBlockingQueue.h"
+#include "CTestBlockingQueue.h"
 
 class Logger
 {

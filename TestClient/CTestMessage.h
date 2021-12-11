@@ -4,7 +4,7 @@
 #include <string>
 #include <thread>
 #include <sstream>
-#include "TestTimer.h"
+#include "CTestTimer.h"
 
 using std::chrono::time_point;
 using std::chrono::system_clock;

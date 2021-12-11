@@ -18,6 +18,23 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CSockets.h" />
+    <ClInclude Include="CStaticLogger.h" />
+    <ClInclude Include="CTestBlockingQueue.h" />
+    <ClInclude Include="CTestMessage.h" />
+    <ClInclude Include="CTestTimer.h" />
+    <ClInclude Include="CUtilities.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CTestMessage.cpp" />
+    <ClCompile Include="CTestTimer.cpp" />
+    <ClCompile Include="MainClient.cpp" />
+    <ClCompile Include="CSockets.cpp" />
+    <ClCompile Include="CStaticLogger.cpp" />
+    <ClCompile Include="CTestBlockingQueue.cpp" />
+    <ClCompile Include="CUtilities.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -139,21 +156,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="Sockets.h" />
-    <ClInclude Include="StaticLogger.h" />
-    <ClInclude Include="TestBlockingQueue.h" />
-    <ClInclude Include="TestMessage.h" />
-    <ClInclude Include="Utilities.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="MainClient.cpp" />
-    <ClCompile Include="Sockets.cpp" />
-    <ClCompile Include="StaticLogger.cpp" />
-    <ClCompile Include="TestBlockingQueue.cpp" />
-    <ClCompile Include="TestMessage.cpp" />
-    <ClCompile Include="Utilities.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

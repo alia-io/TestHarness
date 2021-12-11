@@ -11,14 +11,14 @@
 // Platform:    Visual Studio 2015, Dell XPS 8900, Windows 10 pro      //
 /////////////////////////////////////////////////////////////////////////
 
-#include "Sockets.h"
+#include "CSockets.h"
 #include <iostream>
 #include <sstream>
 #include <thread>
 #include <memory>
 #include <functional>
 #include <exception>
-#include "Utilities.h"
+#include "CUtilities.h"
 
 using namespace Sockets;
 using Util = Utilities::StringHelper;

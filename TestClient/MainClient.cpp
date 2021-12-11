@@ -19,9 +19,9 @@
   *   Logger.h, Logger.cpp, Cpp11-BlockingQueue.h
   *   Utilities.h, Utilities.cpp
   */
-#include "Sockets.h"
-#include "StaticLogger.h"
-#include "Utilities.h"
+#include "CSockets.h"
+#include "CStaticLogger.h"
+#include "CUtilities.h"
 #include <string>
 #include <iostream>
 #include <thread>
@@ -30,145 +30,66 @@ using Show = StaticLogger<1>;
 using namespace Utilities;
 using namespace Sockets;
 
-/////////////////////////////////////////////////////////////////////
-// ClientCounter creates a sequential number for each client
-//
-class ClientCounter
+class ConnectionHandler
 {
 public:
-    ClientCounter() { ++clientCount; }
-    size_t count() { return clientCount; }
-private:
-    static size_t clientCount;
+    void operator()(Socket& socket_);
 };
 
-size_t ClientCounter::clientCount = 0;
-
-/////////////////////////////////////////////////////////////////////
-// StringClient class
-// - was created as a class so more than one instance could be 
-//   run on child thread
-//
-class StringClient
+void ConnectionHandler::operator()(Socket& socket_)
 {
-public:
-    void execute(const size_t TimeBetweenMessages, const size_t NumMessages);
-};
+    while (true)
+    {
+        std::string msg = Socket::removeTerminator(socket_.recvString());
+        Show::write("\nrecvd message: " + msg);
+        if (msg == "quit")
+            break;
+    }
+}
 
-void StringClient::execute(const size_t TimeBetweenMessages, const size_t NumMessages)
+int main()
 {
-    ClientCounter counter;
-    size_t myCount = counter.count();
-    std::string myCountString = Utilities::Converter<size_t>::toString(myCount);
-
     Show::attach(&std::cout);
     Show::start();
+    Show::title("\n  Client started");
 
-    Show::title(
-        "Starting String client" + myCountString +
-        " on thread " + Utilities::Converter<std::thread::id>::toString(std::this_thread::get_id())
-    );
-    try
-    {
+    try {
         SocketSystem ss;
+        
+        std::thread listenThread([=] {
+            SocketListener sl(9090, Socket::IP6);
+            ConnectionHandler cp;
+            sl.start(cp);
+            Show::write("\n --------------------\n  press key to exit: \n --------------------");
+            std::cout.flush();
+            std::cin.get();
+        });
+
+        ::Sleep(1000);   // make sure server listener is started
+
         SocketConnecter si;
-        while (!si.connect("localhost", 8080))
-        {
+        while (!si.connect("localhost", 8080)) {
             Show::write("\n client waiting to connect");
             ::Sleep(100);
         }
 
-        std::string msg;
+        std::string msg = "request_list";
+        si.sendString(msg);
+        Show::write("\n  client sent msg: " + msg);
 
-        for (size_t i = 0; i < NumMessages; ++i)
-        {
-            msg = "message #" + Converter<size_t>::toString(i + 1) + " from client" + myCountString;
-            si.sendString(msg);
-            Show::write("\n  client" + myCountString + " sent \"" + msg + "\"");
-            ::Sleep(TimeBetweenMessages);
-        }
+        ::Sleep(100);
+
         msg = "quit";
         si.sendString(msg);
-        Show::write("\n  client sent \"" + msg + "\"");
+        Show::write("\n  client sent msg: " + msg);
 
-        Show::write("\n");
-        Show::write("\n  All done folks");
+        Show::write("\n\n  Connection terminated.");
+
+        listenThread.join();
     }
-    catch (std::exception& exc)
-    {
+    catch (std::exception& exc) {
         Show::write("\n  Exeception caught: ");
         std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
         Show::write(exMsg);
     }
-}
-
-int main() {
-
-    int numTests = 10;
-    std::string testListStr = "{ \"count\": 10, ";
-    testListStr += "\"tests\": [ \"BasicCalculatorTestDriverPassScenario\", ";
-    testListStr += "\"BasicCalculatorTestDriverFailScenario\", ";
-    testListStr += "\"BasicCalculatorTestDriverExceptionScenario\", ";
-    testListStr += "\"AdvCalculatorTestDriverPassScenario\", ";
-    testListStr += "\"MemoryAllocatorTestDriverExceptionScenario1\", ";
-    testListStr += "\"MemoryAllocatorTestDriverExceptionScenario2\", ";
-    testListStr += "\"ContainerConversionsTestDriverFailScenario\", ";
-    testListStr += "\"ContainerConversionsTestDriverExceptionScenario\", ";
-    testListStr += "\"LengthErrorTestDriverExceptionScenario\", ";
-    testListStr += "\"OverflowErrorTestDriverExceptionScenario\" ] }";
-
-    Show::attach(&std::cout);
-    Show::start();
-
-    std::thread sendThread([=] {
-        Show::title("Starting Client on thread " + Utilities::Converter<std::thread::id>::toString(std::this_thread::get_id()));
-        try {
-            SocketSystem ss;
-            SocketConnecter si;
-            while (!si.connect("localhost", 8080)) {
-                Show::write("\n client waiting to connect");
-                ::Sleep(100);
-            }
-
-            /*std::string msg;
-
-            for (size_t i = 0; i < NumMessages; ++i)
-            {
-                msg = "message #" + Converter<size_t>::toString(i + 1) + " from client" + myCountString;
-                si.sendString(msg);
-                Show::write("\n  client" + myCountString + " sent \"" + msg + "\"");
-                ::Sleep(TimeBetweenMessages);
-            }
-            msg = "quit";*/
-
-            si.sendString(testListStr);
-            Show::write("\n  client sent \"" + testListStr + "\"");
-
-            Show::write("\n");
-            //Show::write("\n  All done folks");
-        }
-        catch (std::exception& exc)
-        {
-            Show::write("\n  Exeception caught: ");
-            std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
-            Show::write(exMsg);
-        }
-    });
-    
-    std::cin.get();
-    sendThread.join();
-
-    //Show::title("Demonstrating two String Clients each running on a child thread");
-
-    //StringClient c1;
-    //std::thread t1(
-    //    [&]() { c1.execute(100, 50); } // 50 messages 100 millisec apart
-    //);
-
-    //StringClient c2;
-    //std::thread t2(
-    //    [&]() { c2.execute(120, 50); } // 50 messages 120 millisec apart
-    //);
-    //t1.join();
-    //t2.join();
 }

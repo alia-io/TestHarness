@@ -156,7 +156,6 @@
     <ClInclude Include="MemoryAllocatorTestDriverException2.h" />
     <ClInclude Include="Sockets.h" />
     <ClInclude Include="StaticLogger.h" />
-    <ClInclude Include="TestClientConnection.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="TestMessageParser.h" />
     <ClInclude Include="OverflowErrorTestDriverException.h" />

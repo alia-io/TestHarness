@@ -12,8 +12,8 @@
 /////////////////////////////////////////////////////////////////////
 
 #include <functional>
-#include "StaticLogger.h"
-#include "Utilities.h"
+#include "CStaticLogger.h"
+#include "CUtilities.h"
 
 //----< send text message to std::ostream >--------------------------
 
