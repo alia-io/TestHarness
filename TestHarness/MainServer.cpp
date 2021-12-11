@@ -61,7 +61,7 @@ void ConnectionHandler::operator()(Socket& socket_) {
 
 //----< test stub >--------------------------------------------------
 
-int main() {
+/*int main() {
     Show::attach(&std::cout);
     Show::start();
     Show::title("\n  Server started");
@@ -78,4 +78,4 @@ int main() {
         std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
         Show::write(exMsg);
     }
-}
+}*/
