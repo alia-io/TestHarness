@@ -1,6 +1,6 @@
 #pragma once
-#include "TestBlockingQueue.h"
-#include "TestMessage.h"
+#include "..\TestSuite\TestBlockingQueue.h"
+#include "..\TestSuite\TestMessage.h"
 #include "TestItem.h"
 #include "TestResultFormatter.h"
 #include <thread>

@@ -233,6 +233,21 @@ ServerAddress* TestMessageParser::convertJSONStringToServerAddress(std::string a
 	return &sa;
 }
 
+std::string TestMessageParser::convertRequestListToJSONBody(std::list<std::string> tests) {
+
+	std::string body = "{ \"count\": " + std::to_string(tests.size()) + ", \"tests\": [ ";
+
+	for (auto it = tests.begin(); it != tests.end(); it++) {
+		if (it != tests.begin()) {
+			body += ", ";
+		}
+		body += *it;
+	}
+
+	body += " ] }";
+	return body;
+}
+
 std::string TestMessageParser::convertTestResultToJSONBody(TEST_RESULT result, std::string messageText) {
 	if (result == TEST_RESULT::pass)
 		return "{ \"result\": \"pass\", \"message\": \"" + messageText + "\" }";

@@ -15,45 +15,57 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CTestBlockingQueue.h">
+    <ClInclude Include="MainClient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CUtilities.h">
+    <ClInclude Include="..\TestSuite\Sockets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CStaticLogger.h">
+    <ClInclude Include="..\TestSuite\StaticLogger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CSockets.h">
+    <ClInclude Include="..\TestSuite\TestBlockingQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CTestMessage.h">
+    <ClInclude Include="..\TestSuite\TestMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CTestTimer.h">
+    <ClInclude Include="..\TestSuite\TestMessageParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestSuite\TestTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestSuite\Utilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CTestBlockingQueue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CUtilities.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CStaticLogger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CSockets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MainClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CTestMessage.cpp">
+    <ClCompile Include="Executive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CTestTimer.cpp">
+    <ClCompile Include="..\TestSuite\Sockets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestSuite\StaticLogger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestSuite\TestBlockingQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestSuite\TestMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestSuite\TestMessageParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestSuite\TestTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestSuite\Utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

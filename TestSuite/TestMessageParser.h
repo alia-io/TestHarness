@@ -1,5 +1,6 @@
 #pragma once
 #include <stack>
+#include <list>
 #include "TestMessage.h"
 
 namespace TestSuite {
@@ -10,6 +11,7 @@ namespace TestSuite {
 	public:
 		static std::string convertMessageToJSONString(TestMessage message);
 		static TestMessage convertJSONStringToMessage(std::string messageString);
+		static std::string convertRequestListToJSONBody(std::list<std::string> tests);
 		static std::string convertTestResultToJSONBody(TEST_RESULT result, std::string messageText);
 		static TEST_RESULT getTestResultFromBody(TestMessage message);
 		static std::string getTestResultMessageFromBody(TestMessage message);

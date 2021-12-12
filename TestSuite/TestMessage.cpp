@@ -1,4 +1,4 @@
-#include "TestMessage.h"
+#include "TestThreadMessage.h"
 
 using namespace TestSuite;
 
@@ -18,7 +18,7 @@ IP_VERSION ServerAddress::getVersion() { return version; }
 std::string ServerAddress::getIp() { return ip; }
 size_t ServerAddress::getPort() { return port; }
 
-TestMessage::TestMessage(THREAD_TYPE sourceThreadType, std::thread::id sourceThreadId,
+TestThreadMessage::TestThreadMessage(THREAD_TYPE sourceThreadType, std::thread::id sourceThreadId,
 	THREAD_TYPE destinationThreadType, std::thread::id destinationThreadId,
 	MESSAGE_TYPE messageType, std::string messageAuthor, std::string messageBody)
 	: type{ messageType }, author{ messageAuthor }, body{ messageBody }
@@ -30,7 +30,7 @@ TestMessage::TestMessage(THREAD_TYPE sourceThreadType, std::thread::id sourceThr
 	timestamp = system_clock::now();
 }
 
-TestMessage::TestMessage(IP_VERSION sourceIpVersion, std::string sourceIpAddress, size_t sourcePort,
+TestThreadMessage::TestThreadMessage(IP_VERSION sourceIpVersion, std::string sourceIpAddress, size_t sourcePort,
 	IP_VERSION destinationIpVersion, std::string destinationIpAddress, size_t destinationPort,
 	MESSAGE_TYPE messageType, std::string messageAuthor, std::string messageBody)
 	: type{ messageType }, author{ messageAuthor }, body{ messageBody }
@@ -42,11 +42,11 @@ TestMessage::TestMessage(IP_VERSION sourceIpVersion, std::string sourceIpAddress
 	timestamp = system_clock::now();
 }
 
-TestMessage::TestMessage(Address* src, Address* dest, MESSAGE_TYPE messageType, std::string messageAuthor,
+TestThreadMessage::TestThreadMessage(Address* src, Address* dest, MESSAGE_TYPE messageType, std::string messageAuthor,
 	time_point<system_clock> time, std::string messageBody) : source{ src }, destination{ dest },
 	type{ messageType }, author{ messageAuthor }, timestamp{ time }, body{ messageBody } { }
 
-Address TestMessage::getSourceAddress() { return *source; }
-Address TestMessage::getDestinationAddress() { return *destination; }
-MESSAGE_TYPE TestMessage::getMessageType() { return type; }
-std::string TestMessage::getMessageBody() { return body; }
+Address TestThreadMessage::getSourceAddress() { return *source; }
+Address TestThreadMessage::getDestinationAddress() { return *destination; }
+MESSAGE_TYPE TestThreadMessage::getMessageType() { return type; }
+std::string TestThreadMessage::getMessageBody() { return body; }

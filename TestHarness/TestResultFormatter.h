@@ -1,5 +1,5 @@
 #pragma once
-#include "TestTimer.h"
+#include "..\TestSuite\TestTimer.h"
 #include "TestLogger.h"
 #include <string>
 #include <iostream>

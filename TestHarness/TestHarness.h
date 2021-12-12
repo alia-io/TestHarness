@@ -1,10 +1,10 @@
 #pragma once
 #include "TestLogger.h"
 #include "TestMessageHandler.h"
-#include "TestMessageParser.h"
+#include "..\TestSuite\TestMessageParser.h"
 #include "TestRunner.h"
 #include "TestLogger.h"
-#include "TestTimer.h"
+#include "..\TestSuite\TestTimer.h"
 #include <functional>
 #include <iostream>
 #include <string>

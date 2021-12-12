@@ -37,11 +37,11 @@
     <Filter Include="Source Files\TestUtilities">
       <UniqueIdentifier>{2a19671e-27d6-48ac-9b3d-58f7ac23534a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\TestClientInterface">
-      <UniqueIdentifier>{4f332c87-22c7-42bc-baad-a573cd6e9ec2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\TestClientInterface">
       <UniqueIdentifier>{7ea4fa2d-4127-4270-bd86-6b3e5eb55bc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TestClientInterface">
+      <UniqueIdentifier>{20105814-bcbd-49dc-8113-ec0d1ab7751c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -87,12 +87,6 @@
     <ClInclude Include="OverflowErrorTestDriverException.h">
       <Filter>Header Files\TestDriver</Filter>
     </ClInclude>
-    <ClInclude Include="TestBlockingQueue.h">
-      <Filter>Header Files\TestMessenger</Filter>
-    </ClInclude>
-    <ClInclude Include="TestMessage.h">
-      <Filter>Header Files\TestMessenger</Filter>
-    </ClInclude>
     <ClInclude Include="TestMessageHandler.h">
       <Filter>Header Files\TestMessenger</Filter>
     </ClInclude>
@@ -105,9 +99,6 @@
     <ClInclude Include="TestLogger.h">
       <Filter>Header Files\TestUtilities</Filter>
     </ClInclude>
-    <ClInclude Include="TestTimer.h">
-      <Filter>Header Files\TestUtilities</Filter>
-    </ClInclude>
     <ClInclude Include="ITest.h">
       <Filter>Header Files\TestDriver</Filter>
     </ClInclude>
@@ -117,20 +108,29 @@
     <ClInclude Include="TestItem.h">
       <Filter>Header Files\TestUtilities</Filter>
     </ClInclude>
-    <ClInclude Include="TestMessageParser.h">
-      <Filter>Header Files\TestUtilities</Filter>
-    </ClInclude>
     <ClInclude Include="TestRunner.h">
       <Filter>Header Files\TestController</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities.h">
+    <ClInclude Include="..\TestSuite\Sockets.h">
       <Filter>Header Files\TestClientInterface</Filter>
     </ClInclude>
-    <ClInclude Include="StaticLogger.h">
+    <ClInclude Include="..\TestSuite\StaticLogger.h">
       <Filter>Header Files\TestClientInterface</Filter>
     </ClInclude>
-    <ClInclude Include="Sockets.h">
-      <Filter>Header Files\TestClientInterface</Filter>
+    <ClInclude Include="..\TestSuite\TestBlockingQueue.h">
+      <Filter>Header Files\TestMessenger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestSuite\TestMessage.h">
+      <Filter>Header Files\TestMessenger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestSuite\TestMessageParser.h">
+      <Filter>Header Files\TestMessenger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestSuite\TestTimer.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestSuite\Utilities.h">
+      <Filter>Header Files\TestUtilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,41 +155,41 @@
     <ClCompile Include="TestResultCounter.cpp">
       <Filter>Source Files\TestController</Filter>
     </ClCompile>
-    <ClCompile Include="TestBlockingQueue.cpp">
-      <Filter>Source Files\TestMessenger</Filter>
-    </ClCompile>
-    <ClCompile Include="TestMessage.cpp">
-      <Filter>Source Files\TestMessenger</Filter>
-    </ClCompile>
     <ClCompile Include="TestMessageHandler.cpp">
       <Filter>Source Files\TestMessenger</Filter>
     </ClCompile>
     <ClCompile Include="TestLogger.cpp">
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
-    <ClCompile Include="TestTimer.cpp">
-      <Filter>Source Files\TestUtilities</Filter>
-    </ClCompile>
     <ClCompile Include="TestResultFormatter.cpp">
-      <Filter>Source Files\TestUtilities</Filter>
-    </ClCompile>
-    <ClCompile Include="TestMessageParser.cpp">
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
     <ClCompile Include="TestRunner.cpp">
       <Filter>Source Files\TestController</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities.cpp">
-      <Filter>Source Files\TestClientInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticLogger.cpp">
-      <Filter>Source Files\TestClientInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="Sockets.cpp">
-      <Filter>Source Files\TestClientInterface</Filter>
-    </ClCompile>
     <ClCompile Include="MainServer.cpp">
       <Filter>Source Files\TestClientInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestSuite\Sockets.cpp">
+      <Filter>Source Files\TestClientInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestSuite\StaticLogger.cpp">
+      <Filter>Source Files\TestClientInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestSuite\TestBlockingQueue.cpp">
+      <Filter>Source Files\TestMessenger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestSuite\TestMessage.cpp">
+      <Filter>Source Files\TestMessenger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestSuite\TestMessageParser.cpp">
+      <Filter>Source Files\TestMessenger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestSuite\TestTimer.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestSuite\Utilities.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

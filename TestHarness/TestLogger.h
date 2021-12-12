@@ -1,7 +1,7 @@
 #pragma once
-#include "TestTimer.h"
+#include "..\TestSuite\TestTimer.h"
 #include "TestResultCounter.h"
-#include "TestMessageParser.h"
+#include "..\TestSuite\TestMessageParser.h"
 #include <string>
 #include <string>
 #include <iostream>

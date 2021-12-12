@@ -19,21 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CSockets.h" />
-    <ClInclude Include="CStaticLogger.h" />
-    <ClInclude Include="CTestBlockingQueue.h" />
-    <ClInclude Include="CTestMessage.h" />
-    <ClInclude Include="CTestTimer.h" />
-    <ClInclude Include="CUtilities.h" />
+    <ClInclude Include="..\TestSuite\Sockets.h" />
+    <ClInclude Include="..\TestSuite\StaticLogger.h" />
+    <ClInclude Include="..\TestSuite\TestBlockingQueue.h" />
+    <ClInclude Include="..\TestSuite\TestMessage.h" />
+    <ClInclude Include="..\TestSuite\TestMessageParser.h" />
+    <ClInclude Include="..\TestSuite\TestTimer.h" />
+    <ClInclude Include="..\TestSuite\Utilities.h" />
+    <ClInclude Include="MainClient.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CTestMessage.cpp" />
-    <ClCompile Include="CTestTimer.cpp" />
+    <ClCompile Include="..\TestSuite\Sockets.cpp" />
+    <ClCompile Include="..\TestSuite\StaticLogger.cpp" />
+    <ClCompile Include="..\TestSuite\TestBlockingQueue.cpp" />
+    <ClCompile Include="..\TestSuite\TestMessage.cpp" />
+    <ClCompile Include="..\TestSuite\TestMessageParser.cpp" />
+    <ClCompile Include="..\TestSuite\TestTimer.cpp" />
+    <ClCompile Include="..\TestSuite\Utilities.cpp" />
+    <ClCompile Include="Executive.cpp" />
     <ClCompile Include="MainClient.cpp" />
-    <ClCompile Include="CSockets.cpp" />
-    <ClCompile Include="CStaticLogger.cpp" />
-    <ClCompile Include="CTestBlockingQueue.cpp" />
-    <ClCompile Include="CUtilities.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

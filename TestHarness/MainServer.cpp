@@ -19,9 +19,9 @@
 *   Logger.h, Logger.cpp, Cpp11-BlockingQueue.h
 *   Utilities.h, Utilities.cpp
 */
-#include "Sockets.h"
-#include "StaticLogger.h"
-#include "Utilities.h"
+#include "..\TestSuite\Sockets.h"
+#include "..\TestSuite\StaticLogger.h"
+#include "..\TestSuite\Utilities.h"
 #include <string>
 #include <iostream>
 

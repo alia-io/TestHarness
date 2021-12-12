@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include <exception>
 #include "TestMessageHandler.h"
-#include "TestTimer.h"
+#include "..\TestSuite\TestTimer.h"
 #include "TestResultFormatter.h"
 #include <string>
 #include <thread>

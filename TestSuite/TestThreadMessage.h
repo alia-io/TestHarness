@@ -4,7 +4,7 @@
 #include <string>
 #include <thread>
 #include <sstream>
-#include "CTestTimer.h"
+#include "TestTimer.h"
 
 using std::chrono::time_point;
 using std::chrono::system_clock;
@@ -64,7 +64,7 @@ namespace TestSuite {
 		size_t getPort();
 	};
 
-	class TestMessage {
+	class TestThreadMessage {
 	private:
 		Address* source;
 		Address* destination;
@@ -73,13 +73,13 @@ namespace TestSuite {
 		time_point<system_clock> timestamp;
 		std::string body;
 	public:
-		TestMessage(THREAD_TYPE sourceThreadType, std::thread::id sourceThreadId,	// constructor for thread-to-thread communication
+		TestThreadMessage(THREAD_TYPE sourceThreadType, std::thread::id sourceThreadId,	// constructor for thread-to-thread communication
 			THREAD_TYPE destinationThreadType, std::thread::id destinationThreadId,
 			MESSAGE_TYPE messageType, std::string messageAuthor, std::string messageBody);
-		TestMessage(IP_VERSION sourceIpVersion, std::string sourceIpAddress, size_t sourcePort,	// constructor for server-to-server communication
+		TestThreadMessage(IP_VERSION sourceIpVersion, std::string sourceIpAddress, size_t sourcePort,	// constructor for server-to-server communication
 			IP_VERSION destinationIpVersion, std::string destinationIpAddress, size_t destinationPort,
 			MESSAGE_TYPE messageType, std::string messageAuthor, std::string messageBody);
-		TestMessage(Address* src, Address* dest, MESSAGE_TYPE messageType, std::string messageAuthor,
+		TestThreadMessage(Address* src, Address* dest, MESSAGE_TYPE messageType, std::string messageAuthor,
 			time_point<system_clock> time, std::string messageBody);
 		Address getSourceAddress();
 		Address getDestinationAddress();

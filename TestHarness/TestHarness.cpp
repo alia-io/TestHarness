@@ -47,8 +47,8 @@ void TestHarness::execute(std::list<TestItem> tests) {
 	while (true) {
 		TestMessage message = handler.dequeueTestResult();
 		std::string messageStr = message.getMessageBody();
-		TEST_RESULT result = TestMessageParser::testResult(message);
-		std::string resultMsg = TestMessageParser::testResultMessage(message);
+		TEST_RESULT result = TestMessageParser::getTestResultFromBody(message);
+		std::string resultMsg = TestMessageParser::getTestResultMessageFromBody(message);
 		if (result == TEST_RESULT::pass) counter.incrementTestPassed();
 		else counter.incrementTestFailed();
 		logger.writeLogInfoToOutput(result, resultMsg, timer);	// write result to console
