@@ -27,6 +27,7 @@ public:
 	void endTimer();
 	double timeTaken();
 	static std::string currentTime();
-	static std::string epochTime(time_point<system_clock> timestamp);
+	static int64_t epochTimeFromTimePoint(time_point<system_clock> timestamp);
+	static time_point<system_clock> timePointFromEpochTime(std::string epochTime);
 };
 
