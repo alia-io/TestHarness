@@ -87,4 +87,6 @@ bool testOverflowErrorTestDriverExceptionScenario() {	// expect EXCEPTION
 
 	TestHarness testHarness("def", LOG_LEVEL::debug);
 	testHarness.execute(tests);
+
+	return 0;
 }*/

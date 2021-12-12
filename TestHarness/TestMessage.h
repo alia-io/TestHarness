@@ -45,11 +45,12 @@ namespace TestSuite {
 	class ThreadAddress : public Address {
 	private:
 		THREAD_TYPE type;
-		std::thread::id id;
+		size_t id;
 	public:
 		ThreadAddress(THREAD_TYPE threadType, std::thread::id threadId);
+		ThreadAddress(THREAD_TYPE threadType, size_t threadId);
 		THREAD_TYPE getType();
-		std::thread::id getId();
+		size_t getId();
 	};
 
 	class ServerAddress : public Address {
@@ -78,10 +79,12 @@ namespace TestSuite {
 		TestMessage(IP_VERSION sourceIpVersion, std::string sourceIpAddress, size_t sourcePort,	// constructor for server-to-server communication
 			IP_VERSION destinationIpVersion, std::string destinationIpAddress, size_t destinationPort,
 			MESSAGE_TYPE messageType, std::string messageAuthor, std::string messageBody);
+		TestMessage(Address* src, Address* dest, MESSAGE_TYPE messageType, std::string messageAuthor,
+			time_point<system_clock> time, std::string messageBody);
 		Address getSourceAddress();
 		Address getDestinationAddress();
 		MESSAGE_TYPE getMessageType();
 		std::string getMessageBody();
-		std::string getStringMessage();
+		friend class TestMessageParser;
 	};
 }

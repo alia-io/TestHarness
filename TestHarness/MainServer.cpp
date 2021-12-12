@@ -35,7 +35,7 @@ public:
 };
 
 void ConnectionHandler::operator()(Socket& socket_) {
-    
+
     ::Sleep(1000);    // make sure client listener is started
 
     SocketConnecter si;
@@ -56,7 +56,7 @@ void ConnectionHandler::operator()(Socket& socket_) {
     si.sendString("quit");
     Show::write("\n  server sent msg: quit");
     Show::write("\n\n  Connection terminated.");
-    
+
 }
 
 //----< test stub >--------------------------------------------------
@@ -73,7 +73,8 @@ int main() {
         Show::write("\n --------------------\n  press key to exit: \n --------------------");
         std::cout.flush();
         std::cin.get();
-    } catch (std::exception& exc) {
+    }
+    catch (std::exception& exc) {
         Show::write("\n  Exeception caught: ");
         std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
         Show::write(exMsg);
