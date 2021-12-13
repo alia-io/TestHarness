@@ -39,34 +39,11 @@ public:
 };
 
 void ConnectionHandler::operator()(Socket& socket_) {
-
     std::string msg = Socket::removeTerminator(socket_.recvString());
     Message request{ msg };
     StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Recvd message: " + msg });
-
     ::Sleep(1000);  // wait to make sure client listener is started
-
-    SocketConnecter si;
-    while (!si.connect(request.sourceIpAddress(), request.sourcePort())) {
-        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server waiting to connect" });
-        ::Sleep(100);
-    }
-
-    int numberOfTests = request.getRequestMessageBody().testCount;
-    TestHarness testHarness{ "default", request };
-    MessageHandler* handler = testHarness.getHandler();
-    std::thread harnessThr([&] { testHarness.execute(); });
-
-    while (true) {
-        if (numberOfTests <= 0) break;
-        Message resultMsg = handler->dequeueTestResult();
-        si.sendString(resultMsg.getJsonFormattedMessage());
-        numberOfTests--;
-    }
-
-    if (harnessThr.joinable()) harnessThr.join();
-
-    si.sendString("quit");
+    Server::runTestHarness(request);
 }
 
 void Server::runServer() {
@@ -99,7 +76,7 @@ void Server::startListener() {
 /* Open a new client channel and run TestHarness on the client request */
 void Server::runTestHarness(Message requestMsg) {
     
-    SocketConnecter si;             // connect to client
+    SocketConnecter si;     // connect to client
     while (!si.connect(requestMsg.sourceIpAddress(), requestMsg.sourcePort())) {
         StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server waiting to connect" });
         ::Sleep(100);
@@ -108,16 +85,18 @@ void Server::runTestHarness(Message requestMsg) {
     int numberOfTests = requestMsg.getRequestMessageBody().testCount;
     TestHarness testHarness{ "default", requestMsg };
     MessageHandler* handler = testHarness.getHandler();
-    testHarness.execute();
+    std::thread harnessThr([&] { testHarness.execute(); });
 
     while (true) {
-        //if (numberOfTests >= 0) break;
+        if (numberOfTests <= 0) break;
         Message resultMsg = handler->dequeueTestResult();
         si.sendString(resultMsg.getJsonFormattedMessage());
         numberOfTests--;
     }
 
-    //si.sendString("quit");
+    if (harnessThr.joinable()) harnessThr.join();
+
+    si.sendString("quit");
     //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server sent msg: quit" });
     //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Connection terminated." });
 }
