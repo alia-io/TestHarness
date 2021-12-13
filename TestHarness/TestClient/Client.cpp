@@ -80,16 +80,16 @@ void Client::sendRequest(LOG_LEVEL logLevel, std::list<std::string> testList) { 
         ::Sleep(100);
     }
 
-    //Message request{ Client::ipVersion, Client::ipAddress, Client::portNumber,
-    //    IP_VERSION::IPv6, "localhost", 8080, LOG_LEVEL::detail, testList };
+    Message request{ Client::ipVersion, Client::ipAddress, Client::portNumber,
+        IP_VERSION::IPv6, "localhost", 8080, LOG_LEVEL::detail, testList };
+    std::string jsonRequest = request.getJsonFormattedMessage();
+    si.sendString(jsonRequest);   // send request to server
 
-    std::string msg = "request_list";
-    si.sendString(msg);
-    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + msg });
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + jsonRequest });
 
     ::Sleep(100);
 
-    msg = "quit";
+    std::string msg = "quit";
     si.sendString(msg);
     StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + msg });
 
