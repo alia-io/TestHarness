@@ -40,7 +40,7 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include "TestBlockingQueue.h"
+#include "BlockingQueue.h"
 
 class Logger
 {
@@ -57,7 +57,7 @@ public:
 private:
 	std::thread* _pThr;
 	std::ostream* _pOut;
-	TestBlockingQueue<std::string> _queue;
+	BlockingQueue<std::string> _queue;
 	bool _ThreadRunning = false;
 };
 

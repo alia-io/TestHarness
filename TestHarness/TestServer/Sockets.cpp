@@ -491,7 +491,6 @@ void SocketListener::stop() {
     sendString("Stop!");
 }
 
-#define TEST_SOCKETS
 #ifdef TEST_SOCKETS
 
 /////////////////////////////////////////////////////////////////////////////

@@ -13,7 +13,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "TestBlockingQueue.h"
+#include "BlockingQueue.h"
 
 #ifdef TEST_BLOCKINGQUEUE
 

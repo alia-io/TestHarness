@@ -42,16 +42,10 @@
     <ClInclude Include="Sockets.h">
       <Filter>Header Files\TestMainServer</Filter>
     </ClInclude>
-    <ClInclude Include="StaticLogger.h">
-      <Filter>Header Files\TestMainServer</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities.h">
-      <Filter>Header Files\TestMainServer</Filter>
-    </ClInclude>
     <ClInclude Include="TestResultCounter.h">
       <Filter>Header Files\TestController</Filter>
     </ClInclude>
-    <ClInclude Include="TestBlockingQueue.h">
+    <ClInclude Include="BlockingQueue.h">
       <Filter>Header Files\TestMessenger</Filter>
     </ClInclude>
     <ClInclude Include="TestTimer.h">
@@ -60,21 +54,21 @@
     <ClInclude Include="Message.h">
       <Filter>Header Files\TestMessenger</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticLogger.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sockets.cpp">
       <Filter>Source Files\TestMainServer</Filter>
     </ClCompile>
-    <ClCompile Include="StaticLogger.cpp">
-      <Filter>Source Files\TestMainServer</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities.cpp">
-      <Filter>Source Files\TestMainServer</Filter>
-    </ClCompile>
     <ClCompile Include="TestResultCounter.cpp">
       <Filter>Source Files\TestController</Filter>
     </ClCompile>
-    <ClCompile Include="TestBlockingQueue.cpp">
+    <ClCompile Include="BlockingQueue.cpp">
       <Filter>Source Files\TestMessenger</Filter>
     </ClCompile>
     <ClCompile Include="TestTimer.cpp">
@@ -82,6 +76,12 @@
     </ClCompile>
     <ClCompile Include="Message.cpp">
       <Filter>Source Files\TestMessenger</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticLogger.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

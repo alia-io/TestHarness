@@ -16,13 +16,13 @@
 #include <sstream>
 
 template <typename T>
-class TestBlockingQueue {
+class BlockingQueue {
 public:
-    TestBlockingQueue() {}
-    TestBlockingQueue(TestBlockingQueue<T>&& bq);
-    TestBlockingQueue<T>& operator=(TestBlockingQueue<T>&& bq);
-    TestBlockingQueue(const TestBlockingQueue<T>&) = delete;
-    TestBlockingQueue<T>& operator=(const TestBlockingQueue<T>&) = delete;
+    BlockingQueue() {}
+    BlockingQueue(BlockingQueue<T>&& bq);
+    BlockingQueue<T>& operator=(BlockingQueue<T>&& bq);
+    BlockingQueue(const BlockingQueue<T>&) = delete;
+    BlockingQueue<T>& operator=(const BlockingQueue<T>&) = delete;
     T deQ();
     void enQ(const T& t);
     T& front();
@@ -37,7 +37,7 @@ private:
 //----< move constructor >---------------------------------------------
 
 template<typename T>
-TestBlockingQueue<T>::TestBlockingQueue(TestBlockingQueue<T>&& bq) // need to lock so can't initialize
+BlockingQueue<T>::BlockingQueue(BlockingQueue<T>&& bq) // need to lock so can't initialize
 {
     std::lock_guard<std::mutex> l(mtx_);
     q_ = bq.q_;
@@ -48,7 +48,7 @@ TestBlockingQueue<T>::TestBlockingQueue(TestBlockingQueue<T>&& bq) // need to lo
 //----< move assignment >----------------------------------------------
 
 template<typename T>
-TestBlockingQueue<T>& TestBlockingQueue<T>::operator=(TestBlockingQueue<T>&& bq)
+BlockingQueue<T>& BlockingQueue<T>::operator=(BlockingQueue<T>&& bq)
 {
     if (this == &bq) return *this;
     std::lock_guard<std::mutex> l(mtx_);
@@ -61,7 +61,7 @@ TestBlockingQueue<T>& TestBlockingQueue<T>::operator=(TestBlockingQueue<T>&& bq)
 //----< remove element from front of queue >---------------------------
 
 template<typename T>
-T TestBlockingQueue<T>::deQ()
+T BlockingQueue<T>::deQ()
 {
     std::unique_lock<std::mutex> l(mtx_);
     /*
@@ -90,7 +90,7 @@ T TestBlockingQueue<T>::deQ()
 //----< push element onto back of queue >------------------------------
 
 template<typename T>
-void TestBlockingQueue<T>::enQ(const T& t)
+void BlockingQueue<T>::enQ(const T& t)
 {
     {
         std::unique_lock<std::mutex> l(mtx_);
@@ -101,7 +101,7 @@ void TestBlockingQueue<T>::enQ(const T& t)
 //----< peek at next item to be popped >-------------------------------
 
 template <typename T>
-T& TestBlockingQueue<T>::front()
+T& BlockingQueue<T>::front()
 {
     std::lock_guard<std::mutex> l(mtx_);
     if (q_.size() > 0)
@@ -111,7 +111,7 @@ T& TestBlockingQueue<T>::front()
 //----< remove all elements from queue >-------------------------------
 
 template <typename T>
-void TestBlockingQueue<T>::clear()
+void BlockingQueue<T>::clear()
 {
     std::lock_guard<std::mutex> l(mtx_);
     while (q_.size() > 0)
@@ -120,7 +120,7 @@ void TestBlockingQueue<T>::clear()
 //----< return number of elements in queue >---------------------------
 
 template<typename T>
-size_t TestBlockingQueue<T>::size()
+size_t BlockingQueue<T>::size()
 {
     std::lock_guard<std::mutex> l(mtx_);
     return q_.size();

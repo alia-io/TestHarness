@@ -141,7 +141,7 @@
   <ItemGroup>
     <ClInclude Include="Sockets.h" />
     <ClInclude Include="StaticLogger.h" />
-    <ClInclude Include="TestBlockingQueue.h" />
+    <ClInclude Include="BlockingQueue.h" />
     <ClInclude Include="TestResultCounter.h" />
     <ClInclude Include="TestTimer.h" />
     <ClInclude Include="Message.h" />
@@ -151,7 +151,7 @@
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="Sockets.cpp" />
     <ClCompile Include="StaticLogger.cpp" />
-    <ClCompile Include="TestBlockingQueue.cpp" />
+    <ClCompile Include="BlockingQueue.cpp" />
     <ClCompile Include="TestResultCounter.cpp" />
     <ClCompile Include="TestTimer.cpp" />
     <ClCompile Include="Utilities.cpp" />
