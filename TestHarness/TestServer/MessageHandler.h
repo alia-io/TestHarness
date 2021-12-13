@@ -1,7 +1,7 @@
 #pragma once
 #include "BlockingQueue.h"
 #include "Message.h"
-#include "TestResultFormatter.h"
+#include "ResultFormatter.h"
 #include "Server.h"
 #include <thread>
 

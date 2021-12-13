@@ -2,7 +2,7 @@
 #include "StaticLogger.h"
 #include "MessageHandler.h"
 #include "TestRunner.h"
-#include "TestTimer.h"
+#include "Timer.h"
 #include <functional>
 #include <iostream>
 #include <string>
@@ -24,7 +24,7 @@
 class TestHarness {
 private:
 	std::string suiteName;
-	TestResultCounter counter{};
+	ResultCounter counter{};
 	MessageHandler handler{};
 	void executeChild();
 public:

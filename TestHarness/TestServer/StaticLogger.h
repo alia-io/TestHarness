@@ -58,7 +58,7 @@
 #include <iomanip>
 #include "BlockingQueue.h"
 #include "Message.h"
-#include "TestResultCounter.h"
+#include "ResultCounter.h"
 
 using namespace TestMessenger;
 

@@ -12,7 +12,7 @@
 */
 
 
-class TestResultCounter
+class ResultCounter
 {
 private:
 	int testsPassed;

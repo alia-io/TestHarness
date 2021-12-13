@@ -1,4 +1,4 @@
-#include "TestTimer.h"
+#include "Timer.h"
 #include <chrono>
 #include <sstream>
 #include <regex>
@@ -19,19 +19,19 @@ using  std::chrono::system_clock;
 using  std::chrono::duration_cast;
 using  std::chrono::nanoseconds;
 
-void TestTimer::startTimer() {
+void Timer::startTimer() {
 	startTime = system_clock::now();	// Sets a start time when called.  
 }
 
-void TestTimer::endTimer() {
+void Timer::endTimer() {
 	endTime = system_clock::now(); // Sets an end time when called.
 }
 
-double TestTimer::timeTaken() {
+double Timer::timeTaken() {
 	return duration_cast<nanoseconds>(endTime - startTime).count(); // Used to determine amount of time between start and end time which is two points within code.
 }
 
-std::string TestTimer::currentTime() {		// Function that returns formatted current time
+std::string Timer::currentTime() {		// Function that returns formatted current time
 	time_t now = system_clock::to_time_t(system_clock::now());
 	char buf[30]{ '\0' };
 	ctime_s(buf, sizeof(buf), &now);
@@ -41,11 +41,11 @@ std::string TestTimer::currentTime() {		// Function that returns formatted curre
 	return time;
 }
 
-int64_t TestTimer::epochTimeFromTimePoint(time_point<system_clock> timestamp) {
+int64_t Timer::epochTimeFromTimePoint(time_point<system_clock> timestamp) {
 	return std::chrono::duration_cast<std::chrono::seconds>(timestamp.time_since_epoch()).count();
 }
 
-time_point<system_clock> TestTimer::timePointFromEpochTime(std::string epochTime) {
+time_point<system_clock> Timer::timePointFromEpochTime(std::string epochTime) {
 	int64_t epochTimeInt;
 	std::istringstream iss(epochTime);
 	iss >> epochTimeInt;

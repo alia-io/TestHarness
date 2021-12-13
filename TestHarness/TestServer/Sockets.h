@@ -145,7 +145,7 @@ namespace Sockets
     /////////////////////////////////////////////////////////////////////////////
     // SocketSystem class - manages loading and unloading Winsock library
 
-    /*class SocketSystem
+    class SocketSystem
     {
     public:
         SocketSystem();
@@ -252,7 +252,7 @@ namespace Sockets
     *  - You will find an example Callable Object, ClientProc,
     *    used in the test stub below
     */
-    /*template<typename CallObj>
+    template<typename CallObj>
     bool SocketListener::start(CallObj& co) {
 
         if (!bind()) { return false; }
@@ -262,7 +262,7 @@ namespace Sockets
         // listen on a dedicated thread so server's main thread won't block
 
         std::thread ListenThread([&]() {
-            StaticLogger<1>::write("\n  -- server waiting for connection");
+            StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server waiting for connection" });
 
             while (!acceptFailed_)
             {
@@ -275,7 +275,7 @@ namespace Sockets
                 if (!clientSocket.validState()) {
                     continue;
                 }
-                StaticLogger<1>::write("\n  -- server accepted connection");
+                StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server accepted connection" });
 
                 // start thread to handle client request
 
@@ -283,12 +283,12 @@ namespace Sockets
                 std::thread clientThread(std::bind(co, std::move(clientSocket)));
                 clientThread.detach();  // detach - listener won't access thread again
             }
-            StaticLogger<1>::write("\n  -- Listen thread stopping");
+            StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Listen thread stopping" });
             }
         );
         ListenThread.detach();
         return true;
     }
-}*/
+}
 #endif
 

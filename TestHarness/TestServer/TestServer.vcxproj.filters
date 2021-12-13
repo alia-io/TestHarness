@@ -39,7 +39,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TestTimer.h">
+    <ClInclude Include="Timer.h">
       <Filter>Header Files\TestUtilities</Filter>
     </ClInclude>
     <ClInclude Include="Message.h">
@@ -54,7 +54,7 @@
     <ClInclude Include="BlockingQueue.h">
       <Filter>Header Files\TestUtilities</Filter>
     </ClInclude>
-    <ClInclude Include="TestResultFormatter.h">
+    <ClInclude Include="ResultFormatter.h">
       <Filter>Header Files\TestUtilities</Filter>
     </ClInclude>
     <ClInclude Include="MessageHandler.h">
@@ -69,7 +69,7 @@
     <ClInclude Include="TestDriver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestResultCounter.h">
+    <ClInclude Include="ResultCounter.h">
       <Filter>Header Files\TestUtilities</Filter>
     </ClInclude>
     <ClInclude Include="TestRunner.h">
@@ -83,7 +83,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TestTimer.cpp">
+    <ClCompile Include="Timer.cpp">
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
     <ClCompile Include="Message.cpp">
@@ -98,7 +98,7 @@
     <ClCompile Include="BlockingQueue.cpp">
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
-    <ClCompile Include="TestResultFormatter.cpp">
+    <ClCompile Include="ResultFormatter.cpp">
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
     <ClCompile Include="Sockets.cpp">
@@ -113,7 +113,7 @@
     <ClCompile Include="TestDriver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestResultCounter.cpp">
+    <ClCompile Include="ResultCounter.cpp">
       <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
     <ClCompile Include="TestRunner.cpp">

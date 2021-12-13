@@ -3,8 +3,8 @@
 #include <Windows.h>
 #include <exception>
 #include "MessageHandler.h"
-#include "TestTimer.h"
-#include "TestResultFormatter.h"
+#include "Timer.h"
+#include "ResultFormatter.h"
 #include "MessageHandler.h"
 #include <string>
 #include <thread>

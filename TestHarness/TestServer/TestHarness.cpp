@@ -23,7 +23,7 @@ TestHarness::TestHarness(std::string name, LOG_LEVEL log) : suiteName{ name } {
 
 void TestHarness::execute(std::list<std::string> tests) {
 
-	TestTimer timer{};
+	Timer timer{};
 	const int NUM_TESTS = tests.size();
 	const int NUM_THREADS = 3;
 
@@ -67,7 +67,7 @@ void TestHarness::execute(std::list<std::string> tests) {
 	timer.endTimer();	// Submit end time to determine how much time the test list took to run
 
 	// write test result summary
-	StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::summary, TestResultFormatter::testResultSummary(counter, timer) });
+	StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::summary, ResultFormatter::testResultSummary(counter, timer) });
 
 	for (auto& thr : threads) {
 		if (thr.joinable()) thr.join();
@@ -83,7 +83,7 @@ void TestHarness::executeChild() {
 	}
 }
 
-int main() {
+/*int main() {
 
 	StaticLogger<1>::attach(&std::cout);
 	StaticLogger<1>::start();
@@ -98,4 +98,4 @@ int main() {
 	testHarness.execute(tests);
 
 	return 0;
-}
+}*/

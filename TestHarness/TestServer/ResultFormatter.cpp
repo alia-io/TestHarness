@@ -1,14 +1,14 @@
-#include "TestResultFormatter.h"
+#include "ResultFormatter.h"
 
-std::string TestResultFormatter::testPassedMessage(std::string testName, TestTimer timer) {
+std::string ResultFormatter::testPassedMessage(std::string testName, Timer timer) {
 	return testName + "\n        Time elapsed: " + std::to_string(timer.timeTaken()) + " ns.";
 }
 
-std::string TestResultFormatter::testFailedMessage(std::string testName, TestTimer timer) {
+std::string ResultFormatter::testFailedMessage(std::string testName, Timer timer) {
 	return testName + "\n        Time elapsed: " + std::to_string(timer.timeTaken()) + " ns.";
 }
 
-std::string TestResultFormatter::testExceptionMessage(std::string testName, std::exception& e, LOG_LEVEL logLevel) {
+std::string ResultFormatter::testExceptionMessage(std::string testName, std::exception& e, LOG_LEVEL logLevel) {
 	switch (logLevel) {
 	case LOG_LEVEL::info:	// level 1 logging
 		return testName + "\n        Test failed with exception.";
@@ -16,12 +16,12 @@ std::string TestResultFormatter::testExceptionMessage(std::string testName, std:
 		return testName + "\n        Test failed with exception: " + exceptionDetails(e) + "";
 	case LOG_LEVEL::debug:	// level 3 logging
 		return testName + "\n        Test failed with exception: " + exceptionDetails(e)
-			+ "\n        Exception occurred on " + TestTimer::currentTime() + ".";
+			+ "\n        Exception occurred on " + Timer::currentTime() + ".";
 	}
 	return "";
 }
 
-std::string TestResultFormatter::testResultSummary(TestResultCounter counter, TestTimer timer) {
+std::string ResultFormatter::testResultSummary(ResultCounter counter, Timer timer) {
 	std::string out = " Total Tests           " + std::to_string(counter.getTestsTotal());
 	out += "\n                        Tests Passed          " + std::to_string(counter.getTestsPassed());
 	out += "\n                        Tests Failed          " + std::to_string(counter.getTestsFailed());
@@ -30,7 +30,7 @@ std::string TestResultFormatter::testResultSummary(TestResultCounter counter, Te
 	return out;
 }
 
-std::string TestResultFormatter::exceptionDetails(std::exception& e) {
+std::string ResultFormatter::exceptionDetails(std::exception& e) {
 	if (typeid(e) == typeid(std::bad_alloc)) {
 		return "Failure to allocate storage.";
 	}

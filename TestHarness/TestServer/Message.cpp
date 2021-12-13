@@ -107,7 +107,7 @@ Message::Message(IP_VERSION sourceIpVer, std::string sourceIpAddr, size_t source
 	destination.setValues(destIpVer, destIpAddr, destPort);
 	messageType = MESSAGE_TYPE::client_request;
 	author = "TestClient";
-	timestamp = TestTimer::currentTime();
+	timestamp = Timer::currentTime();
 	body = R"({ "count": ")" + std::to_string(testList.size()) + R"(", "tests": [ )";
 	for (auto it = testList.begin(); it != testList.end(); ++it) {
 		if (it != testList.begin()) body += ", ";
@@ -124,7 +124,7 @@ Message::Message(IP_VERSION sourceIpVer, std::string sourceIpAddr, size_t source
 	destination.setValues(destIpVer, destIpAddr, destPort);
 	messageType = MESSAGE_TYPE::test_result;
 	author = "TestServer";
-	timestamp = TestTimer::currentTime();
+	timestamp = Timer::currentTime();
 	body = R"({ "name": ")" + testName + R"(", "result": "", "message": "" })";
 }
 

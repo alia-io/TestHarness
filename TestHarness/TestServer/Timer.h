@@ -17,7 +17,7 @@
 using std::chrono::time_point;
 using std::chrono::system_clock;
 
-class TestTimer {
+class Timer {
 private:
 	time_point<system_clock> startTime;
 	time_point<system_clock> endTime;

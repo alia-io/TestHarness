@@ -25,7 +25,7 @@ using namespace TestMessenger;
 TestRunner::TestRunner(std::string name, bool (*funcPtr)()) : testFunctionName{ name }, testFunction{ funcPtr } { }
 
 void TestRunner::runTest(MessageHandler* messageHandler, Message msg, LOG_LEVEL logLevel) {
-	TestTimer timer{};
+	Timer timer{};
 	bool result = false;
 	timer.startTimer();
 	try {
@@ -34,7 +34,7 @@ void TestRunner::runTest(MessageHandler* messageHandler, Message msg, LOG_LEVEL 
 	catch (std::exception& e) {
 		timer.endTimer();
 		messageHandler->enqueueTestResult(msg, TEST_RESULT::exception,
-			TestResultFormatter::testExceptionMessage(testFunctionName, e, logLevel));
+			ResultFormatter::testExceptionMessage(testFunctionName, e, logLevel));
 		return;
 	}
 
@@ -42,12 +42,12 @@ void TestRunner::runTest(MessageHandler* messageHandler, Message msg, LOG_LEVEL 
 
 	if (result) {
 		messageHandler->enqueueTestResult(msg, TEST_RESULT::pass,
-			TestResultFormatter::testPassedMessage(testFunctionName, timer));
+			ResultFormatter::testPassedMessage(testFunctionName, timer));
 		return;
 	}
 
 	messageHandler->enqueueTestResult(msg, TEST_RESULT::fail,
-		TestResultFormatter::testFailedMessage(testFunctionName, timer));
+		ResultFormatter::testFailedMessage(testFunctionName, timer));
 }
 
 /*int main2() {
