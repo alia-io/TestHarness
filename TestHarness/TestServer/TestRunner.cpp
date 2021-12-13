@@ -1,5 +1,5 @@
 #include "TestRunner.h"
-#include "DllLoader.h"
+//#include "TestDLLLoader.h"
 
 //////////////////////////////////////////////////////
 // TestRunner.cpp									//
