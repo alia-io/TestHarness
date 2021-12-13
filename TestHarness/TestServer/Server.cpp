@@ -22,7 +22,6 @@
 #include "Server.h"
 #include "Sockets.h"
 #include "StaticLogger.h"
-#include "Utilities.h"
 #include <string>
 #include <iostream>
 
@@ -44,22 +43,22 @@ void ConnectionHandler::operator()(Socket& socket_) {
 
     SocketConnecter si;
     while (!si.connect("localhost", 9090)) {
-        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "\n server waiting to connect" });
+        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server waiting to connect" });
         ::Sleep(100);
     }
 
     while (true) {
         std::string msg = Socket::removeTerminator(socket_.recvString());
-        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "\nrecvd message: " + msg });
+        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Recvd message: " + msg });
         if (msg == "quit") break;
         std::string response = "I got your message. It said " + msg + ".";
         si.sendString(response);
-        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "\n  server sent msg: " + response });
+        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server sent msg: " + response });
     }
 
     si.sendString("quit");
-    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "\n  server sent msg: quit" });
-    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "\n\n  Connection terminated." });
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server sent msg: quit" });
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Connection terminated." });
 
 }
 

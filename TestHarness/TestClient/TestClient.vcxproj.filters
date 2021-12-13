@@ -13,5 +13,63 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\TestUtilities">
+      <UniqueIdentifier>{8bf9e54b-6257-49fc-961b-555504192e99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TestCommunicationInterface">
+      <UniqueIdentifier>{c2ab618c-5572-4980-bd7c-2decdcd4c1e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestCommunicationInterface">
+      <UniqueIdentifier>{e8afdc68-2b57-43f1-a608-a03561494567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestUtilities">
+      <UniqueIdentifier>{6378759f-e0c3-40b9-ada3-7cd61523bd52}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Sockets.h">
+      <Filter>Header Files\TestCommunicationInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticLogger.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockingQueue.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Message.h">
+      <Filter>Header Files\TestCommunicationInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>Header Files\TestCommunicationInterface</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Sockets.cpp">
+      <Filter>Source Files\TestCommunicationInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Message.cpp">
+      <Filter>Source Files\TestCommunicationInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockingQueue.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticLogger.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>Source Files\TestCommunicationInterface</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
