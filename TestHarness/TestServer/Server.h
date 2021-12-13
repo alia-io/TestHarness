@@ -8,4 +8,8 @@ public:
 	static const IP_VERSION ipVersion;
 	static const std::string ipAddress;
 	static const size_t portNumber;
+	static void runServer();
+private:
+	static void init();
+	static void startListener();
 };

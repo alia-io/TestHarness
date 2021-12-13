@@ -62,21 +62,33 @@ void ConnectionHandler::operator()(Socket& socket_) {
 
 }
 
-int main() {
-    StaticLogger<1>::attach(&std::cout);
-    StaticLogger<1>::start();
-    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server started" });
+void Server::runServer() {
+    init();
     try {
         SocketSystem ss;
-        SocketListener sl(8080, IP_VERSION::IPv6);
-        ConnectionHandler cp;
-        sl.start(cp);
-        std::cout.flush();
-        std::cin.get();
+        startListener();
     }
     catch (std::exception& exc) {
         StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "\n  Exeception caught: " });
         std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
         StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, exMsg });
     }
+}
+
+void Server::init() {
+    StaticLogger<1>::attach(&std::cout);
+    StaticLogger<1>::start();
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server started" });
+}
+
+void Server::startListener() {
+    SocketListener sl(Server::portNumber, Server::ipVersion);
+    ConnectionHandler cp;
+    sl.start(cp);
+    std::cout.flush();
+    std::cin.get();
+}
+
+int main() {
+    Server::runServer();
 }

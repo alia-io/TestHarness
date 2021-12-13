@@ -85,13 +85,14 @@ void Client::sendRequest(LOG_LEVEL logLevel, std::list<std::string> testList) { 
     std::string jsonRequest = request.getJsonFormattedMessage();
     si.sendString(jsonRequest);   // send request to server
 
-    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + jsonRequest });
+    //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + jsonRequest });
 
     ::Sleep(100);
 
-    std::string msg = "quit";
+    std::string msg = "quit";   // terminate connection client > server
     si.sendString(msg);
-    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + msg });
 
-    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Connection terminated." });
+    //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + msg });
+
+    //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Connection terminated." });
 }
