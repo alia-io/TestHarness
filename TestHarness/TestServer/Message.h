@@ -45,6 +45,15 @@ namespace TestMessenger {
 	enum class TEST_RESULT { exception, pass, fail };
 	enum class LOG_LEVEL { info, debug, detail };
 
+	class Address {
+	public:
+		IP_VERSION ipVer;
+		std::string ipAddr;
+		size_t port;
+		bool operator==(const Address& addr) const;
+		void setValues(IP_VERSION ver, std::string addr, size_t pt);
+	};
+
 	class RequestItem {
 	public:
 		LOG_LEVEL logLevel;
@@ -61,15 +70,6 @@ namespace TestMessenger {
 
 	class Message {
 	private:
-		
-		class Address {
-		public:
-			IP_VERSION ipVer;
-			std::string ipAddr;
-			size_t port;
-			void setValues(IP_VERSION ver, std::string addr, size_t pt);
-		};
-
 		Address source{};					// ip version, ip address, port
 		Address destination{};				// ip version, ip address, port
 		MESSAGE_TYPE messageType;			// client_request or test_result

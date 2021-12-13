@@ -16,7 +16,15 @@ void ResultCounter::setTotalTests(int count) { totalTests = count; };	// set the
 void ResultCounter::incrementTestPassed() { testsPassed++; };		// increment tests passed
 void ResultCounter::incrementTestFailed() { testsFailed++; };		// increment tests failed 
 
-
 int ResultCounter::getTestsPassed() { return testsPassed; };	// return counter variables
 int ResultCounter::getTestsFailed() { return testsFailed; };
 int ResultCounter::getTestsTotal() { return totalTests; }
+
+std::string ResultCounter::testResultSummary() {
+	std::string out = " Total Tests           " + std::to_string(totalTests);
+	out += "\n                        Tests Passed          " + std::to_string(testsPassed);
+	out += "\n                        Tests Failed          " + std::to_string(testsFailed);
+	//TODO:Add timer logic,below line gives a weird format
+	//cout << left << setw(10) << "Total Time Taken " << right << setw(20) << timer.timeTaken() << endl;
+	return out;
+}

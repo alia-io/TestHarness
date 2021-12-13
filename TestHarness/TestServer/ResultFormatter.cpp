@@ -21,15 +21,6 @@ std::string ResultFormatter::testExceptionMessage(std::string testName, std::exc
 	return "";
 }
 
-std::string ResultFormatter::testResultSummary(ResultCounter counter, Timer timer) {
-	std::string out = " Total Tests           " + std::to_string(counter.getTestsTotal());
-	out += "\n                        Tests Passed          " + std::to_string(counter.getTestsPassed());
-	out += "\n                        Tests Failed          " + std::to_string(counter.getTestsFailed());
-	//TODO:Add timer logic,below line gives a weird format
-	//cout << left << setw(10) << "Total Time Taken " << right << setw(20) << timer.timeTaken() << endl;
-	return out;
-}
-
 std::string ResultFormatter::exceptionDetails(std::exception& e) {
 	if (typeid(e) == typeid(std::bad_alloc)) {
 		return "Failure to allocate storage.";

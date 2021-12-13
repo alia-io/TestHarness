@@ -266,8 +266,7 @@ namespace Sockets
 
             while (!acceptFailed_)
             {
-                if (stop_.load())
-                    break;
+                if (stop_.load()) break;
 
                 // Accept a client socket - blocking call
 

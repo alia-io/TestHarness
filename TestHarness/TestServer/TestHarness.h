@@ -8,6 +8,7 @@
 #include <string>
 #include <list>
 #include <thread>
+#include <mutex>
 
 //////////////////////////////////////////////////////
 // TestHarness.h									//
@@ -24,11 +25,14 @@
 class TestHarness {
 private:
 	std::string suiteName;
-	ResultCounter counter{};
+	Message requestMessage;
 	MessageHandler handler{};
-	void executeChild();
+	int numberOfTests;
+	std::mutex mtx;
+	void parentRunner();
+	void childRunner();
 public:
-	TestHarness();
-	TestHarness(std::string name, LOG_LEVEL log);
-	void execute(std::list<std::string> tests);
+	TestHarness(std::string name, Message request);
+	MessageHandler* getHandler();
+	void execute();
 };

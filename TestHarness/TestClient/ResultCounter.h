@@ -11,6 +11,7 @@
 *
 */
 
+#include <string>
 
 class ResultCounter
 {
@@ -25,5 +26,6 @@ public:
 	int getTestsPassed();
 	int getTestsFailed();
 	int getTestsTotal();
+	std::string testResultSummary();
 };
 

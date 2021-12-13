@@ -5,10 +5,14 @@
 
 using namespace TestMessenger;
 
-void Message::Address::setValues(IP_VERSION ver, std::string addr, size_t pt) {
+void Address::setValues(IP_VERSION ver, std::string addr, size_t pt) {
 	ipVer = ver;
 	ipAddr = addr;
 	port = pt;
+}
+
+bool Address::operator==(const Address& addr) const {
+	return (ipVer == addr.ipVer) && (ipAddr.compare(addr.ipAddr) == 0) && (port == addr.port);
 }
 
 /* constuctor from JSON message string */

@@ -22,6 +22,7 @@
 #include "Server.h"
 #include "Sockets.h"
 #include "StaticLogger.h"
+#include "TestHarness.h"
 #include <string>
 #include <iostream>
 
@@ -39,26 +40,53 @@ public:
 
 void ConnectionHandler::operator()(Socket& socket_) {
 
-    ::Sleep(1000);    // make sure client listener is started
+    ::Sleep(1000);    // wait to make sure client listener is started
 
-    SocketConnecter si;
-    while (!si.connect("localhost", 9090)) {
-        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server waiting to connect" });
-        ::Sleep(100);
-    }
+    //std::vector<std::thread> threads{};
 
-    while (true) {
+    //while (true) {
         std::string msg = Socket::removeTerminator(socket_.recvString());
+        Message request{ msg };
         StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Recvd message: " + msg });
-        if (msg == "quit") break;
-        std::string response = "I got your message. It said " + msg + ".";
-        si.sendString(response);
-        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server sent msg: " + response });
-    }
+        //if (msg == "quit") break;
+        //threads.push_back(std::thread([=] { Server::runTestHarness(request); }));
+        //Server::runTestHarness(request);
+        //std::string response = "I got your message. It said " + msg + ".";
+        //si.sendString(response);
+        //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server sent msg: " + response });
 
-    si.sendString("quit");
+
+    //}
+
+        SocketConnecter si;
+        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "source IP address: " + request.sourceIpAddress() });
+        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "source port: " + std::to_string(request.sourcePort()) });
+        while (!si.connect(request.sourceIpAddress(), request.sourcePort())) {
+            StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server waiting to connect" });
+            ::Sleep(100);
+        }
+
+        TestHarness testHarness{ "default", request };
+        MessageHandler* handler = testHarness.getHandler();
+        testHarness.execute();
+
+        si.sendString("hello");
+
+        while (true) {
+            //if (numberOfTests >= 0) break;
+            Message resultMsg = handler->dequeueTestResult();
+            si.sendString(resultMsg.getJsonFormattedMessage());
+            //numberOfTests--;
+            StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server sent msg: " + resultMsg.getJsonFormattedMessage() });
+        }
+    
+    //for (auto& thr : threads) {
+    //    if (thr.joinable()) thr.join();
+    //}
+
+    /*si.sendString("quit");
     StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server sent msg: quit" });
-    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Connection terminated." });
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Connection terminated." });*/
 
 }
 
@@ -87,6 +115,32 @@ void Server::startListener() {
     sl.start(cp);
     std::cout.flush();
     std::cin.get();
+}
+
+/* Open a new client channel and run TestHarness on the client request */
+void Server::runTestHarness(Message requestMsg) {
+    
+    SocketConnecter si;             // connect to client
+    while (!si.connect(requestMsg.sourceIpAddress(), requestMsg.sourcePort())) {
+        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server waiting to connect" });
+        ::Sleep(100);
+    }
+
+    int numberOfTests = requestMsg.getRequestMessageBody().testCount;
+    TestHarness testHarness{ "default", requestMsg };
+    MessageHandler* handler = testHarness.getHandler();
+    testHarness.execute();
+
+    while (true) {
+        //if (numberOfTests >= 0) break;
+        Message resultMsg = handler->dequeueTestResult();
+        si.sendString(resultMsg.getJsonFormattedMessage());
+        numberOfTests--;
+    }
+
+    //si.sendString("quit");
+    //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server sent msg: quit" });
+    //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Connection terminated." });
 }
 
 int main() {

@@ -9,6 +9,7 @@ public:
 	static const std::string ipAddress;
 	static const size_t portNumber;
 	static void runServer();
+	static void runTestHarness(Message requestMsg);
 private:
 	static void init();
 	static void startListener();

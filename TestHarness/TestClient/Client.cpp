@@ -75,7 +75,7 @@ void Client::startListener() {  // Communication from server to client
 void Client::sendRequest(LOG_LEVEL logLevel, std::list<std::string> testList) { // Communication from client to server
     
     SocketConnecter si;
-    while (!si.connect("localhost", 8080)) {
+    while (!si.connect("localhost", 8080)) {    // connect to server
         StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client waiting to connect" });
         ::Sleep(100);
     }
@@ -89,8 +89,8 @@ void Client::sendRequest(LOG_LEVEL logLevel, std::list<std::string> testList) { 
 
     ::Sleep(100);
 
-    std::string msg = "quit";   // terminate connection client > server
-    si.sendString(msg);
+    //std::string msg = "quit";   // terminate connection client > server
+    //si.sendString(msg);
 
     //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + msg });
 

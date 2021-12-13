@@ -69,9 +69,6 @@
     <ClInclude Include="TestDriver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ResultCounter.h">
-      <Filter>Header Files\TestUtilities</Filter>
-    </ClInclude>
     <ClInclude Include="TestRunner.h">
       <Filter>Header Files\TestController</Filter>
     </ClInclude>
@@ -112,9 +109,6 @@
     </ClCompile>
     <ClCompile Include="TestDriver.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResultCounter.cpp">
-      <Filter>Source Files\TestUtilities</Filter>
     </ClCompile>
     <ClCompile Include="TestRunner.cpp">
       <Filter>Source Files\TestController</Filter>
