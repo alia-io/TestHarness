@@ -21,7 +21,7 @@ using std::chrono::system_clock;
 *		"type": "client_request",
 *		"author": "TestClient",
 *		"timestamp": "[time&date]",
-*		"body": { "count": "[num_tests]", "tests": [ "[test_name]", "[test_name]", ... ] }
+*		"body": { "log": "[info/debug/detail]", "count": "[num_tests]", "tests": [ "[test_name]", "[test_name]", ... ] }
 *	}
 * 
 *	--------------------------------------
@@ -43,9 +43,11 @@ namespace TestMessenger {
 	enum class IP_VERSION { IPv4, IPv6 };
 	enum class MESSAGE_TYPE { client_request, test_result };
 	enum class TEST_RESULT { exception, pass, fail };
+	enum class LOG_LEVEL { info, debug, detail };
 
 	class RequestItem {
 	public:
+		LOG_LEVEL logLevel;
 		int testCount;
 		std::list<std::string> testList{};
 	};
@@ -77,7 +79,7 @@ namespace TestMessenger {
 	public:
 		Message(std::string jsonMessageString);	// constuctor from JSON message string
 		Message(IP_VERSION sourceIpVer, std::string sourceIpAddr, size_t sourcePort,	// constructor for client request message
-			IP_VERSION destIpVer, std::string destIpAddr, size_t destPort, std::list<std::string> testList);
+			IP_VERSION destIpVer, std::string destIpAddr, size_t destPort, LOG_LEVEL log, std::list<std::string> testList);
 		Message(IP_VERSION sourceIpVer, std::string sourceIpAddr, size_t sourcePort,	// constructor for test result message
 			IP_VERSION destIpVer, std::string destIpAddr, size_t destPort, std::string testName);
 		void setTestResult(TEST_RESULT testResult, std::string resultMessage);	// add the test result to the message

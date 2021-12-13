@@ -43,6 +43,10 @@
 
 namespace Utilities
 {
+    enum class IP_VERSION { IPv4, IPv6 };
+    enum class MESSAGE_TYPE { client_request, test_result };
+    enum class TEST_RESULT { exception, pass, fail };
+
     ///////////////////////////////////////////////////////////////////
     // Utilities for std::string
     // - split accepts comma separated list of items and returns

@@ -29,7 +29,8 @@ void TestHarness::execute(std::list<std::string> tests) {
 
 	counter.setTotalTests(NUM_TESTS);	//counter struct for # of pass, fail, and total tests
 
-	Message requestMsg{ IP_VERSION::IPv4, "123.45.678.9", 9090, Server::ipVersion, Server::ipAddress, Server::portNumber, tests };
+	Message requestMsg{ IP_VERSION::IPv4, "123.45.678.9", 9090, Server::ipVersion,
+		Server::ipAddress, Server::portNumber, LOG_LEVEL::detail, tests };
 
 	timer.startTimer();						// Initiate start time
 
@@ -83,7 +84,7 @@ void TestHarness::executeChild() {
 	}
 }
 
-/*int main() {
+int main() {
 
 	StaticLogger<1>::attach(&std::cout);
 	StaticLogger<1>::start();
@@ -98,4 +99,4 @@ void TestHarness::executeChild() {
 	testHarness.execute(tests);
 
 	return 0;
-}*/
+}

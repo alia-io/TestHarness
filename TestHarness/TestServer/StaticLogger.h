@@ -61,7 +61,6 @@
 
 using namespace TestMessenger;
 
-enum class LOG_LEVEL { info, debug, detail };
 enum class OUTPUT_TYPE { system, positive, negative, error, summary };
 
 class LogMsg {
