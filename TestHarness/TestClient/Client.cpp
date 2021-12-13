@@ -110,11 +110,4 @@ void Client::sendRequest(LOG_LEVEL logLevel, std::list<std::string> testList) { 
 
     StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent test request message" });
     StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server processing results..." });
-
-    //std::string msg = "quit";   // terminate connection client > server
-    //si.sendString(msg);
-
-    //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + msg });
-
-    //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Connection terminated." });
 }
