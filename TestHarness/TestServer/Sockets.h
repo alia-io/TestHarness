@@ -163,7 +163,7 @@ namespace Sockets
     class Socket
     {
     public:
-        using byte = char;
+        //using byte = char;
 
         // disable copy construction and assignment
         Socket(const Socket& s) = delete;
@@ -177,12 +177,12 @@ namespace Sockets
         virtual ~Socket();
 
         IP_VERSION& ipVer();
-        bool send(size_t bytes, byte* buffer);
-        bool recv(size_t bytes, byte* buffer);
-        size_t sendStream(size_t bytes, byte* buffer);
-        size_t recvStream(size_t bytes, byte* buffer);
-        bool sendString(const std::string& str, byte terminator = '\0');
-        std::string recvString(byte terminator = '\0');
+        bool send(size_t bytes, char* buffer);
+        bool recv(size_t bytes, char* buffer);
+        size_t sendStream(size_t bytes, char* buffer);
+        size_t recvStream(size_t bytes, char* buffer);
+        bool sendString(const std::string& str, char terminator = '\0');
+        std::string recvString(char terminator = '\0');
         static std::string removeTerminator(const std::string& src);
         size_t bytesWaiting();
         bool waitForData(size_t timeToWait, size_t timeToCheck);

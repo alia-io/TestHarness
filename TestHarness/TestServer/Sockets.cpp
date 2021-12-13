@@ -21,38 +21,28 @@
 #include "Utilities.h"
 
 using namespace Sockets;
-using Util = Utilities::StringHelper;
-template<typename T>
-using Conv = Utilities::Converter<T>;
-using Show = StaticLogger<1>;
 
 /////////////////////////////////////////////////////////////////////////////
 // SocketSystem class members
 
 //----< constructor starts up sockets by loading winsock lib >---------------
-
-SocketSystem::SocketSystem()
-{
+SocketSystem::SocketSystem() {
     int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (iResult != 0) {
-        Show::write("\n  WSAStartup failed with error = " + Conv<int>::toString(iResult));
+        StaticLogger<1>::write("\n  WSAStartup failed with error = " + Utilities::Converter<int>::toString(iResult));
     }
 }
 //-----< destructor frees winsock lib >--------------------------------------
-
-SocketSystem::~SocketSystem()
-{
+SocketSystem::~SocketSystem() {
     int error = WSACleanup();
-    Show::write("\n  -- Socket System cleaning up\n");
+    StaticLogger<1>::write("\n  -- Socket System cleaning up\n");
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Socket class members
 
 //----< constructor sets TCP protocol and Stream mode >----------------------
-
-Socket::Socket(IP_VERSION ipver) : ipver_(ipver)
-{
+Socket::Socket(IP_VERSION ipver) : ipver_(ipver) {
     ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
@@ -63,18 +53,16 @@ Socket::Socket(IP_VERSION ipver) : ipver_(ipver)
 *  You have to set ip version if you want IP6 after promotion, e.g.:
 *     s.ipVer() = IP6;
 */
-Socket::Socket(::SOCKET sock) : socket_(sock)
-{
+Socket::Socket(::SOCKET sock) : socket_(sock) {
     ipver_ = IP_VERSION::IPv4;
     ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_protocol = IPPROTO_TCP;
 }
-//----< transfer socket ownership with move constructor >--------------------
 
-Socket::Socket(Socket&& s)
-{
+//----< transfer socket ownership with move constructor >--------------------
+Socket::Socket(Socket&& s) {
     socket_ = s.socket_;
     s.socket_ = INVALID_SOCKET;
     ipver_ = s.ipver_;
@@ -83,10 +71,9 @@ Socket::Socket(Socket&& s)
     hints.ai_socktype = s.hints.ai_socktype;
     hints.ai_protocol = s.hints.ai_protocol;
 }
-//----< transfer socket ownership with move assignment >---------------------
 
-Socket& Socket::operator=(Socket&& s)
-{
+//----< transfer socket ownership with move assignment >---------------------
+Socket& Socket::operator=(Socket&& s) {
     if (this == &s) return *this;
     socket_ = s.socket_;
     s.socket_ = INVALID_SOCKET;
@@ -96,27 +83,23 @@ Socket& Socket::operator=(Socket&& s)
     hints.ai_protocol = s.hints.ai_protocol;
     return *this;
 }
+
 //----< get, set IP version >------------------------------------------------
 /*
 *  Note:
 *    Only instances of SocketListener are influenced by ipVer().
 *    Clients will use whatever protocol the server supports.
 */
-IP_VERSION& Socket::ipVer()
-{
-    return ipver_;
-}
-//----< close connection >---------------------------------------------------
+IP_VERSION& Socket::ipVer() { return ipver_; }
 
-void Socket::close()
-{
+//----< close connection >---------------------------------------------------
+void Socket::close() {
     if (socket_ != INVALID_SOCKET)
         ::closesocket(socket_);
 }
-//----< tells receiver there will be no more sends from this socket >--------
 
-bool Socket::shutDownSend()
-{
+//----< tells receiver there will be no more sends from this socket >--------
+bool Socket::shutDownSend() {
     ::shutdown(socket_, SD_SEND);
     if (socket_ != INVALID_SOCKET)
         return true;
@@ -124,39 +107,36 @@ bool Socket::shutDownSend()
 }
 
 //----< tells receiver this socket won't call receive anymore >--------------
-
-bool Socket::shutDownRecv()
-{
+bool Socket::shutDownRecv() {
     ::shutdown(socket_, SD_RECEIVE);
     if (socket_ != INVALID_SOCKET)
         return true;
     return false;
 }
-//----< tells receiver there will be no more sends or recvs >----------------
 
-bool Socket::shutDown()
-{
+//----< tells receiver there will be no more sends or recvs >----------------
+bool Socket::shutDown() {
     ::shutdown(socket_, SD_BOTH);
     if (socket_ != INVALID_SOCKET)
         return true;
     return false;
 
 }
-//----< destructor closes socket handle >------------------------------------
 
+//----< destructor closes socket handle >------------------------------------
 Socket::~Socket() {
     shutDown();
     close();
 }
+
 //----< send buffer >--------------------------------------------------------
 /*
 *  - bytes must be less than or equal to the size of buffer
 *  - doesn't return until requested number of bytes have been sent
 */
-bool Socket::send(size_t bytes, byte* buffer)
-{
+bool Socket::send(size_t bytes, char* buffer) {
     size_t bytesSent = 0, bytesLeft = bytes;
-    byte* pBuf = buffer;
+    char* pBuf = buffer;
     while (bytesLeft > 0)
     {
         bytesSent = ::send(socket_, pBuf, bytesLeft, 0);
@@ -167,15 +147,15 @@ bool Socket::send(size_t bytes, byte* buffer)
     }
     return true;
 }
+
 //----< recv buffer >--------------------------------------------------------
 /*
 *  - bytes must be less than or equal to the size of buffer
 *  - doesn't return until buffer has been filled with requested bytes
 */
-bool Socket::recv(size_t bytes, byte* buffer)
-{
+bool Socket::recv(size_t bytes, char* buffer) {
     size_t bytesRecvd = 0, bytesLeft = bytes;
-    byte* pBuf = buffer;
+    char* pBuf = buffer;
     while (bytesLeft > 0)
     {
         bytesRecvd = ::recv(socket_, pBuf, bytesLeft, 0);
@@ -186,15 +166,15 @@ bool Socket::recv(size_t bytes, byte* buffer)
     }
     return true;
 }
+
 //----< sends a terminator terminated string >-------------------------------
 /*
  *  Doesn't return until entire string has been sent
  *  By default terminator is '\0'
  */
-bool Socket::sendString(const std::string& str, byte terminator)
-{
+bool Socket::sendString(const std::string& str, char terminator) {
     size_t bytesSent, bytesRemaining = str.size();
-    const byte* pBuf = &(*str.begin());
+    const char* pBuf = &(*str.begin());
     while (bytesRemaining > 0)
     {
         bytesSent = ::send(socket_, pBuf, bytesRemaining, 0);
@@ -206,6 +186,7 @@ bool Socket::sendString(const std::string& str, byte terminator)
     ::send(socket_, &terminator, 1, 0);
     return true;
 }
+
 //----< receives terminator terminated string >------------------------------
 /*
  * - Doesn't return until a terminator byte as been received.
@@ -216,8 +197,7 @@ bool Socket::sendString(const std::string& str, byte terminator)
  * - That will require building a circular buffer.
  * - performance seems acceptable, so won't do this now
  */
-std::string Socket::recvString(byte terminator)
-{
+std::string Socket::recvString(char terminator) {
     static const int buflen = 1;
     char buffer[1];
     std::string str;
@@ -240,40 +220,37 @@ std::string Socket::recvString(byte terminator)
     }
     return str;
 }
-//----< strips terminator character that recvString includes >---------------
 
-std::string Socket::removeTerminator(const std::string& src)
-{
+//----< strips terminator character that recvString includes >---------------
+std::string Socket::removeTerminator(const std::string& src) {
     return src.substr(0, src.size() - 1);
 }
+
 //----< attempt to send specified number of bytes, but may not send all >----
 /*
  * returns number of bytes actually sent
  */
-size_t Socket::sendStream(size_t bytes, byte* pBuf)
-{
+size_t Socket::sendStream(size_t bytes, char* pBuf) {
     return ::send(socket_, pBuf, bytes, 0);
 }
+
 //----< attempt to recv specified number of bytes, but may not send all >----
 /*
 * returns number of bytes actually received
 */
-size_t Socket::recvStream(size_t bytes, byte* pBuf)
-{
+size_t Socket::recvStream(size_t bytes, char* pBuf) {
     return ::recv(socket_, pBuf, bytes, 0);
 }
-//----< returns bytes available in recv buffer >-----------------------------
 
-size_t Socket::bytesWaiting()
-{
+//----< returns bytes available in recv buffer >-----------------------------
+size_t Socket::bytesWaiting() {
     unsigned long int ret;
     ::ioctlsocket(socket_, FIONREAD, &ret);
     return (size_t)ret;
 }
-//----< waits for server data, checking every timeToCheck millisec >---------
 
-bool Socket::waitForData(size_t timeToWait, size_t timeToCheck)
-{
+//----< waits for server data, checking every timeToCheck millisec >---------
+bool Socket::waitForData(size_t timeToWait, size_t timeToCheck) {
     size_t MaxCount = timeToWait / timeToCheck;
     static size_t count = 0;
     while (bytesWaiting() == 0)
@@ -285,19 +262,15 @@ bool Socket::waitForData(size_t timeToWait, size_t timeToCheck)
     }
     return true;
 }
+
 /////////////////////////////////////////////////////////////////////////////
 // SocketConnector class members
 
 //----< constructor inherits its base Socket's Win32 socket_ member >--------
+SocketConnecter::SocketConnecter() : Socket() { hints.ai_family = AF_UNSPEC; }
 
-SocketConnecter::SocketConnecter() : Socket()
-{
-    hints.ai_family = AF_UNSPEC;
-}
 //----< move constructor transfers ownership of Win32 socket_ member >-------
-
-SocketConnecter::SocketConnecter(SocketConnecter&& s) : Socket()
-{
+SocketConnecter::SocketConnecter(SocketConnecter&& s) : Socket() {
     socket_ = s.socket_;
     s.socket_ = INVALID_SOCKET;
     ipver_ = s.ipver_;
@@ -305,10 +278,9 @@ SocketConnecter::SocketConnecter(SocketConnecter&& s) : Socket()
     hints.ai_socktype = s.hints.ai_socktype;
     hints.ai_protocol = s.hints.ai_protocol;
 }
-//----< move assignment transfers ownership of Win32 socket_ member >--------
 
-SocketConnecter& SocketConnecter::operator=(SocketConnecter&& s)
-{
+//----< move assignment transfers ownership of Win32 socket_ member >--------
+SocketConnecter& SocketConnecter::operator=(SocketConnecter&& s) {
     if (this == &s) return *this;
     socket_ = s.socket_;
     s.socket_ = INVALID_SOCKET;
@@ -318,24 +290,22 @@ SocketConnecter& SocketConnecter::operator=(SocketConnecter&& s)
     hints.ai_protocol = s.hints.ai_protocol;
     return *this;
 }
+
 //----< destructor announces destruction if Verbose(true) >------------------
-
-SocketConnecter::~SocketConnecter()
-{
-    Show::write("\n  -- SocketConnecter instance destroyed");
+SocketConnecter::~SocketConnecter() {
+    StaticLogger<1>::write("\n  -- SocketConnecter instance destroyed");
 }
-//----< request to connect to ip and port >----------------------------------
 
-bool SocketConnecter::connect(const std::string& ip, size_t port)
-{
+//----< request to connect to ip and port >----------------------------------
+bool SocketConnecter::connect(const std::string& ip, size_t port) {
     size_t uport = htons((u_short)port);
-    std::string sPort = Conv<size_t>::toString(uport);
+    std::string sPort = Utilities::Converter<size_t>::toString(uport);
 
     // Resolve the server address and port
     const char* pTemp = ip.c_str();
     iResult = getaddrinfo(pTemp, sPort.c_str(), &hints, &result);  // was DEFAULT_PORT
     if (iResult != 0) {
-        Show::write("\n  -- getaddrinfo failed with error: " + Conv<int>::toString(iResult));
+        StaticLogger<1>::write("\n  -- getaddrinfo failed with error: " + Utilities::Converter<int>::toString(iResult));
         return false;
     }
 
@@ -367,7 +337,7 @@ bool SocketConnecter::connect(const std::string& ip, size_t port)
         socket_ = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
         if (socket_ == INVALID_SOCKET) {
             int error = WSAGetLastError();
-            Show::write("\n\n  -- socket failed with error: " + Conv<int>::toString(error));
+            StaticLogger<1>::write("\n\n  -- socket failed with error: " + Utilities::Converter<int>::toString(error));
             return false;
         }
 
@@ -375,7 +345,7 @@ bool SocketConnecter::connect(const std::string& ip, size_t port)
         if (iResult == SOCKET_ERROR) {
             socket_ = INVALID_SOCKET;
             int error = WSAGetLastError();
-            Show::write("\n  -- WSAGetLastError returned " + Conv<int>::toString(error));
+            StaticLogger<1>::write("\n  -- WSAGetLastError returned " + Utilities::Converter<int>::toString(error));
             continue;
         }
         break;
@@ -385,18 +355,17 @@ bool SocketConnecter::connect(const std::string& ip, size_t port)
 
     if (socket_ == INVALID_SOCKET) {
         int error = WSAGetLastError();
-        Show::write("\n  -- unable to connect to server, error = " + Conv<int>::toString(error));
+        StaticLogger<1>::write("\n  -- unable to connect to server, error = " + Utilities::Converter<int>::toString(error));
         return false;
     }
     return true;
 }
+
 /////////////////////////////////////////////////////////////////////////////
 // SocketListener class members
 
 //----< constructs SocketListener, specifying type of protocol to use >------
-
-SocketListener::SocketListener(size_t port, IP_VERSION ipv) : Socket(ipv), port_(port)
-{
+SocketListener::SocketListener(size_t port, IP_VERSION ipv) : Socket(ipv), port_(port) {
     socket_ = INVALID_SOCKET;
     ZeroMemory(&hints, sizeof(hints));
     if (ipv == IP_VERSION::IPv6)
@@ -407,10 +376,9 @@ SocketListener::SocketListener(size_t port, IP_VERSION ipv) : Socket(ipv), port_
     hints.ai_protocol = IPPROTO_TCP;
     hints.ai_flags = AI_PASSIVE;
 }
-//----< move constructor transfers ownership of Win32 socket_ member >-------
 
-SocketListener::SocketListener(SocketListener&& s) : Socket()
-{
+//----< move constructor transfers ownership of Win32 socket_ member >-------
+SocketListener::SocketListener(SocketListener&& s) : Socket() {
     socket_ = s.socket_;
     s.socket_ = INVALID_SOCKET;
     ipver_ = s.ipver_;
@@ -419,10 +387,9 @@ SocketListener::SocketListener(SocketListener&& s) : Socket()
     hints.ai_protocol = s.hints.ai_protocol;
     hints.ai_flags = s.hints.ai_flags;
 }
-//----< move assignment transfers ownership of Win32 socket_ member >--------
 
-SocketListener& SocketListener::operator=(SocketListener&& s)
-{
+//----< move assignment transfers ownership of Win32 socket_ member >--------
+SocketListener& SocketListener::operator=(SocketListener&& s) {
     if (this == &s) return *this;
     socket_ = s.socket_;
     s.socket_ = INVALID_SOCKET;
@@ -433,26 +400,24 @@ SocketListener& SocketListener::operator=(SocketListener&& s)
     hints.ai_flags = s.hints.ai_flags;
     return *this;
 }
+
 //----< destructor announces destruction if Verbal(true) >-------------------
-
-SocketListener::~SocketListener()
-{
-    Show::write("\n  -- SocketListener instance destroyed");
+SocketListener::~SocketListener() {
+    StaticLogger<1>::write("\n  -- SocketListener instance destroyed");
 }
-//----< binds SocketListener to a network adddress on local machine >--------
 
-bool SocketListener::bind()
-{
-    Show::write("\n  -- staring bind operation");
+//----< binds SocketListener to a network adddress on local machine >--------
+bool SocketListener::bind() {
+    StaticLogger<1>::write("\n  -- staring bind operation");
 
     // Resolve the server address and port
 
     size_t uport = ::htons((u_short)port_);
     StaticLogger<1>::write("\n  -- netstat uport = " + Utilities::Converter<size_t>::toString(uport));
-    std::string sPort = Conv<size_t>::toString(uport);
+    std::string sPort = Utilities::Converter<size_t>::toString(uport);
     iResult = getaddrinfo(NULL, sPort.c_str(), &hints, &result);
     if (iResult != 0) {
-        Show::write("\n  -- getaddrinfo failed with error: " + Conv<int>::toString(iResult));
+        StaticLogger<1>::write("\n  -- getaddrinfo failed with error: " + Utilities::Converter<int>::toString(iResult));
         return false;
     }
 
@@ -465,17 +430,17 @@ bool SocketListener::bind()
         socket_ = socket(pResult->ai_family, pResult->ai_socktype, pResult->ai_protocol);
         if (socket_ == INVALID_SOCKET) {
             int error = WSAGetLastError();
-            Show::write("\n  -- socket failed with error: " + Conv<int>::toString(error));
+            StaticLogger<1>::write("\n  -- socket failed with error: " + Utilities::Converter<int>::toString(error));
             continue;
         }
-        Show::write("\n  -- server created ListenSocket");
+        StaticLogger<1>::write("\n  -- server created ListenSocket");
 
         // Setup the TCP listening socket
 
         iResult = ::bind(socket_, pResult->ai_addr, (int)pResult->ai_addrlen);
         if (iResult == SOCKET_ERROR) {
             int error = WSAGetLastError();
-            Show::write("\n  -- bind failed with error: " + Conv<int>::toString(error));
+            StaticLogger<1>::write("\n  -- bind failed with error: " + Utilities::Converter<int>::toString(error));
             socket_ = INVALID_SOCKET;
             continue;
         }
@@ -486,52 +451,48 @@ bool SocketListener::bind()
         }
     }
     freeaddrinfo(result);
-    Show::write("\n  -- bind operation complete");
+    StaticLogger<1>::write("\n  -- bind operation complete");
     return true;
 }
-//----< put SocketListener in listen mode, doesn't block >-------------------
 
-bool SocketListener::listen()
-{
-    Show::write("\n  -- starting TCP listening socket setup");
+//----< put SocketListener in listen mode, doesn't block >-------------------
+bool SocketListener::listen() {
+    StaticLogger<1>::write("\n  -- starting TCP listening socket setup");
     iResult = ::listen(socket_, SOMAXCONN);
     if (iResult == SOCKET_ERROR) {
         int error = WSAGetLastError();
-        Show::write("\n  -- listen failed with error: " + Conv<int>::toString(error));
+        StaticLogger<1>::write("\n  -- listen failed with error: " + Utilities::Converter<int>::toString(error));
         socket_ = INVALID_SOCKET;
         return false;
     }
-    Show::write("\n  -- server TCP listening socket setup complete");
+    StaticLogger<1>::write("\n  -- server TCP listening socket setup complete");
     return true;
 }
-//----< accepts incoming requrests to connect - blocking call >--------------
 
-Socket SocketListener::accept()
-{
+//----< accepts incoming requrests to connect - blocking call >--------------
+Socket SocketListener::accept() {
     ::SOCKET sock = ::accept(socket_, NULL, NULL);
     Socket clientSocket = sock;    // uses Socket(::SOCKET) promotion ctor
     if (!clientSocket.validState()) {
         acceptFailed_ = true;
         int error = WSAGetLastError();
-        Show::write("\n  -- server accept failed with error: " + Conv<int>::toString(error));
-        Show::write(
+        StaticLogger<1>::write("\n  -- server accept failed with error: " + Utilities::Converter<int>::toString(error));
+        StaticLogger<1>::write(
             "\n  -- this occurs when application shuts down while listener thread is blocked on Accept call"
         );
         return clientSocket;
     }
     return clientSocket;
 }
-//----< request SocketListener to stop accepting connections >---------------
 
-void SocketListener::stop()
-{
+//----< request SocketListener to stop accepting connections >---------------
+void SocketListener::stop() {
     stop_.exchange(true);
     sendString("Stop!");
 }
 
+#define TEST_SOCKETS
 #ifdef TEST_SOCKETS
-
-//----< test stub >----------------------------------------------------------
 
 /////////////////////////////////////////////////////////////////////////////
 // Server's client handler class
@@ -539,8 +500,7 @@ void SocketListener::stop()
 // - passed to SocketListener::start(CallObject& co)
 // - Client handling thread starts by calling operator()
 
-class ClientHandler
-{
+class ClientHandler {
 public:
     void operator()(Socket& socket_);
     bool testStringHandling(Socket& socket_);
@@ -548,30 +508,27 @@ public:
 };
 
 //----< Client Handler thread starts running this function >-----------------
-
-void clearBuffer(Socket::byte* buffer, size_t BufLen)
-{
+void clearBuffer(char* buffer, size_t BufLen) {
     for (size_t i = 0; i < BufLen; ++i)
         buffer[i] = '\0';
 }
 
-void ClientHandler::operator()(Socket& socket_)
-{
+void ClientHandler::operator()(Socket& socket_) {
     while (true)
     {
         // interpret test command
 
         std::string command = Socket::removeTerminator(socket_.recvString());
-        Show::write("\n  server rcvd command: " + command);
+        StaticLogger<1>::write("\n  server rcvd command: " + command);
         if (command == "Done")
         {
-            Show::write("\n  server sent : " + command);
+            StaticLogger<1>::write("\n  server sent : " + command);
             socket_.sendString(command);
             break;
         }
         if (command.size() == 0)
         {
-            Show::write("\n  client connection closed");
+            StaticLogger<1>::write("\n  client connection closed");
             break;
         }
         //Show::write("\n  server recvd: " + command);
@@ -579,37 +536,36 @@ void ClientHandler::operator()(Socket& socket_)
         if (command == "TEST_STRING_HANDLING")
         {
             if (testStringHandling(socket_))
-                Show::write("\n  ----String Handling test passed\n");
+                StaticLogger<1>::write("\n  ----String Handling test passed\n");
             else
-                Show::write("\n  ----String Handling test failed\n");
+                StaticLogger<1>::write("\n  ----String Handling test failed\n");
             continue; // go back and get another command
         }
         if (command == "TEST_BUFFER_HANDLING")
         {
             if (testBufferHandling(socket_))
-                Show::write("\n  ----Buffer Handling test passed\n");
+                StaticLogger<1>::write("\n  ----Buffer Handling test passed\n");
             else
-                Show::write("\n  ----Buffer Handling test failed\n");
+                StaticLogger<1>::write("\n  ----Buffer Handling test failed\n");
             continue;  // get another command
         }
     }
 
     // we get here if command isn't requesting a test, e.g., "TEST_STOP"
 
-    Show::write("\n");
-    Show::write("\n  ClientHandler socket connection closing");
+    StaticLogger<1>::write("\n");
+    StaticLogger<1>::write("\n  ClientHandler socket connection closing");
     socket_.shutDown();
     socket_.close();
-    Show::write("\n  ClientHandler thread terminating");
+    StaticLogger<1>::write("\n  ClientHandler thread terminating");
 }
 
 //----< test string handling >-----------------------------------------------
 /*
 *   Creates strings, sends to server, then reads strings server echos back.
 */
-bool ClientHandler::testStringHandling(Socket& socket_)
-{
-    Show::title("String handling test on server");
+bool ClientHandler::testStringHandling(Socket& socket_) {
+    StaticLogger<1>::title("String handling test on server");
 
     while (true)
     {
@@ -619,11 +575,11 @@ bool ClientHandler::testStringHandling(Socket& socket_)
         if (str.size() > 0)
         {
             //Show::write("\n  bytes recvd at server: " + toString(str.size() + 1));
-            Show::write("\n  server rcvd : " + str);
+            StaticLogger<1>::write("\n  server rcvd : " + str);
 
             if (socket_.sendString(str))
             {
-                Show::write("\n  server sent : " + str);
+                StaticLogger<1>::write("\n  server sent : " + str);
             }
             else
             {
@@ -638,7 +594,7 @@ bool ClientHandler::testStringHandling(Socket& socket_)
         }
     }
     socket_.sendString("TEST_STRING_HANDLING_END");
-    Show::write("\n  End of string handling test in ClientHandler");
+    StaticLogger<1>::write("\n  End of string handling test in ClientHandler");
     return true;
 }
 
@@ -646,11 +602,10 @@ bool ClientHandler::testStringHandling(Socket& socket_)
 /*
 *   Creates buffers, sends to server, then reads buffers server echos back.
 */
-bool ClientHandler::testBufferHandling(Socket& socket_)
-{
-    Show::title("Buffer handling test on server");
+bool ClientHandler::testBufferHandling(Socket& socket_) {
+    StaticLogger<1>::title("Buffer handling test on server");
     const size_t BufLen = 20;
-    Socket::byte buffer[BufLen];
+    char buffer[BufLen];
     bool ok;
 
     while (true)
@@ -664,16 +619,16 @@ bool ClientHandler::testBufferHandling(Socket& socket_)
             for (size_t i = 0; i < BufLen; ++i)
                 temp += buffer[i];
             //Show::write("\n  bytes recvd at server: " + toString(BufLen));
-            Show::write("\n  server rcvd : " + temp);
+            StaticLogger<1>::write("\n  server rcvd : " + temp);
 
             buffer[BufLen - 1] = '\0';
             if (socket_.send(BufLen, buffer))
             {
-                Show::write("\n  server sent : " + std::string(buffer));
+                StaticLogger<1>::write("\n  server sent : " + std::string(buffer));
             }
             else
             {
-                Show::write("\n  server send failed");
+                StaticLogger<1>::write("\n  server send failed");
                 return false;
             }
             if (temp.find("TEST_END") != std::string::npos)
@@ -689,59 +644,56 @@ bool ClientHandler::testBufferHandling(Socket& socket_)
             break;
         }
     }
-    Show::write("\n  End of buffer handling test in ClientHandler");
+    StaticLogger<1>::write("\n  End of buffer handling test in ClientHandler");
     ::Sleep(4000);
     return true;
 }
 
 //----< test string handling - server echos back client sent string >--------
-
-void clientTestStringHandling(Socket& si)
-{
+void clientTestStringHandling(Socket& si) {
     std::string command = "TEST_STRING_HANDLING";
     si.sendString(command);
-    Show::write("\n  client sent : " + command);
+    StaticLogger<1>::write("\n  client sent : " + command);
 
     for (size_t i = 0; i < 5; ++i)
     {
-        std::string text = "Hello World " + std::string("#") + Conv<size_t>::toString(i + 1);
+        std::string text = "Hello World " + std::string("#") + Utilities::Converter<size_t>::toString(i + 1);
         si.sendString(text);
-        Show::write("\n  client sent : " + text);
+        StaticLogger<1>::write("\n  client sent : " + text);
     }
     command = "TEST_END";
     si.sendString(command);
-    Show::write("\n  client sent : " + command);
+    StaticLogger<1>::write("\n  client sent : " + command);
 
     while (true)
     {
         std::string str = Socket::removeTerminator(si.recvString());
         if (str.size() == 0)
         {
-            Show::write("\n  client detected closed connection");
+            StaticLogger<1>::write("\n  client detected closed connection");
             break;
         }
-        Show::write("\n  client recvd: " + str);
+        StaticLogger<1>::write("\n  client recvd: " + str);
         if (str == "TEST_END")
         {
-            Show::write("\n  End of string handling test in client");
+            StaticLogger<1>::write("\n  End of string handling test in client");
             break;
         }
     }
 }
-//----< test buffer handling - server echos back client sent buffer >--------
 
-void clientTestBufferHandling(Socket& si)
-{
+//----< test buffer handling - server echos back client sent buffer >--------
+void clientTestBufferHandling(Socket& si) {
     std::string command = "TEST_BUFFER_HANDLING";
     si.sendString(command);
-    Show::write("\n  client sent : " + command);
+    StaticLogger<1>::write("\n  client sent : " + command);
 
     const int BufLen = 20;
-    Socket::byte buffer[BufLen];
+    char buffer[BufLen];
 
     for (size_t i = 0; i < 5; ++i)
     {
-        std::string text = "Hello World " + std::string("#") + Conv<size_t>::toString(i + 1);
+        std::string text = "Hello World " + std::string("#") + Utilities::Converter<size_t>::toString(i + 1);
         for (size_t i = 0; i < BufLen; ++i)
         {
             if (i < text.size())
@@ -751,7 +703,7 @@ void clientTestBufferHandling(Socket& si)
         }
         buffer[BufLen - 1] = '\0';
         si.send(BufLen, buffer);
-        Show::write("\n  client sent : " + std::string(buffer));
+        StaticLogger<1>::write("\n  client sent : " + std::string(buffer));
     }
     std::string text = "TEST_END";
     for (size_t i = 0; i < BufLen; ++i)
@@ -763,7 +715,7 @@ void clientTestBufferHandling(Socket& si)
     }
     buffer[BufLen - 1] = '\0';
     si.send(BufLen, buffer);
-    Show::write("\n  client sent : " + std::string(buffer));
+    StaticLogger<1>::write("\n  client sent : " + std::string(buffer));
 
     bool ok;
     std::string collector;
@@ -774,47 +726,47 @@ void clientTestBufferHandling(Socket& si)
         ok = si.recv(BufLen, buffer);
         if (!ok)
         {
-            Show::write("\n  client unable to receive");
+            StaticLogger<1>::write("\n  client unable to receive");
             break;
         }
         std::string str(buffer);
         collector += str;
         if (str.size() == 0)
         {
-            Show::write("\n  client detected closed connection");
+            StaticLogger<1>::write("\n  client detected closed connection");
             break;
         }
-        Show::write("\n  client rcvd : " + str);
+        StaticLogger<1>::write("\n  client rcvd : " + str);
         if (collector.find("TEST_END") != std::string::npos)
         {
-            Show::write("\n  End of buffer handling test in client");
+            StaticLogger<1>::write("\n  End of buffer handling test in client");
             break;
         }
     }
 }
-//----< demonstration >------------------------------------------------------
 
-int main(int argc, char* argv[])
-{
-    Show::attach(&std::cout);
-    Show::start();
-    Show::title("Testing Sockets", '=');
+//----< test stub >------------------------------------------------------
+
+int main(int argc, char* argv[]) {
+    StaticLogger<1>::attach(&std::cout);
+    StaticLogger<1>::start();
+    StaticLogger<1>::title("Testing Sockets", '=');
 
     try
     {
         SocketSystem ss;
         SocketConnecter si;
-        SocketListener sl(9070, Socket::IP6);
+        SocketListener sl(9070, IP_VERSION::IPv6);
         ClientHandler cp;
         sl.start(cp);
 
         while (!si.connect("localhost", 9070))
         {
-            Show::write("\n  client waiting to connect");
+            StaticLogger<1>::write("\n  client waiting to connect");
             ::Sleep(100);
         }
 
-        Show::title("Starting string test on client");
+        StaticLogger<1>::title("Starting string test on client");
         clientTestStringHandling(si);
 
         ////////////////////////////////////////////////////
@@ -826,7 +778,7 @@ int main(int argc, char* argv[])
 
         si.sendString("TEST_STOP");
 
-        Show::write("\n\n  client calling send shutdown\n");
+        StaticLogger<1>::write("\n\n  client calling send shutdown\n");
         si.shutDownSend();
         sl.stop();
     }
@@ -836,5 +788,4 @@ int main(int argc, char* argv[])
         std::cout << "\n  " << ex.what() << "\n\n";
     }
 }
-
 #endif
