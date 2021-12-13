@@ -87,7 +87,6 @@ int main() {
 
 	StaticLogger<1>::attach(&std::cout);
 	StaticLogger<1>::start();
-	StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "test" });
 
 	std::list<std::string> tests{
 		"TestBasicCalculatorPass", "TestBasicCalculatorFail", "TestBasicCalculatorException", "TestAdvancedCalculatorPass",
@@ -97,4 +96,6 @@ int main() {
 
 	TestHarness testHarness{ "default", LOG_LEVEL::debug };
 	testHarness.execute(tests);
+
+	return 0;
 }

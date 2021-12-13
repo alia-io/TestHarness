@@ -42,29 +42,30 @@ void Logger::start() {
             hConsole = GetStdHandle(STD_OUTPUT_HANDLE);		//retrieve handle for std ouput device
             switch (msg.outputType) {
             case OUTPUT_TYPE::system:
-                SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
+                SetConsoleTextAttribute(hConsole, 9);
                 *_pOut << " [SYSTEM] ";
                 break;
             case OUTPUT_TYPE::summary:
-                SetConsoleTextAttribute(hConsole, 3);
-                *_pOut << " [TEST RESULT SUMMARY] ";
+                SetConsoleTextAttribute(hConsole, 9);
+                *_pOut << "\n [TEST RESULT SUMMARY] ";
                 break;
             case OUTPUT_TYPE::positive:
                 SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
-                *_pOut << " [PASS] ";
+                *_pOut << "\n [PASS] ";
                 break;
             case OUTPUT_TYPE::negative:
                 SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
-                *_pOut << " [FAIL] ";
+                *_pOut << "\n [FAIL] ";
                 break;
             case OUTPUT_TYPE::error:
-                SetConsoleTextAttribute(hConsole, 6);
+                SetConsoleTextAttribute(hConsole, 14);
+                *_pOut << "\n [EXCEPTION] ";
             }
             // 3,9 = light blue
             // 5, 13 = red-violet
             // 6 = golden
             SetConsoleTextAttribute(hConsole, 15);
-            *_pOut << msg.text;
+            *_pOut << msg.text << "\n";
         }
     };
     std::thread thr(tp);

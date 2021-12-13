@@ -1,30 +1,30 @@
 #include "TestResultFormatter.h"
 
 std::string TestResultFormatter::testPassedMessage(std::string testName, TestTimer timer) {
-	return testName + "\n        Time elapsed: " + std::to_string(timer.timeTaken()) + " ns.\n\n";
+	return testName + "\n        Time elapsed: " + std::to_string(timer.timeTaken()) + " ns.";
 }
 
 std::string TestResultFormatter::testFailedMessage(std::string testName, TestTimer timer) {
-	return testName + "\n        Time elapsed: " + std::to_string(timer.timeTaken()) + " ns.\n\n";
+	return testName + "\n        Time elapsed: " + std::to_string(timer.timeTaken()) + " ns.";
 }
 
 std::string TestResultFormatter::testExceptionMessage(std::string testName, std::exception& e, LOG_LEVEL logLevel) {
 	switch (logLevel) {
 	case LOG_LEVEL::info:	// level 1 logging
-		return testName + "\n        Test failed with exception.\n\n";
+		return testName + "\n        Test failed with exception.";
 	case LOG_LEVEL::detail:	// level 2 logging
-		return testName + "\n        Test failed with exception: " + exceptionDetails(e) + "\n\n";
+		return testName + "\n        Test failed with exception: " + exceptionDetails(e) + "";
 	case LOG_LEVEL::debug:	// level 3 logging
 		return testName + "\n        Test failed with exception: " + exceptionDetails(e)
-			+ "\n        Exception occurred on " + TestTimer::currentTime() + ".\n\n";
+			+ "\n        Exception occurred on " + TestTimer::currentTime() + ".";
 	}
 	return "";
 }
 
 std::string TestResultFormatter::testResultSummary(TestResultCounter counter, TestTimer timer) {
-	std::string out = " Total Tests           " + counter.getTestsTotal();
-	out += "\n Tests Passed          " + counter.getTestsPassed();
-	out += "\n Tests Failed          " + counter.getTestsFailed();
+	std::string out = " Total Tests           " + std::to_string(counter.getTestsTotal());
+	out += "\n                        Tests Passed          " + std::to_string(counter.getTestsPassed());
+	out += "\n                        Tests Failed          " + std::to_string(counter.getTestsFailed());
 	//TODO:Add timer logic,below line gives a weird format
 	//cout << left << setw(10) << "Total Time Taken " << right << setw(20) << timer.timeTaken() << endl;
 	return out;
