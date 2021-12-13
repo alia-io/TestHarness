@@ -56,14 +56,12 @@ Message::Message(std::string jsonMessageString) {
 						if (step.at(0) == MESSAGE_STEP::ms_type) {
 							if (str.compare("client_request") == 0) messageType = MESSAGE_TYPE::client_request;
 							else if (str.compare("test_result") == 0) messageType = MESSAGE_TYPE::test_result;
-							step.pop_back();
 						} else if (step.at(0) == MESSAGE_STEP::ms_author) {
 							author = str;
-							step.pop_back();
 						} else if (step.at(0) == MESSAGE_STEP::ms_timestamp) {
 							timestamp = str;
-							step.pop_back();
 						}
+						step.pop_back();
 					} else if (step.size() == 1 && stk.size() == 2) {
 						if (step.at(0) == MESSAGE_STEP::ms_source || step.at(0) == MESSAGE_STEP::ms_destination) {
 							if (str.compare("version") == 0) step.push_back(MESSAGE_STEP::ms_version);
@@ -80,7 +78,6 @@ Message::Message(std::string jsonMessageString) {
 								std::stringstream(str) >> source.port;
 								step.pop_back();
 							}
-							step.pop_back();
 						} else if (step.at(0) == MESSAGE_STEP::ms_destination) {
 							if (step.at(1) == MESSAGE_STEP::ms_version) {
 								if (str.compare("IPv4") == 0) destination.ipVer = IP_VERSION::IPv4;
@@ -90,8 +87,8 @@ Message::Message(std::string jsonMessageString) {
 								std::stringstream(str) >> destination.port;
 								step.pop_back();
 							}
-							step.pop_back();
 						}
+						step.pop_back();
 					}
 					str = "";
 				} else stk.push(ch);
@@ -99,7 +96,6 @@ Message::Message(std::string jsonMessageString) {
 		} else if (stk.size() > 0) {
 			if (stk.top() == '"') str += ch;
 		}
-
 	}
 }
 
