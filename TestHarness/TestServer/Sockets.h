@@ -145,7 +145,7 @@ namespace Sockets
     /////////////////////////////////////////////////////////////////////////////
     // SocketSystem class - manages loading and unloading Winsock library
 
-    class SocketSystem
+    /*class SocketSystem
     {
     public:
         SocketSystem();
@@ -252,7 +252,7 @@ namespace Sockets
     *  - You will find an example Callable Object, ClientProc,
     *    used in the test stub below
     */
-    template<typename CallObj>
+    /*template<typename CallObj>
     bool SocketListener::start(CallObj& co) {
 
         if (!bind()) { return false; }
@@ -289,6 +289,6 @@ namespace Sockets
         ListenThread.detach();
         return true;
     }
-}
+}*/
 #endif
 

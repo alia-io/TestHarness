@@ -157,14 +157,86 @@ std::string Message::getJsonFormattedMessage() {
 IP_VERSION Message::destinationIpVersion() { return destination.ipVer; }
 std::string Message::destinationIpAddress() { return destination.ipAddr; }
 size_t Message::destinationPort() { return destination.port; }
+IP_VERSION Message::sourceIpVersion() { return source.ipVer; }
+std::string Message::sourceIpAddress() { return source.ipAddr; }
+size_t Message::sourcePort() { return source.port; }
 
-/* return message body as a RequestItem or TestItem object */
-auto Message::getMessageBody() {
-	return "";
+/* get message body as a RequestItem object */
+RequestItem Message::getRequestMessageBody() {
+
+	enum class REQUEST_STEP { rs_none, rs_count, rs_tests };
+	REQUEST_STEP step = REQUEST_STEP::rs_none;
+	std::string str = "";
+	bool readText = false;
+	RequestItem item{};
+
+	if (messageType == MESSAGE_TYPE::client_request) {
+		for (char ch : body) {
+			if (readText) {
+				if (ch == '"') {
+					if (step == REQUEST_STEP::rs_none) {
+						if (str.compare("count") == 0) {
+							step = REQUEST_STEP::rs_count;
+						} else if (str.compare("tests") == 0) {
+							step = REQUEST_STEP::rs_tests;
+						}
+					} else if (step == REQUEST_STEP::rs_count) {
+						item.testCount = std::stoi(str);
+						step = REQUEST_STEP::rs_none;
+					} else if (step == REQUEST_STEP::rs_tests) {
+						item.testList.push_back(str);
+					}
+					readText = false;
+					str = "";
+				} else str += ch;
+			} else if (ch == '"') readText = true;
+
+		}
+	}
+	return item;
 }
 
-#define MESSAGE_TEST
+/* get message body as a TestItem object */
+TestItem Message::getResultMessageBody() {
+
+	enum class RESULT_STEP { rs_none, rs_name, rs_result, rs_message };
+	RESULT_STEP step = RESULT_STEP::rs_none;
+	std::string str = "";
+	bool readText = false;
+	TestItem item{};
+
+	if (messageType == MESSAGE_TYPE::test_result) {
+		for (char ch : body) {
+			if (readText) {
+				if (ch == '"') {
+					if (step == RESULT_STEP::rs_none) {
+						if (str.compare("name") == 0) step = RESULT_STEP::rs_name;
+						else if (str.compare("result") == 0) step = RESULT_STEP::rs_result;
+						else if (str.compare("message") == 0) step = RESULT_STEP::rs_message;
+					}
+					else if (step == RESULT_STEP::rs_name) {
+						item.testName = str;
+						step = RESULT_STEP::rs_none;
+					} else if (step == RESULT_STEP::rs_result) {
+						if (str.compare("pass") == 0) item.testResult = TEST_RESULT::pass;
+						else if (str.compare("fail") == 0) item.testResult = TEST_RESULT::fail;
+						else if (str.compare("exception") == 0) item.testResult = TEST_RESULT::exception;
+						step = RESULT_STEP::rs_none;
+					} else if (step == RESULT_STEP::rs_message) {
+						item.testMessage = str;
+						step = RESULT_STEP::rs_none;
+					}
+					readText = false;
+					str = "";
+				} else str += ch;
+			} else if (ch == '"') readText = true;
+		}
+	}
+	return item;
+}
+
 // ------------ Test Stub ------------- //
+
 #ifdef MESSAGE_TEST
 
 int main() {
@@ -176,13 +248,26 @@ int main() {
 	Message requestStrToMsg{ requestStr };
 	std::cout << "\n" << requestStrToMsg.getJsonFormattedMessage() << std::endl;
 	std::cout << "\nequal = " << requestStr.compare(requestStrToMsg.getJsonFormattedMessage()) << std::endl;
+	RequestItem requestItem = requestMsg.getRequestMessageBody();
+	std::cout << "\ntestCount = " << requestItem.testCount << ", testList = [ ";
+	for (auto it = requestItem.testList.begin(); it != requestItem.testList.end(); ++it) {
+		if (it != requestItem.testList.begin()) std::cout << ", ";
+		std::cout << *it;
+	}
+	std::cout << " ]" << std::endl;
 
-	Message resultMsg{ IP_VERSION::IPv6, "123.45.678.90", 8080, IP_VERSION::IPv4, "987.65.432.10", 9090, "TestName" };
+	Message resultMsg{IP_VERSION::IPv6, "123.45.678.90", 8080, IP_VERSION::IPv4, "987.65.432.10", 9090, "TestName"};
 	std::string resultStr = resultMsg.getJsonFormattedMessage();
 	std::cout << "\n" << resultStr << std::endl;
 	Message resultStrToMsg{ resultStr };
 	std::cout << "\n" << resultStrToMsg.getJsonFormattedMessage() << std::endl;
 	std::cout << "\nequal = " << resultStr.compare(resultStrToMsg.getJsonFormattedMessage()) << std::endl;
+	TestItem resultItem = resultMsg.getResultMessageBody();
+	std::cout << "\nname = " << resultItem.testName << ", result = ";
+	if (resultItem.testResult == TEST_RESULT::pass) std::cout << "pass";
+	else if (resultItem.testResult == TEST_RESULT::fail) std::cout << "fail";
+	else if (resultItem.testResult == TEST_RESULT::exception) std::cout << "exception";
+	std::cout << ", message = " << resultItem.testMessage << std::endl;
 
 	resultMsg.setTestResult(TEST_RESULT::fail, "test failed!\n     new line");
 	std::string testResultStr = resultMsg.getJsonFormattedMessage();
@@ -190,6 +275,12 @@ int main() {
 	Message testResultStrToMsg{ testResultStr };
 	std::cout << "\n" << testResultStrToMsg.getJsonFormattedMessage() << std::endl;
 	std::cout << "\nequal = " << testResultStr.compare(testResultStrToMsg.getJsonFormattedMessage()) << std::endl;
+	resultItem = resultMsg.getResultMessageBody();
+	std::cout << "\nname = " << resultItem.testName << ", result = ";
+	if (resultItem.testResult == TEST_RESULT::pass) std::cout << "pass";
+	else if (resultItem.testResult == TEST_RESULT::fail) std::cout << "fail";
+	else if (resultItem.testResult == TEST_RESULT::exception) std::cout << "exception";
+	std::cout << ", message = " << resultItem.testMessage << std::endl;
 
 	return 0;
 }

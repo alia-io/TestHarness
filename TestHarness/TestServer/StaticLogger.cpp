@@ -15,79 +15,91 @@
 #include "StaticLogger.h"
 #include "Utilities.h"
 
-//----< send text message to std::ostream >--------------------------
+Logger::Logger() : logLevel{ LOG_LEVEL::info } { }
+void Logger::setLogLevel(LOG_LEVEL log) { logLevel = log; }
 
-void Logger::write(const std::string& msg)
-{
+//----< attach logger to existing std::ostream >---------------------
+void Logger::attach(std::ostream* pOut) { _pOut = pOut; }
+
+//----< send text message to std::ostream >--------------------------
+void Logger::write(const LogMsg msg) {
     if (_ThreadRunning)
         _queue.enQ(msg);
 }
-void Logger::title(const std::string& msg, char underline)
-{
-    std::string temp = "\n  " + msg + "\n " + std::string(msg.size() + 2, underline);
-    write(temp);
-}
-//----< attach logger to existing std::ostream >---------------------
 
-void Logger::attach(std::ostream* pOut)
-{
-    _pOut = pOut;
-}
 //----< start logging >----------------------------------------------
-
-void Logger::start()
-{
-    if (_ThreadRunning)
-        return;
+void Logger::start() {
+    if (_ThreadRunning) return;
     _ThreadRunning = true;
     std::function<void()> tp = [=]() {
-        while (true)
-        {
-            std::string msg = _queue.deQ();
-            if (msg == "quit")
-            {
+        while (true) {
+            LogMsg msg = _queue.deQ();
+            if (msg.text == "quit") {
                 _ThreadRunning = false;
                 break;
             }
-            *_pOut << msg;
+            HANDLE hConsole;
+            hConsole = GetStdHandle(STD_OUTPUT_HANDLE);		//retrieve handle for std ouput device
+            switch (msg.outputType) {
+            case OUTPUT_TYPE::system:
+                SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
+                *_pOut << " [SYSTEM] ";
+                break;
+            case OUTPUT_TYPE::summary:
+                SetConsoleTextAttribute(hConsole, 3);
+                *_pOut << " [TEST RESULT SUMMARY] ";
+                break;
+            case OUTPUT_TYPE::positive:
+                SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
+                *_pOut << " [PASS] ";
+                break;
+            case OUTPUT_TYPE::negative:
+                SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
+                *_pOut << " [FAIL] ";
+                break;
+            case OUTPUT_TYPE::error:
+                SetConsoleTextAttribute(hConsole, 6);
+            }
+            // 3,9 = light blue
+            // 5, 13 = red-violet
+            // 6 = golden
+            SetConsoleTextAttribute(hConsole, 15);
+            *_pOut << msg.text;
         }
     };
     std::thread thr(tp);
     thr.detach();
 }
-//----< stop logging >-----------------------------------------------
 
-void Logger::stop(const std::string& msg)
-{
-    if (_ThreadRunning)
-    {
-        if (msg != "")
-            write(msg);
-        write("quit");  // request thread to stop
+//----< stop logging >-----------------------------------------------
+void Logger::stop(const LogMsg msg) {
+    if (_ThreadRunning) {
+        if (msg.text != "") write(msg);
+        LogMsg quitMsg{};
+        quitMsg.outputType = OUTPUT_TYPE::system;
+        quitMsg.text = "quit";
+        write(quitMsg);  // request thread to stop
         while (_ThreadRunning)
             /* wait for thread to stop*/
             ;
     }
 }
-//----< stop logging thread >----------------------------------------
 
-Logger::~Logger()
-{
-    stop();
+//----< stop logging thread >----------------------------------------
+Logger::~Logger() {
+    LogMsg msg{};
+    msg.outputType = OUTPUT_TYPE::system;
+    msg.text = "";
+    stop(msg);
 }
 
-struct Cosmetic
-{
-    ~Cosmetic() { std::cout << "\n\n"; }
-} cosmetic;
+LOG_LEVEL Logger::getLogLevel() { return logLevel; }
+
+//--------------< test stub >--------------------
 
 #ifdef TEST_LOGGER
 
-using Util = Utilities::StringHelper;
-
-int main()
-{
-    //Util::Title("Testing Logger Class");
+int main(){
     Logger log;
     log.attach(&std::cout);
     log.write("\n  won't get logged - not started yet");

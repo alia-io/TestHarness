@@ -139,20 +139,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Executive.h" />
+    <ClInclude Include="Server.h" />
     <ClInclude Include="Sockets.h" />
     <ClInclude Include="StaticLogger.h" />
     <ClInclude Include="BlockingQueue.h" />
+    <ClInclude Include="MessageHandler.h" />
+    <ClInclude Include="TestDriver.h" />
+    <ClInclude Include="TestHarness.h" />
     <ClInclude Include="TestResultCounter.h" />
+    <ClInclude Include="TestResultFormatter.h" />
+    <ClInclude Include="TestRunner.h" />
     <ClInclude Include="TestTimer.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Message.cpp" />
+    <ClCompile Include="MessageHandler.cpp" />
+    <ClCompile Include="Server.cpp" />
     <ClCompile Include="Sockets.cpp" />
     <ClCompile Include="StaticLogger.cpp" />
     <ClCompile Include="BlockingQueue.cpp" />
+    <ClCompile Include="TestDriver.cpp" />
+    <ClCompile Include="TestHarness.cpp" />
     <ClCompile Include="TestResultCounter.cpp" />
+    <ClCompile Include="TestResultFormatter.cpp" />
+    <ClCompile Include="TestRunner.cpp" />
     <ClCompile Include="TestTimer.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>

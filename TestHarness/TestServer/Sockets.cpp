@@ -11,22 +11,22 @@
 // Platform:    Visual Studio 2015, Dell XPS 8900, Windows 10 pro      //
 /////////////////////////////////////////////////////////////////////////
 
-#include "Sockets.h"
-#include <iostream>
-#include <sstream>
-#include <thread>
-#include <memory>
-#include <functional>
-#include <exception>
-#include "Utilities.h"
+//#include "Sockets.h"
+//#include <iostream>
+//#include <sstream>
+//#include <thread>
+//#include <memory>
+//#include <functional>
+//#include <exception>
+//#include "Utilities.h"
 
-using namespace Sockets;
+//using namespace Sockets;
 
 /////////////////////////////////////////////////////////////////////////////
 // SocketSystem class members
 
 //----< constructor starts up sockets by loading winsock lib >---------------
-SocketSystem::SocketSystem() {
+/*SocketSystem::SocketSystem() {
     int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (iResult != 0) {
         StaticLogger<1>::write("\n  WSAStartup failed with error = " + Utilities::Converter<int>::toString(iResult));
@@ -53,7 +53,7 @@ Socket::Socket(IP_VERSION ipver) : ipver_(ipver) {
 *  You have to set ip version if you want IP6 after promotion, e.g.:
 *     s.ipVer() = IP6;
 */
-Socket::Socket(::SOCKET sock) : socket_(sock) {
+/*Socket::Socket(::SOCKET sock) : socket_(sock) {
     ipver_ = IP_VERSION::IPv4;
     ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
@@ -90,7 +90,7 @@ Socket& Socket::operator=(Socket&& s) {
 *    Only instances of SocketListener are influenced by ipVer().
 *    Clients will use whatever protocol the server supports.
 */
-IP_VERSION& Socket::ipVer() { return ipver_; }
+/*IP_VERSION& Socket::ipVer() { return ipver_; }
 
 //----< close connection >---------------------------------------------------
 void Socket::close() {
@@ -134,7 +134,7 @@ Socket::~Socket() {
 *  - bytes must be less than or equal to the size of buffer
 *  - doesn't return until requested number of bytes have been sent
 */
-bool Socket::send(size_t bytes, char* buffer) {
+/*bool Socket::send(size_t bytes, char* buffer) {
     size_t bytesSent = 0, bytesLeft = bytes;
     char* pBuf = buffer;
     while (bytesLeft > 0)
@@ -153,7 +153,7 @@ bool Socket::send(size_t bytes, char* buffer) {
 *  - bytes must be less than or equal to the size of buffer
 *  - doesn't return until buffer has been filled with requested bytes
 */
-bool Socket::recv(size_t bytes, char* buffer) {
+/*bool Socket::recv(size_t bytes, char* buffer) {
     size_t bytesRecvd = 0, bytesLeft = bytes;
     char* pBuf = buffer;
     while (bytesLeft > 0)
@@ -172,7 +172,7 @@ bool Socket::recv(size_t bytes, char* buffer) {
  *  Doesn't return until entire string has been sent
  *  By default terminator is '\0'
  */
-bool Socket::sendString(const std::string& str, char terminator) {
+/*bool Socket::sendString(const std::string& str, char terminator) {
     size_t bytesSent, bytesRemaining = str.size();
     const char* pBuf = &(*str.begin());
     while (bytesRemaining > 0)
@@ -197,7 +197,7 @@ bool Socket::sendString(const std::string& str, char terminator) {
  * - That will require building a circular buffer.
  * - performance seems acceptable, so won't do this now
  */
-std::string Socket::recvString(char terminator) {
+/*std::string Socket::recvString(char terminator) {
     static const int buflen = 1;
     char buffer[1];
     std::string str;
@@ -230,7 +230,7 @@ std::string Socket::removeTerminator(const std::string& src) {
 /*
  * returns number of bytes actually sent
  */
-size_t Socket::sendStream(size_t bytes, char* pBuf) {
+/*size_t Socket::sendStream(size_t bytes, char* pBuf) {
     return ::send(socket_, pBuf, bytes, 0);
 }
 
@@ -238,7 +238,7 @@ size_t Socket::sendStream(size_t bytes, char* pBuf) {
 /*
 * returns number of bytes actually received
 */
-size_t Socket::recvStream(size_t bytes, char* pBuf) {
+/*size_t Socket::recvStream(size_t bytes, char* pBuf) {
     return ::recv(socket_, pBuf, bytes, 0);
 }
 
@@ -563,7 +563,7 @@ void ClientHandler::operator()(Socket& socket_) {
 /*
 *   Creates strings, sends to server, then reads strings server echos back.
 */
-bool ClientHandler::testStringHandling(Socket& socket_) {
+/*bool ClientHandler::testStringHandling(Socket& socket_) {
     StaticLogger<1>::title("String handling test on server");
 
     while (true)
@@ -601,7 +601,7 @@ bool ClientHandler::testStringHandling(Socket& socket_) {
 /*
 *   Creates buffers, sends to server, then reads buffers server echos back.
 */
-bool ClientHandler::testBufferHandling(Socket& socket_) {
+/*bool ClientHandler::testBufferHandling(Socket& socket_) {
     StaticLogger<1>::title("Buffer handling test on server");
     const size_t BufLen = 20;
     char buffer[BufLen];
@@ -787,4 +787,4 @@ int main(int argc, char* argv[]) {
         std::cout << "\n  " << ex.what() << "\n\n";
     }
 }
-#endif
+#endif*/
