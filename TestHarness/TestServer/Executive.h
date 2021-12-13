@@ -1,3 +1,4 @@
+#pragma once
 #include "TestDriver.h"
 
 bool testBasicCalculatorPassScenario() {	// expect PASS
