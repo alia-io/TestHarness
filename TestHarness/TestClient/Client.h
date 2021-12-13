@@ -11,6 +11,6 @@ public:
 	static void runTests(LOG_LEVEL logLevel, std::list<std::string> testList);
 private:
 	static void init();
-	static void startListener();
+	static void startListener(int numTests);
 	static void sendRequest(LOG_LEVEL logLevel, std::list<std::string> testList);
 };

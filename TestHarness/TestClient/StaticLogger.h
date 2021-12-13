@@ -61,7 +61,7 @@
 
 using namespace TestMessenger;
 
-enum class OUTPUT_TYPE { system, positive, negative, error, summary };
+enum class OUTPUT_TYPE { system, positive, negative, neutral, summary };
 
 class LogMsg {
 private:

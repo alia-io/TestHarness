@@ -41,7 +41,8 @@ public:
 void ConnectionHandler::operator()(Socket& socket_) {
     std::string msg = Socket::removeTerminator(socket_.recvString());
     Message request{ msg };
-    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Recvd message: " + msg });
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Test request message received from client" });
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Running tests..." });
     ::Sleep(1000);  // wait to make sure client listener is started
     Server::runTestHarness(request);
 }
@@ -94,9 +95,10 @@ void Server::runTestHarness(Message requestMsg) {
         numberOfTests--;
     }
 
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "All test results have been sent to client" });
     if (harnessThr.joinable()) harnessThr.join();
 
-    si.sendString("quit");
+    //si.sendString("quit");
     //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server sent msg: quit" });
     //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Connection terminated." });
 }

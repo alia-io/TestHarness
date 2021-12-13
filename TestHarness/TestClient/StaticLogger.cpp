@@ -57,7 +57,7 @@ void Logger::start() {
                 SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
                 *_pOut << "\n [FAIL] ";
                 break;
-            case OUTPUT_TYPE::error:
+            case OUTPUT_TYPE::neutral:
                 SetConsoleTextAttribute(hConsole, 14);
                 *_pOut << "\n [EXCEPTION] ";
             }

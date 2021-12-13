@@ -22,6 +22,7 @@
 #include "Client.h"
 #include "Sockets.h"
 #include "StaticLogger.h"
+#include "ResultCounter.h"
 #include <string>
 #include <iostream>
 #include <thread>
@@ -33,23 +34,44 @@ const size_t Client::portNumber = 9090;
 using namespace Sockets;
 
 class ConnectionHandler {
+private:
+    ResultCounter counter{};
 public:
     void operator()(Socket& socket_);
+    void setTotalTests(int count);
 };
 
 void ConnectionHandler::operator()(Socket& socket_) {
+    
+    int numberOfTests = counter.getTestsTotal();
     while (true) {  // Incoming messages from server received here
+        if (numberOfTests <= 0) break;
         std::string msg = Socket::removeTerminator(socket_.recvString());
-        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Recvd message: " + msg });
-        if (msg == "quit") break;
+        //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Recvd message: " + msg });
+        Message resultMsg{ msg };
+        if (resultMsg.getResultMessageBody().testResult == TEST_RESULT::pass) {
+            StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::positive, resultMsg.getResultMessageBody().testMessage });
+            counter.incrementTestPassed();
+        } else if (resultMsg.getResultMessageBody().testResult == TEST_RESULT::fail) {
+            StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::negative, resultMsg.getResultMessageBody().testMessage });
+            counter.incrementTestFailed();
+        } else if (resultMsg.getResultMessageBody().testResult == TEST_RESULT::exception) {
+            StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::neutral, resultMsg.getResultMessageBody().testMessage });
+            counter.incrementTestFailed();
+        }
+        numberOfTests--;
     }
+
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::summary, counter.testResultSummary() });
 }
+
+void ConnectionHandler::setTotalTests(int count) { counter.setTotalTests(count); }
 
 void Client::runTests(LOG_LEVEL logLevel, std::list<std::string> testList) {
     init();
     try {
         SocketSystem ss;
-        std::thread listenThread([=] { startListener(); });
+        std::thread listenThread([=] { startListener(testList.size()); });
         ::Sleep(1000);   // wait to make sure server listener is started
         sendRequest(logLevel, testList);
         listenThread.join();
@@ -64,9 +86,10 @@ void Client::init() {
     StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client started" });
 }
 
-void Client::startListener() {  // Communication from server to client
+void Client::startListener(int numTests) {  // Communication from server to client
     SocketListener sl(Client::portNumber, Client::ipVersion);
     ConnectionHandler cp;
+    cp.setTotalTests(numTests);
     sl.start(cp);
     std::cout.flush();
     std::cin.get();
@@ -85,9 +108,8 @@ void Client::sendRequest(LOG_LEVEL logLevel, std::list<std::string> testList) { 
     std::string jsonRequest = request.getJsonFormattedMessage();
     si.sendString(jsonRequest);   // send request to server
 
-    //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + jsonRequest });
-
-    ::Sleep(100);
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent test request message" });
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server processing results..." });
 
     //std::string msg = "quit";   // terminate connection client > server
     //si.sendString(msg);
