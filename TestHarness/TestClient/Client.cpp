@@ -38,52 +38,60 @@ public:
 };
 
 void ConnectionHandler::operator()(Socket& socket_) {
-    while (true) {
+    while (true) {  // Incoming messages from server received here
         std::string msg = Socket::removeTerminator(socket_.recvString());
         StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Recvd message: " + msg });
         if (msg == "quit") break;
     }
 }
 
-int main() {
-
-    StaticLogger<1>::attach(&std::cout);
-    StaticLogger<1>::start();
-    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client started" });
-
+void Client::runTests(LOG_LEVEL logLevel, std::list<std::string> testList) {
+    init();
     try {
         SocketSystem ss;
-
-        std::thread listenThread([=] {
-            SocketListener sl(9090, IP_VERSION::IPv6);
-            ConnectionHandler cp;
-            sl.start(cp);
-            std::cout.flush();
-            std::cin.get();
-            });
-
-        ::Sleep(1000);   // make sure server listener is started
-
-        SocketConnecter si;
-        while (!si.connect("localhost", 8080)) {
-            StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client waiting to connect" });
-            ::Sleep(100);
-        }
-
-        std::string msg = "request_list";
-        si.sendString(msg);
-        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + msg });
-
-        ::Sleep(100);
-
-        msg = "quit";
-        si.sendString(msg);
-        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + msg });
-
-        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Connection terminated." });
-
+        std::thread listenThread([=] { startListener(); });
+        ::Sleep(1000);   // wait to make sure server listener is started
+        sendRequest(logLevel, testList);
         listenThread.join();
     } catch (std::exception& exc) {
         StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Exeception caught: " + std::string(exc.what()) });
     }
+}
+
+void Client::init() {
+    StaticLogger<1>::attach(&std::cout);
+    StaticLogger<1>::start();
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client started" });
+}
+
+void Client::startListener() {  // Communication from server to client
+    SocketListener sl(Client::portNumber, Client::ipVersion);
+    ConnectionHandler cp;
+    sl.start(cp);
+    std::cout.flush();
+    std::cin.get();
+}
+
+void Client::sendRequest(LOG_LEVEL logLevel, std::list<std::string> testList) { // Communication from client to server
+    
+    SocketConnecter si;
+    while (!si.connect("localhost", 8080)) {
+        StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client waiting to connect" });
+        ::Sleep(100);
+    }
+
+    //Message request{ Client::ipVersion, Client::ipAddress, Client::portNumber,
+    //    IP_VERSION::IPv6, "localhost", 8080, LOG_LEVEL::detail, testList };
+
+    std::string msg = "request_list";
+    si.sendString(msg);
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + msg });
+
+    ::Sleep(100);
+
+    msg = "quit";
+    si.sendString(msg);
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Client sent msg: " + msg });
+
+    StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Connection terminated." });
 }

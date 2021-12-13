@@ -25,6 +25,9 @@
     <Filter Include="Source Files\TestUtilities">
       <UniqueIdentifier>{6378759f-e0c3-40b9-ada3-7cd61523bd52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TestDriver">
+      <UniqueIdentifier>{05889ba8-d5f1-4ce7-88b0-90da4d11f027}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sockets.h">
@@ -70,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="Client.cpp">
       <Filter>Source Files\TestCommunicationInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Executive.cpp">
+      <Filter>Source Files\TestDriver</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

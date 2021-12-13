@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="BlockingQueue.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Executive.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="Sockets.cpp" />
     <ClCompile Include="StaticLogger.cpp" />

@@ -62,9 +62,7 @@ void ConnectionHandler::operator()(Socket& socket_) {
 
 }
 
-//----< test stub >--------------------------------------------------
-
-/*int main() {
+int main() {
     StaticLogger<1>::attach(&std::cout);
     StaticLogger<1>::start();
     StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server started" });
@@ -81,4 +79,4 @@ void ConnectionHandler::operator()(Socket& socket_) {
         std::string exMsg = "\n  " + std::string(exc.what()) + "\n\n";
         StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, exMsg });
     }
-}*/
+}

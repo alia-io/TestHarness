@@ -84,7 +84,7 @@ void TestHarness::executeChild() {
 	}
 }
 
-int main() {
+/*int main() {
 
 	StaticLogger<1>::attach(&std::cout);
 	StaticLogger<1>::start();
@@ -99,4 +99,4 @@ int main() {
 	testHarness.execute(tests);
 
 	return 0;
-}
+}*/
