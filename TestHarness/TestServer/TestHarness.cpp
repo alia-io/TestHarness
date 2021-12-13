@@ -21,8 +21,9 @@ TestHarness::TestHarness(std::string name, Message request) : suiteName{ name },
 MessageHandler* TestHarness::getHandler() { return &handler; }
 
 void TestHarness::execute() {
-	std::thread parent([=] { parentRunner(); });
-	if (parent.joinable()) parent.join();
+	//std::thread parent([=] { parentRunner(); });
+	//if (parent.joinable()) parent.join();
+	parentRunner();
 }
 
 void TestHarness::parentRunner() {
@@ -77,7 +78,7 @@ void TestHarness::parentRunner() {
 
 void TestHarness::childRunner() {
 	while (true) {
-		if (numberOfTests >= 0) break;
+		if (numberOfTests <= 0) break;
 		Message message = handler.dequeueTestRequest();
 		bool (*ptr)() = TestGetter::getTest(message.getResultMessageBody().testName).pointer;
 		TestRunner runner{ message.getResultMessageBody().testName, ptr };
