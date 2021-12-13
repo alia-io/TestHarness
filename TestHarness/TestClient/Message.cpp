@@ -116,14 +116,18 @@ Message::Message(std::string jsonMessageString) {
 
 /* constructor for client request message */
 Message::Message(IP_VERSION sourceIpVer, std::string sourceIpAddr, size_t sourcePort,
-	IP_VERSION destIpVer, std::string destIpAddr, size_t destPort, std::list<std::string> testList)
+	IP_VERSION destIpVer, std::string destIpAddr, size_t destPort, LOG_LEVEL logLevel, std::list<std::string> testList)
 {
 	source.setValues(sourceIpVer, sourceIpAddr, sourcePort);
 	destination.setValues(destIpVer, destIpAddr, destPort);
 	messageType = MESSAGE_TYPE::client_request;
 	author = "TestClient";
 	timestamp = Timer::currentTime();
-	body = R"({ "count": ")" + std::to_string(testList.size()) + R"(", "tests": [ )";
+	body = R"({ "log": ")";
+	if (logLevel == LOG_LEVEL::info) body += "info";
+	else if (logLevel == LOG_LEVEL::debug) body += "debug";
+	else if (logLevel == LOG_LEVEL::detail) body += "detail";
+	body += R"(", "count": ")" + std::to_string(testList.size()) + R"(", "tests": [ )";
 	for (auto it = testList.begin(); it != testList.end(); ++it) {
 		if (it != testList.begin()) body += ", ";
 		body += R"(")" + *it + R"(")";
@@ -179,7 +183,7 @@ size_t Message::sourcePort() { return source.port; }
 /* get message body as a RequestItem object */
 RequestItem Message::getRequestMessageBody() {
 
-	enum class REQUEST_STEP { rs_none, rs_count, rs_tests };
+	enum class REQUEST_STEP { rs_none, rs_log, rs_count, rs_tests };
 	REQUEST_STEP step = REQUEST_STEP::rs_none;
 	std::string str = "";
 	bool readText = false;
@@ -190,12 +194,21 @@ RequestItem Message::getRequestMessageBody() {
 			if (readText) {
 				if (ch == '"') {
 					if (step == REQUEST_STEP::rs_none) {
-						if (str.compare("count") == 0) {
+						if (str.compare("log") == 0) {
+							step = REQUEST_STEP::rs_log;
+						}
+						else if (str.compare("count") == 0) {
 							step = REQUEST_STEP::rs_count;
 						}
 						else if (str.compare("tests") == 0) {
 							step = REQUEST_STEP::rs_tests;
 						}
+					}
+					else if (step == REQUEST_STEP::rs_log) {
+						if (str.compare("info") == 0) item.logLevel = LOG_LEVEL::info;
+						else if (str.compare("debug") == 0) item.logLevel = LOG_LEVEL::debug;
+						else if (str.compare("detail") == 0) item.logLevel = LOG_LEVEL::detail;
+						step = REQUEST_STEP::rs_none;
 					}
 					else if (step == REQUEST_STEP::rs_count) {
 						item.testCount = std::stoi(str);
@@ -266,7 +279,7 @@ TestItem Message::getResultMessageBody() {
 int main() {
 
 	std::list<std::string> tests{ "TestName1", "TestName2", "TestName3", "TestName4", "TestName5", "TestName6", "TestName7" };
-	Message requestMsg{ IP_VERSION::IPv4, "111.11.111", 5555, IP_VERSION::IPv6, "9999.999.99.9", 1234, tests };
+	Message requestMsg{ IP_VERSION::IPv4, "111.11.111", 5555, IP_VERSION::IPv6, "9999.999.99.9", 1234, LOG_LEVEL::detail, tests };
 	std::string requestStr = requestMsg.getJsonFormattedMessage();
 	std::cout << "\n" << requestStr << std::endl;
 	Message requestStrToMsg{ requestStr };
