@@ -133,9 +133,12 @@
 
 #include "Utilities.h"
 #include "StaticLogger.h"
+#include "Message.h"
 
 #pragma warning(disable:4522)
 #pragma comment(lib, "Ws2_32.lib")
+
+using namespace TestMessenger;
 
 namespace Sockets
 {
@@ -160,21 +163,20 @@ namespace Sockets
     class Socket
     {
     public:
-        enum IpVer { IP4, IP6 };
         using byte = char;
 
         // disable copy construction and assignment
         Socket(const Socket& s) = delete;
         Socket& operator=(const Socket& s) = delete;
 
-        Socket(IpVer ipver = IP4);
+        Socket(IP_VERSION ipver = IP_VERSION::IPv4);
         Socket(::SOCKET);
         Socket(Socket&& s);
         operator ::SOCKET() { return socket_; }
         Socket& operator=(Socket&& s);
         virtual ~Socket();
 
-        IpVer& ipVer();
+        IP_VERSION& ipVer();
         bool send(size_t bytes, byte* buffer);
         bool recv(size_t bytes, byte* buffer);
         size_t sendStream(size_t bytes, byte* buffer);
@@ -196,7 +198,7 @@ namespace Sockets
         ::SOCKET socket_;
         struct addrinfo* result = NULL, * ptr = NULL, hints;
         int iResult;
-        IpVer ipver_ = IP4;
+        IP_VERSION ipver_ = IP_VERSION::IPv4;
     };
 
     /////////////////////////////////////////////////////////////////////////////
@@ -227,12 +229,10 @@ namespace Sockets
     public:
         SocketListener(const SocketListener& s) = delete;
         SocketListener& operator=(const SocketListener& s) = delete;
-
-        SocketListener(size_t port, IpVer ipv = IP6);
+        SocketListener(size_t port, IP_VERSION ipv = IP_VERSION::IPv6);
         SocketListener(SocketListener&& s);
         SocketListener& operator=(SocketListener&& s);
         virtual ~SocketListener();
-
         template<typename CallObj>
         bool start(CallObj& co);
         void stop();

@@ -51,7 +51,7 @@ SocketSystem::~SocketSystem()
 
 //----< constructor sets TCP protocol and Stream mode >----------------------
 
-Socket::Socket(IpVer ipver) : ipver_(ipver)
+Socket::Socket(IP_VERSION ipver) : ipver_(ipver)
 {
     ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
@@ -65,7 +65,7 @@ Socket::Socket(IpVer ipver) : ipver_(ipver)
 */
 Socket::Socket(::SOCKET sock) : socket_(sock)
 {
-    ipver_ = IP4;
+    ipver_ = IP_VERSION::IPv4;
     ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
@@ -102,7 +102,7 @@ Socket& Socket::operator=(Socket&& s)
 *    Only instances of SocketListener are influenced by ipVer().
 *    Clients will use whatever protocol the server supports.
 */
-Socket::IpVer& Socket::ipVer()
+IP_VERSION& Socket::ipVer()
 {
     return ipver_;
 }
@@ -395,11 +395,11 @@ bool SocketConnecter::connect(const std::string& ip, size_t port)
 
 //----< constructs SocketListener, specifying type of protocol to use >------
 
-SocketListener::SocketListener(size_t port, IpVer ipv) : Socket(ipv), port_(port)
+SocketListener::SocketListener(size_t port, IP_VERSION ipv) : Socket(ipv), port_(port)
 {
     socket_ = INVALID_SOCKET;
     ZeroMemory(&hints, sizeof(hints));
-    if (ipv == Socket::IP6)
+    if (ipv == IP_VERSION::IPv6)
         hints.ai_family = AF_INET6;       // use this if you want an IP6 address
     else
         hints.ai_family = AF_INET;        // this gives IP4 address

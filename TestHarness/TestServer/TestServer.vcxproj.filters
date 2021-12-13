@@ -13,5 +13,75 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\TestController">
+      <UniqueIdentifier>{a784222a-0ba5-4acc-b710-a8429670210b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TestMessenger">
+      <UniqueIdentifier>{1577747f-68e6-4322-873b-4fb299d09433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TestUtilities">
+      <UniqueIdentifier>{98625632-65a1-4298-a251-9c3193c085c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestMainServer">
+      <UniqueIdentifier>{ba0219bf-a232-4ed3-aa5c-8c3c135e69d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TestMainServer">
+      <UniqueIdentifier>{d19a2f3f-cc8d-4897-8f27-28c46c0874dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestController">
+      <UniqueIdentifier>{e80821ac-5421-4a3a-ac6a-af6ec9e1c8a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestMessenger">
+      <UniqueIdentifier>{14ed6c8f-73bc-4c7e-8806-d3e582bc6f09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestUtilities">
+      <UniqueIdentifier>{34e674b4-10bb-4c53-84f9-b41121b13519}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Sockets.h">
+      <Filter>Header Files\TestMainServer</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticLogger.h">
+      <Filter>Header Files\TestMainServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files\TestMainServer</Filter>
+    </ClInclude>
+    <ClInclude Include="TestResultCounter.h">
+      <Filter>Header Files\TestController</Filter>
+    </ClInclude>
+    <ClInclude Include="TestBlockingQueue.h">
+      <Filter>Header Files\TestMessenger</Filter>
+    </ClInclude>
+    <ClInclude Include="TestTimer.h">
+      <Filter>Header Files\TestUtilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Message.h">
+      <Filter>Header Files\TestMessenger</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Sockets.cpp">
+      <Filter>Source Files\TestMainServer</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticLogger.cpp">
+      <Filter>Source Files\TestMainServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>Source Files\TestMainServer</Filter>
+    </ClCompile>
+    <ClCompile Include="TestResultCounter.cpp">
+      <Filter>Source Files\TestController</Filter>
+    </ClCompile>
+    <ClCompile Include="TestBlockingQueue.cpp">
+      <Filter>Source Files\TestMessenger</Filter>
+    </ClCompile>
+    <ClCompile Include="TestTimer.cpp">
+      <Filter>Source Files\TestUtilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Message.cpp">
+      <Filter>Source Files\TestMessenger</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
