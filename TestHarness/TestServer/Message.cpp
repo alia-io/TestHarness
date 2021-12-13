@@ -38,120 +38,66 @@ Message::Message(std::string jsonMessageString) {
 			}
 		}
 		
-		if (ch == '{') {
-			stk.push(ch);
-		} else if (ch == '}' && stk.size() > 0) {
-			if (stk.top() == '{') {
-				stk.pop();
-			}
+		if (ch == '{') stk.push(ch);
+		else if (ch == '}' && stk.size() > 0) {
+			if (stk.top() == '{') stk.pop();
 		} else if (ch == '"') {
 			if (stk.size() > 0) {
 				if (stk.top() == '"') {
 					stk.pop();
-
 					if (step.size() == 0 && stk.size() == 1) {
-						if (str.compare("source") == 0) {
-							step.push_back(MESSAGE_STEP::ms_source);
-							str = "";
-						} else if (str.compare("destination") == 0) {
-							step.push_back(MESSAGE_STEP::ms_destination);
-							str = "";
-						} else if (str.compare("type") == 0) {
-							step.push_back(MESSAGE_STEP::ms_type);
-							str = "";
-						} else if (str.compare("author") == 0) {
-							step.push_back(MESSAGE_STEP::ms_author);
-							str = "";
-						} else if (str.compare("timestamp") == 0) {
-							step.push_back(MESSAGE_STEP::ms_timestamp);
-							str = "";
-						} else if (str.compare("body") == 0) {
-							step.push_back(MESSAGE_STEP::ms_body);
-							str = "";
-							body = "";
-						}
+						if (str.compare("source") == 0) step.push_back(MESSAGE_STEP::ms_source);
+						else if (str.compare("destination") == 0) step.push_back(MESSAGE_STEP::ms_destination);
+						else if (str.compare("type") == 0) step.push_back(MESSAGE_STEP::ms_type);
+						else if (str.compare("author") == 0) step.push_back(MESSAGE_STEP::ms_author);
+						else if (str.compare("timestamp") == 0) step.push_back(MESSAGE_STEP::ms_timestamp);
+						else if (str.compare("body") == 0) step.push_back(MESSAGE_STEP::ms_body);
 					} else if (step.size() == 1 && stk.size() == 1) {
 						if (step.at(0) == MESSAGE_STEP::ms_type) {
-							if (str.compare("client_request") == 0) {
-								messageType = MESSAGE_TYPE::client_request;
-							} else if (str.compare("test_result") == 0) {
-								messageType = MESSAGE_TYPE::test_result;
-							}
+							if (str.compare("client_request") == 0) messageType = MESSAGE_TYPE::client_request;
+							else if (str.compare("test_result") == 0) messageType = MESSAGE_TYPE::test_result;
 							step.pop_back();
-							str = "";
 						} else if (step.at(0) == MESSAGE_STEP::ms_author) {
 							author = str;
 							step.pop_back();
-							str = "";
 						} else if (step.at(0) == MESSAGE_STEP::ms_timestamp) {
 							timestamp = str;
 							step.pop_back();
-							str = "";
 						}
 					} else if (step.size() == 1 && stk.size() == 2) {
 						if (step.at(0) == MESSAGE_STEP::ms_source || step.at(0) == MESSAGE_STEP::ms_destination) {
-							if (str.compare("version") == 0) {
-								step.push_back(MESSAGE_STEP::ms_version);
-								str = "";
-							} else if (str.compare("ip") == 0) {
-								step.push_back(MESSAGE_STEP::ms_ip);
-								str = "";
-							} else if (str.compare("port") == 0) {
-								step.push_back(MESSAGE_STEP::ms_port);
-								str = "";
-							}
+							if (str.compare("version") == 0) step.push_back(MESSAGE_STEP::ms_version);
+							else if (str.compare("ip") == 0) step.push_back(MESSAGE_STEP::ms_ip);
+							else if (str.compare("port") == 0) step.push_back(MESSAGE_STEP::ms_port);
 						}
 					} else if (step.size() == 2 && stk.size() == 2) {
 						if (step.at(0) == MESSAGE_STEP::ms_source) {
 							if (step.at(1) == MESSAGE_STEP::ms_version) {
-								if (str.compare("IPv4") == 0) {
-									source.ipVer = IP_VERSION::IPv4;
-								} else if (str.compare("IPv6") == 0) {
-									source.ipVer = IP_VERSION::IPv6;
-								}
-							} else if (step.at(1) == MESSAGE_STEP::ms_ip) {
-								source.ipAddr = str;
-							} else if (step.at(1) == MESSAGE_STEP::ms_port) {
+								if (str.compare("IPv4") == 0) source.ipVer = IP_VERSION::IPv4;
+								else if (str.compare("IPv6") == 0) source.ipVer = IP_VERSION::IPv6;
+							} else if (step.at(1) == MESSAGE_STEP::ms_ip) source.ipAddr = str;
+							else if (step.at(1) == MESSAGE_STEP::ms_port) {
 								std::stringstream(str) >> source.port;
 								step.pop_back();
 							}
 							step.pop_back();
-							str = "";
 						} else if (step.at(0) == MESSAGE_STEP::ms_destination) {
 							if (step.at(1) == MESSAGE_STEP::ms_version) {
-								if (str.compare("IPv4") == 0) {
-									destination.ipVer = IP_VERSION::IPv4;
-								} else if (str.compare("IPv6") == 0) {
-									destination.ipVer = IP_VERSION::IPv6;
-								}
-							} else if (step.at(1) == MESSAGE_STEP::ms_ip) {
-								destination.ipAddr = str;
-							} else if (step.at(1) == MESSAGE_STEP::ms_port) {
+								if (str.compare("IPv4") == 0) destination.ipVer = IP_VERSION::IPv4;
+								else if (str.compare("IPv6") == 0) destination.ipVer = IP_VERSION::IPv6;
+							} else if (step.at(1) == MESSAGE_STEP::ms_ip) destination.ipAddr = str;
+							else if (step.at(1) == MESSAGE_STEP::ms_port) {
 								std::stringstream(str) >> destination.port;
 								step.pop_back();
 							}
 							step.pop_back();
-							str = "";
 						}
-
-
-
 					}
-
-
-
-				} else {
-					stk.push(ch);
-				}
-			} else {
-				stk.push(ch);
-			}
-			
-
+					str = "";
+				} else stk.push(ch);
+			} else stk.push(ch);
 		} else if (stk.size() > 0) {
-			if (stk.top() == '"') {
-				str += ch;
-			}
+			if (stk.top() == '"') str += ch;
 		}
 
 	}
@@ -221,8 +167,8 @@ auto Message::getMessageBody() {
 	return "";
 }
 
+#define MESSAGE_TEST
 // ------------ Test Stub ------------- //
-
 #ifdef MESSAGE_TEST
 
 int main() {
@@ -251,5 +197,4 @@ int main() {
 
 	return 0;
 }
-
 #endif
