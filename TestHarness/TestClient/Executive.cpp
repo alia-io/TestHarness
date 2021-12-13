@@ -1,6 +1,10 @@
 #include "Client.h"
+#include <iostream>
+#include <windows.h>
 
 int main() {
+
+	::Sleep(5000);	// delay to set up consoles
 
 	std::list<std::string> testList {
 		"TestBasicCalculatorPass", "TestBasicCalculatorFail", "TestBasicCalculatorException", "TestAdvancedCalculatorPass",

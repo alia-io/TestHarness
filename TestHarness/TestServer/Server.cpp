@@ -97,12 +97,9 @@ void Server::runTestHarness(Message requestMsg) {
 
     StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "All test results have been sent to client" });
     if (harnessThr.joinable()) harnessThr.join();
-
-    //si.sendString("quit");
-    //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Server sent msg: quit" });
-    //StaticLogger<1>::write(LogMsg{ OUTPUT_TYPE::system, "Connection terminated." });
 }
 
 int main() {
+    ::Sleep(5000);  // delay to set up consoles
     Server::runServer();
 }
